@@ -1,0 +1,46 @@
+
+
+<ion-header>
+    <ion-navbar id="titlePrice">
+      <ion-title>
+      找回密码
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content>
+<!-- <p>????</p> -->
+    <div class="contain">
+            <img src="assets/img/login/logo2.png" alt="" class="logo">
+          <div class="ulInput">
+            <ul>
+                <li>
+                  <img src="assets/img/login/phone.png" alt="" class="regIcon">
+                  <input type="number" [(ngModel)]="userInfo.phone" clearInput autocomplete="on" placeholder="请输入手机号" class="plcolor" >
+                </li>
+                <li>
+                  <img src="assets/img/login/phoneCode.png" alt="" class="regIcon">
+                  <input type="number" [(ngModel)]="userInfo.yzm" id="ion-input" placeholder="请输入验证码" clearInput class="plcolor">
+                </li>
+                <li>
+                  <img src="assets/img/login/password.png" alt="" class="regIcon">
+                  <input type="password" [(ngModel)]="userInfo.newPassWord" id="ion-input" placeholder="请输入新密码" clearInput class="plcolor">
+                </li>
+                <li>
+                  <img src="assets/img/login/password.png" alt="" class="regIcon">
+                  <input type="password" [(ngModel)]="userInfo.rePassWord" id="ion-input" placeholder="请再次输入新密码" clearInput class="plcolor">
+                </li>
+            </ul>
+            <div id="getCode">
+              <button ion-button class="yzm-btn" (click)="findPasswordCode()" *ngIf="!hasClick">{{hq}}</button>
+              <button ion-button class="yzm-btn" disabled *ngIf="hasClick">{{num}}s</button>
+            </div>
+        </div>  
+      
+
+            <button ion-button class="btn" (click)="next()" block>确定</button>
+    </div>
+ 
+</ion-content>
+
+

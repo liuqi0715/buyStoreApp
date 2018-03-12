@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>我要报单</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<div class="bOrder_subbar">
+    <div class="bOrder_subbar_item" *ngFor="let title of navTitle, let idx = index" (click)="slcItem(idx)">{{title}}</div>
+    <div id="initSlideLine"></div>
+</div>
+<ion-content class="bOrder_main" has-bouncing="true">
+    <div class="bOrder_slcbox" *ngFor="let m of models, let idx = index">
+         <div class="bOrder_slcbox_l">
+           <div>{{m.modelName}}</div>
+         </div>
+         <div class="bOrder_slcbox_r">
+           <div class="bOrder_slb_num">
+             <div class="bOrder_slb_btn bbtn1" (click)="minus(idx)">
+                 <ion-icon ios="ios-remove" md="md-remove"></ion-icon>
+             </div>
+             <div class="bOrder_slb_in">
+                 <input type="text" class="bdInput" (keyup)="limitIn(idx)" [(ngModel)] = "m.value"/>
+             </div>
+             <div class="bOrder_slb_btn bbtn2" (click)="plus(idx)">
+                 <ion-icon ios="ios-add" md="md-add"></ion-icon>
+             </div>
+           </div> 
+         </div>
+    </div>
+</ion-content>
+<div class="inner-center noNet" *ngIf="noContent == false && offline == true" (click)="reload()">
+    <img src="assets/img/noNet.png" alt="无网络">
+</div>
+<div class="inner-center noContent" *ngIf="noContent == true && offline == false">
+    <img src="assets/img/noContent.png" alt="暂无内容">
+</div>
+<div class="bottomBar" id="bBottom">
+  <div class="bottomBar_l">
+      <p>总金额：{{totalPrice}}元</p>
+      <p>总重量：约{{totalWeight}}kg</p>
+  </div>
+  <div class="bottomBar_r" (click)="orderNext()">下一步</div>
+</div>
+
+

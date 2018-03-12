@@ -1,0 +1,129 @@
+page-tab-more-page-page {
+
+  .headImg{
+    width: 1.75rem;
+    height: 1.75rem;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .imgHeader{
+    width: 100%;
+    height: 100%;
+    border-radius:50%;
+  }
+  .scroll-content{
+    background-color: #EEEEEE;  
+  }
+  .mine-header{
+    position: relative;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0!important;
+  }
+  .mine-header-ver{
+    position: absolute;
+    bottom: .2rem;
+    left: 50%;
+    color: #FFF;
+    font-size: .26rem;
+    transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+  }
+  .mine-header.grid{
+    height: 4rem;
+    font-size: .25rem;
+    background: -webkit-linear-gradient(left top, #1ca696 , #32db64); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(bottom right, #1ca696 , #32db64); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(bottom right, #1ca696 , #32db64); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to bottom right, #1ca696 , #32db64); /* 标准的语法（必须放在最后） */
+    padding-top: .3rem;
+  }
+  .mine-header .big-title{
+    line-height: .8rem;
+    font-size: .33rem;
+  }
+  .mine-header .sub-title{
+    font-size: .30rem;
+    line-height: .6rem;
+  }
+  .grid{
+    background-color: #fff;
+    margin-bottom: .25rem;
+    padding-bottom: .1rem;
+    height: 1.64rem;
+  }
+  .grid ul{
+    height: 100%;
+  }
+  .grid ul li{
+    font-size: .3rem;
+    width: 33.3%;
+    height: 100%;
+    text-align: center;
+    float: left;
+    padding-top: .1rem;
+    color: #8A8A8A;
+  }
+ 
+  .iconImg{
+    width: .64rem;
+  }
+  .iconImg2{
+      float: left;
+      margin-top: .15rem;
+      margin-right: .2rem;
+      margin-left: .2rem;
+  }
+  .more{
+    height: .7rem;
+    float: right;
+    vertical-align: middle;
+    margin-top: .2rem;
+  }
+  .info{
+    background-color: white;
+    margin-bottom: .3rem;
+    color: #8A8A8A;
+  }
+  .asked{
+    background-color: white;
+    color: #8A8A8A;
+  }
+  .fontS{
+    font-size: .25rem;
+    height: 1rem;
+    line-height: 1rem;
+    border-bottom: 1px solid #cccc;
+    color: #8A8A8A;
+    
+  }
+  #exitApp{
+    width: .5rem;
+    margin-top: .25rem;
+    margin-left: .28rem;
+    margin-right: .24rem;
+  }
+  //提示消息
+  #infoTips{
+    display: block;
+    width: .35rem;
+    height: .35rem;
+    font-size: .25rem;
+    line-height: .35rem;
+    background: red;
+    color: white;
+    border-radius: .35rem;
+    position: absolute;
+    left: 57%;
+    top: .5%;
+  }
+  .notReadMore{
+    width: .5rem !important;
+  }
+}

@@ -1,0 +1,37 @@
+order-list-page {
+  .ol_list{
+    width: 94%;
+    margin:0 auto;
+    height: 1.2rem;
+    padding-top: .2rem;
+    border-bottom: .02rem solid #F5F5F5;
+  }
+  .ol_list p{
+    width: 100%;
+    height: .42rem;
+    margin-bottom: .16rem;
+  }
+  .ol_list p span:nth-child(1){
+    float: left;
+  }
+  .ol_list p span:nth-child(2){
+    float: right;
+  }
+  .ol_list p:nth-child(1) span:nth-child(1){
+    color: #726D6D;
+    font-size: .32rem;
+  }
+  .ol_list p:nth-child(1) span:nth-child(2){
+    color: #B2AFAE;
+    font-size: .32rem;
+  }
+  .ol_list p:nth-child(2) span:nth-child(1){
+    color: #A5A09F;
+    font-size: .26rem;
+  }
+  .ol_list p:nth-child(2) span:nth-child(2){
+    color: #A5A09F;
+    font-size: .26rem;
+  }
+
+}

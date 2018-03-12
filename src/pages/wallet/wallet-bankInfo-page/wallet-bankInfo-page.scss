@@ -1,0 +1,63 @@
+wallet-bankInfo-page{
+    .wb_hotBank,.wb_notHotBank{
+        width: 100%;
+    }
+    .wb_hotBank ul{
+        width: 100%;
+        border-top: 1px solid #E3E3E3;
+    }
+    .wb_hotBank ul li{
+        font-size: 0.25rem;
+        width: 25%;
+        height: 2rem;
+        float: left;
+        text-align: center;
+        border-bottom: 1px solid #E3E3E3;
+        border-right: 1px solid #E3E3E3;
+        position: relative;
+
+    }
+    .wb_notHotBank ul{
+        width: 100%;
+        border-top: 1px solid #E3E3E3;
+    }
+    .wb_notHotBank ul li{
+        font-size: .25rem;
+        border-bottom: 1px solid #E3E3E3;
+        height: .8rem;
+        line-height: .8rem;
+        text-indent: .25rem;
+        
+    }
+    #bankImg{
+        width: 50%;
+        display: block;
+        // margin: .2rem auto;
+        margin: 0 auto;
+        margin-bottom: .2rem;
+        // position:absolute;
+        // top:50%;left:50%;
+        // transform:translate(-50%,-50%);
+    }
+    .searchbar-ios .searchbar-clear-icon{
+        display: none;
+    }
+    #valInput{
+        width: 100%;
+        font-size: .25rem;
+    }
+    .bankName{
+        position: absolute;
+        bottom: 0;
+        left: .5rem;
+    }
+    .center{
+        width: 100%;
+        /* height: 100%; */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+}

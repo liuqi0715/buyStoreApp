@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>我的订单</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+
+  <div class="ol_list" *ngFor="let list of orderList" (click)="goDetail(list)"> 
+    <p><span>{{list.orderNo}}</span><span>{{list.amountRec}}</span></p>
+    <p><span>{{list.createTime}}</span><span>{{list.payStatus}}</span></p>
+  </div>
+
+  <div class="inner-center noNet" *ngIf="noContent == false && offline == true" (click)="reload()">
+    <img src="assets/img/noNet.png" alt="无网络">
+  </div>
+  <div class="inner-center noContent" *ngIf="noContent == true && offline == false">
+      <img src="assets/img/noContent.png" alt="暂无内容">
+  </div>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="获取数据中...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
+

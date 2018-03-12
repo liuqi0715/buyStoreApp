@@ -1,0 +1,50 @@
+
+<ion-header>
+    <ion-navbar>
+      <ion-title>银行信息</ion-title>
+    </ion-navbar>
+  </ion-header>
+<ion-content>
+        <div padding>
+                <ion-segment [(ngModel)]="pet">
+                  <ion-segment-button value="puppies">
+                    热门银行
+                  </ion-segment-button>
+                  <ion-segment-button value="kittens">
+                    非热门银行
+                  </ion-segment-button>
+                </ion-segment>
+          </div>
+              
+        <div [ngSwitch]="pet">
+          <div *ngSwitchCase="'puppies'" class="wb_hotBank">
+              <ul>
+                <li  *ngFor="let bank of hotBankType" (click)="confirmHotBank(bank)">
+                    <div class="center">
+                        <img src="{{bank.bankLogoPath}}" alt="" id="bankImg">
+                        <!-- <p class="bankName"> {{bank.bankFullName}}</p> -->
+                        {{bank.bankFullName}}
+                    </div>
+                    
+                
+                </li>
+              </ul>
+            
+          </div>
+
+          <div *ngSwitchCase="'kittens'" class="wb_notHotBank">  
+              <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>   
+              <!-- <input type="text" (ngModelChange)="getItems()" [(ngModel)]="valInput" id="valInput"> -->
+              <!-- <p><input type="text" [(ngModel)]="test"></p> -->
+              <!-- | filter:test -->
+              <ul *ngIf="reLoad">
+                  <li *ngFor="let bank of notHotBankType"  (click)="confirmBank(bank)">
+                   
+                     {{bank.bankFullName}}
+                    </li>
+              </ul>
+          </div>
+        </div>
+              
+</ion-content>
+      

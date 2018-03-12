@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>我的评论</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="ocom_content">
+  <section class="ocom_area">
+    <ul>
+      <li (click)="activeIcon(1)"><img [src]="iconActive1" alt="fengchangmanyi"><label [style.color] = "labelActive1 ? '#f4a80e': '#C9C9C9'">{{comm1.commTypeName}}</label></li>
+      <li (click)="activeIcon(2)"><img [src]="iconActive2" alt="manyi"><label [style.color] = "labelActive2 ? '#f4a80e': '#C9C9C9'">{{comm2.commTypeName}}</label></li>
+      <li (click)="activeIcon(3)"><img [src]="iconActive3" alt="tucao"><label [style.color] = "labelActive3 ? '#f4a80e': '#C9C9C9'">{{comm3.commTypeName}}</label></li>
+    </ul>
+  </section>
+  <section class="ocom_tags" *ngIf="commTags.length>0">
+    <span>请至少选择一个标签</span>
+    <ul>
+      <li *ngFor="let tag of commTags, let idx = index" (click)="getTag(tag,idx)" [style.color] = "tag.check ? '#FFF': '#C9C9C9'" [style.backgroundColor] = "tag.check ? '#f4a80e': '#FFF'">{{tag.lable}}</li>
+    </ul>
+  </section>
+  <ion-textarea class="ocom_input" placeholder="还想说点啥？写在这里吧！" [(ngModel)] = "subObj.commDetail">
+    
+  </ion-textarea>
+  <p>此评价为匿名，不向对方公开</p>
+  <button (click)="submit()">立即评价</button>
+
+</ion-content>
+

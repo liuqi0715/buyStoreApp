@@ -1,0 +1,42 @@
+
+<ion-header>
+    <ion-navbar>
+      <ion-title>余额提现</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content>
+    <!-- <div class="header">
+            <span class="more" (click)="goBack()"> ← back </span>    余额提现
+    </div> -->
+    <div class="card">
+        <div class="cardImg">
+            <img src="assets/img/wallet/bank.png" alt="">
+        </div> 
+        <div>{{bankName}}</div>
+        <div>尾号{{bankCardNo}}储蓄卡</div>
+    </div>
+    <div class="getMoney">
+        <ul>
+            <li class="withdraws">
+                提现金额
+            </li>
+            <li id="money">
+                <span class="danwei">￥</span>
+                <input type="number" class="money" [(ngModel)]="balance" (ngModelChange)="changeMon()">
+                <span id="allIn" (click)="allIn()">全部提现</span>
+            </li>
+            <li>
+                可用余额{{cashAmount}}元
+            </li>
+        </ul>
+    </div>
+    <div class="affirmGet" (click)="affirmGet()" >
+            确认提现
+    </div>
+    <p class="twoHours">两小时内到账</p>
+
+    <div class="motai" *ngIf="hasSuccess">
+        <img src="assets/img/login/loading.gif" alt="" id="loading">
+      </div>
+</ion-content>

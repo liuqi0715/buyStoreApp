@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>补拍证件</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="ma_content">
+	<p>请按下面提示规范拍清照片</p>
+	<div class="ma_box ma_box1" (click)="takeIdenty1()">
+		<img src="assets/img/wallet/shen.png" alt="shenfenzheng" class="ma_box_shen" *ngIf="!photo1" />
+		<div class="ma_box_btn" (click)="takeIdenty()" *ngIf="!photo1">
+			<img src="assets/img/wallet/xiangji.png" alt="xiangji"/>
+			<p>身份证</p>
+		</div>
+	</div>
+	<div class="ma_box ma_box2" (click)="takeBussiness1()">
+		<img src="assets/img/wallet/yingye.png" alt="yingye" class="ma_box_yingye" *ngIf="!photo2" />
+		<div class="ma_box_btn" (click)="takeBussiness()" *ngIf="!photo2">
+			<img src="assets/img/wallet/xiangji.png" alt="xiangji"/>
+			<p>营业执照</p>
+		</div>
+	</div>
+</ion-content>
+<section class="ma_btn" (click)="next()">
+	提交审核
+</section>
+

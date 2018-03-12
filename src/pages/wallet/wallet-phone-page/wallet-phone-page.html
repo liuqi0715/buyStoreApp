@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>修改手机号</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+
+  <section class="input_list wp_list">
+
+    <div class="input_list_item">
+      <label><img src="assets/img/wallet/shouji.png" alt="shouji"></label>
+      <input type="tel" [(ngModel)] = "subObj.oldphone" placeholder="请输入旧手机号">
+    </div>
+
+    <div class="input_list_item">
+      <label><img src="assets/img/wallet/shouji.png" alt="shouji"></label>
+      <input type="tel" [(ngModel)] = "subObj.newphone" placeholder="请输入新手机号">
+    </div>
+
+  </section>
+
+  <button ion-button outline class="wp_btn" (click)="submit()">确定</button>
+
+</ion-content>

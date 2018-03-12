@@ -1,0 +1,31 @@
+wallet-phone-page {
+  .wp_list{
+    width: 70%;
+  }
+  .wp_list label{
+    width: 20%;
+    height: .4rem !important;
+    border-right: .02rem solid #D4D4D4;
+    margin-top: .2rem;
+    margin-right: .2rem;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: #D4D4D4; opacity:1; 
+  }
+
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: #D4D4D4;opacity:1;
+  }
+
+  input:-ms-input-placeholder{
+      color: #D4D4D4;opacity:1;
+  }
+
+  input::-webkit-input-placeholder{
+      color: #D4D4D4;opacity:1;
+  }
+  .wp_btn{
+    width: 70%;
+    margin-top: .6rem;
+  }
+}

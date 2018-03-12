@@ -1,0 +1,60 @@
+
+
+<ion-header>
+    <ion-navbar id="titlePrice">
+      <ion-title>
+      开户申请
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content>
+<!-- <p>????</p> -->
+    <div class="contain">
+            <!-- <img src="../../assets/img/login/logo2.png" alt="" class="logo"> -->
+            <p class="accountHeader">开户申请</p>
+          <div class="ulInput">
+            <ul>
+                <li>
+                  <!-- <img src="../../assets/img/login/phone.png" alt="" class="regIcon"> -->
+                  <input type="text" [(ngModel)]="campanyName" clearInput autocomplete="on" placeholder="请输入企业名称" class="plcolor" >
+                  
+                </li>
+                <li>
+                  <!-- <img src="../../assets/img/login/phoneCode.png" alt="" class="regIcon"> -->
+                  <input type="tel" [(ngModel)]="linsceNum" id="ion-input" placeholder="统一社会信用代码（注册号）" clearInput class="plcolor"  *ngIf="hasNotLinsceNum">
+                  <div id="liInput" *ngIf="hasLinsceNum">{{linsceNum}}</div>
+                </li>
+                <li>
+                  <!-- <img src="../../assets/img/login/password.png" alt="" class="regIcon"> -->
+                  <input type="tel" [(ngModel)]="personNum" id="ion-input" placeholder="请输入身份证号" clearInput class="plcolor">
+                </li>
+                <li>
+                  <!-- <img src="../../assets/img/login/password.png" alt="" class="regIcon"> -->
+                  <input type="text" [(ngModel)]="personName" id="ion-input" placeholder="请输入姓名" clearInput class="plcolor">
+                </li>
+                <li>
+                  <!-- <img src="../../assets/img/login/password.png" alt="" class="regIcon"> -->
+                  <input type="number" [(ngModel)]="personPhone" id="ion-input" placeholder="请输入手机号" clearInput class="plcolor">
+                </li>
+            </ul>
+        </div>  
+      
+         
+            <!-- <div id="getCode">
+                    <button ion-button class="yzm-btn" (click)="findPasswordCode()" *ngIf="!hasClick">{{hq}}</button>
+                    <button ion-button class="yzm-btn" disabled *ngIf="hasClick">{{num}}s</button>
+            </div> -->
+
+         
+            <!-- <p class="errorTip" *ngIf="errorTip">{{errorTipMsg}}</p>
+            <p style="text-align:center;" class="agreeI"> <input type="checkbox" [(ngModel)]="agreeI" (click)="agree()"> <span (click)="showAlert()"> 阅读并同意《用户协议》</span> </p> -->
+            <button ion-button class="btn" (click)="next()" block>确定</button>
+            <button ion-button class="btn btn2" (click)="linsceGo()" block> 临时营业执照点这里</button>
+    </div>
+    <div class="motai" *ngIf="hasSuccess">
+      <img src="assets/img/login/loading.gif" alt="" id="loading">
+    </div>
+</ion-content>
+
+

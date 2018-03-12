@@ -1,0 +1,52 @@
+{
+  "collectorList": [
+    {
+      "recycleId": "",
+      "recyclePhone": "",
+      "recycleName": "",
+      "recycleImage": "",
+      "status": "",
+      "longitude": "",
+      "latitude": "",
+      "regId": "",
+      "carNo": "",
+      "quotationList": [
+        {
+          "catId": "1",
+          "catPrice": "",
+          "catUnit": "",
+          "updateTime": ""
+        }
+      ],
+      "distance": "",
+      "lableId": "",
+      "lableName": "",
+      "commVerygood": "",
+      "commGood": "",
+      "commNotgood": "",
+      "commScore": ""
+    }
+  ],
+  "latelyDealList": [
+    {
+      "catId": "1",
+      "createTime": "",
+      "priceRec": "",
+      "weightRec": ""
+    }
+  ],
+  "refPriceList": [
+    {
+      "catId": "1",
+      "timePriceArry": {
+        "a0110": "9.8",
+        "a0111": "9.5",
+        "a0112": "9.6",
+        "a0113": "9.7",
+        "a0114": "9.8",
+        "a0115": "9.6",
+        "a0116": "9.8"
+      }
+    }
+  ]
+}

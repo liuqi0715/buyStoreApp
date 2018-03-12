@@ -1,0 +1,121 @@
+wallet-balance-page{
+    .content-ios{
+        background-color: #F0F0F0;
+    }
+    .header{
+        height: 1rem;
+        text-align: center;
+        line-height: 1rem;
+        color: white;
+        background-color: #1CA696;
+        font-size: .32rem;
+    }
+    .more{
+        width: .6rem;
+        height: .5rem;
+        float: left;
+        margin-left: .25rem;
+        margin-top: .2rem;
+        color: white;
+    }
+    .card{
+        width: 95%;
+        height: 1.5rem;
+        background-color: white;
+        font-size: .25rem;
+        margin: .25rem auto;
+    }
+    .card .cardImg{
+        width: 15%;
+        height: 100%;
+        float: left;
+        margin: 2%;
+        margin-right: 2%;
+        margin-top: 0%;
+    }
+    .cardImg img{
+        margin-top: .3rem;
+        width: .9rem;
+        margin-left: .1rem;
+    }
+    .card div{
+        // float: right;
+        height: .75rem;
+        line-height: .6rem;
+        font-size: .3rem;
+        color: #555354;
+    }
+    .card div:nth-child(3){
+        color: #949293;
+    }
+    .card div:nth-child(2){
+        line-height: 1rem;
+    }
+    .getMoney{
+        font-size: .25rem;
+        height: 3rem;
+        width: 95%;
+        margin: 0 auto;
+        background-color: white;
+        margin-bottom: .7rem;
+    }
+    .getMoney ul li{
+        list-style: none;
+        height: 1rem;
+        line-height: 1rem;
+        text-indent: .25rem;
+        color: #949293;
+    }
+    .affirmGet{
+        width: 85%;
+        height: .8rem;
+        line-height: .8rem;
+        font-size: .3rem;
+        color: white;
+        background-color: #1CA696;
+        text-align: center;
+        margin: .2rem auto;
+        border-radius: 5px;
+      
+    }
+    .twoHours{
+        font-size: .25rem;
+        text-align: center;
+        color: #949293;
+    }
+    .money{
+        width: 87%;
+        border: none;
+        text-indent: .25rem;
+        border-bottom: 1px solid #ccc;
+    }
+    #money{
+        text-indent: 0rem;
+        position: relative;
+    }
+    .danwei{
+        display: block;
+        width: 13%;
+        float: left;
+        font-size: .4rem;
+        text-align: center;
+
+    }
+    #allIn{
+        position: absolute;
+        right: 1%;
+        top: .2rem;
+        background-color: #1CA696;
+        width: 1.5rem;
+        height: .5rem;
+        line-height: .5rem;
+        text-align: center;
+        color: white;
+        border-radius: 2px;
+
+    }
+    .withdraws{
+        // background-color: red;
+        // text-indent: -.3rem !important;
+    }
+}

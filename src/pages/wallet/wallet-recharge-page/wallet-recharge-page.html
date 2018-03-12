@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>充值</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+    <section class="wr_imgBox">
+        <img src="assets/img/wallet/infoBg.png" alt="bankInform"/>
+    </section>
+
+    <div class="nowCard" >
+      <div class="cardIcon">
+          <img src="{{bankLogoPath}}" alt="">
+      </div>
+      <div class="cardInfo">
+          <p>{{acct.BankName}}</p>
+          <p>储蓄卡</p>
+          <p><span style="margin-right:.5rem;">{{bankCardNo2}}</span><span style="margin-right:.5rem;">****</span><span style="margin-right:.5rem;">****</span>{{bankCardNo}}</p>
+      </div>
+  </div>
+<div class="go">
+    <img src="assets/img/wallet/goAcct.png" alt="">
+</div>
+  <div class="acctCard" >
+    <div class="cardIcon">
+        <img src="assets/img/wallet/acctBank.png" alt="">
+    </div>
+    <div class="cardInfo">
+        <p>{{virlAcct.BankName}}</p>
+        <p>储蓄卡</p>
+        <!-- <p><span style="margin-right:.5rem;">{{bankCardNo4}}</span><span style="margin-right:.5rem;">****</span><span style="margin-right:.5rem;">****</span>{{bankCardNo3}}</p> -->
+        <p style="letter-spacing: 2px;">{{bankCardNum}}</p>
+    </div>
+</div>
+<div class="motai" *ngIf="hasSuccess">
+    <img src="assets/img/login/loading.gif" alt="" id="loading">
+</div>
+</ion-content>

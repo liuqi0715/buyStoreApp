@@ -1,0 +1,172 @@
+user-register {
+  
+    .toolbar-background-md{
+        background-color: #0DAF90;
+    }
+    .toolbar-title-md{
+        color: white;
+    }
+    .bar-button-default-md{
+        color: white;
+    }
+    .header-md::after{
+        background-image: none;
+    }
+    .content {
+        // background: url("../assets/imgs/bg.png") no-repeat center;
+        background-color: #0DAF90;
+        background-size: cover;
+      }
+      #content p {
+          font-size: .25rem;
+          height: .8rem;
+          margin-bottom: .25rem;
+          line-height: .8rem;
+      }
+      .item{
+          height: .5rem;
+      }
+    .btn, .btn:hover {
+        font-size: .25rem;
+        background-color: #0DAF90 !important;
+        color: #ffffff;
+        height: .8rem !important;
+        border-radius: 3px;
+        width: 90%;
+        margin: .1px auto;
+        }
+     .contain {
+            width: 92%;
+            height: 5.25rem;
+            background-color: white;
+            margin: .25rem auto;
+            border-radius: 3px;
+            padding-top: 1px;
+            position: relative;
+        }
+        #content{
+            width: 90%;
+            height: 10.5rem;
+            margin: .3rem auto;
+            border-radius: 3px;
+            padding-top: 0.5px;
+            background-color: white;  
+             
+        }
+        #content  p input{
+            border-radius: 3px;
+            height: .8rem;
+            line-height: .8rem;
+            border: 1px solid #D4D4D4;  
+        }
+        .ion-input{
+            width: 90%;
+            height: .3rem;
+            text-indent: 16px;
+            margin: 5px auto;
+            margin-left: 5%;
+        }
+        #imgDivs{
+            width: 90%;
+            margin: .1rem auto;
+        }
+        #stroeImg{
+            width: 55%;
+            float: left;
+            height: 2.35rem;
+            color:#8F8D8E;
+            font-size: .25rem;
+            margin-right: 5%;
+            margin-bottom: .55rem;
+            border-radius: 2px;
+            text-align: center;
+          
+            border: 1px solid #AEAEAE;
+        }
+        
+        #license{
+            width: 40%;
+            float: left;
+            height: 2.35rem;
+            color: #8F8D8E;
+            font-size: .25rem;
+            margin-bottom: .55rem;
+            border-radius: 2px;
+            text-align: center;
+            border: 1px solid #AEAEAE;
+        }
+        .camera{
+            width: .8rem;
+            display: block;
+            /* text-align: center; */
+            /* vertical-align: middle; */
+            margin: 0 auto;
+            margin-top: .7rem;
+        }
+
+        #writeInfo{
+            text-indent: .4rem;
+            margin-bottom: .2rem;
+            color: #929091;
+            font-size: .25rem;
+            height: .8rem;
+            line-height: .8rem;
+        }
+
+        #select{
+            width: 90%;
+            margin-left:5%; 
+            height: .8rem;
+            text-indent: .3rem;
+            -webkit-appearance: none;
+            background-image: url("../assets/img/login/select.png");
+            background-position: 97% 50%;
+            background-repeat: no-repeat;
+            background-size: .45rem;
+            background: rgba(127, 127, 127, 0);
+        }
+        #select option{
+            font-size: .28rem;
+        }
+        #address{
+            border: 1px solid #AEAEAE;
+            color: #929091;
+            border-radius: 2px;
+            text-indent: .3rem;
+            line-height: .6rem;
+            // background-image: url(../../assets/imgs/rightArrow.png); 
+            background-position: right center;
+            // background-size: 30%;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .more{
+            height: 100%;
+            float: right;
+            vertical-align: middle;
+        }
+        .errorTip {
+            text-indent: 16px;
+            color: #f00;
+          }
+        .imgSize{
+            width: 100%;
+            height: 100%;
+        }
+        #titlePrice{
+            background-color: #0EAF9D;
+            color: white;
+        }
+      
+        .logo{
+            width: 25%;
+            margin: 100px auto;
+            text-align: center;
+            vertical-align: middle;
+            margin-left: 35%;
+            margin-bottom: 50px;
+          }
+      
+}

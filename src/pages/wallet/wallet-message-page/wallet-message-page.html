@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>消息</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content style="background:#EFEFEF;">
+
+  <div *ngFor="let msg of msgList,let idx = index">
+    <div class="msg_time">{{msg.createTime}}</div>
+    <section class="msg_box">
+
+      <div class="msg_box_head">
+        <label>{{msg.msgTitle}}</label>
+        <span *ngIf="msg.isRead == 0"></span>
+      </div>
+
+      <div class="msg_box_body">
+          <img [src]="msg.msgImage" alt="" *ngIf="msg.msgType == 1"/>
+          <p>{{msg.msgIntro}}</p>
+      </div>
+
+      <div class="msg_box_bottom" (click)="detail(msg)" *ngIf="msg.orderStatusNo == 1 || msg.orderStatusNo == 2 || msg.orderStatusNo == 3 || msg.msgType == 1">
+        <span>查看详情</span>
+        <span><ion-icon name="arrow-forward"></ion-icon></span>
+      </div>
+
+    </section>
+  </div>
+
+  <div class="inner-center noNet" *ngIf="noContent == false && offline == true" (click)="reload()">
+    <img src="assets/img/noNet.png" alt="无网络">
+  </div>
+  <div class="inner-center noContent" *ngIf="noContent == true && offline == false">
+      <img src="assets/img/noContent.png" alt="暂无内容">
+  </div>
+  
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="获取数据中...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
+

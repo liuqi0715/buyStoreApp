@@ -1,0 +1,178 @@
+
+user-login {
+  
+  // *{
+  //   font-size: 16px !important;
+  // }
+  .title {
+    text-align: center;
+    color: #fff;
+    font-size: .25rem;
+    font-weight: 700;
+    line-height: 50px;
+    margin-bottom: 15px;
+  }
+  .scroll-content {
+    padding: 23px !important;
+  }
+  .content {
+    // background: url("../assets/imgs/bg.png") no-repeat center;
+    background-color: #0DAF90;
+    background-size: cover;
+  }
+  
+  .item {
+    margin-bottom: 10px;
+    color: #FFFFFF;
+    width: 90%;
+    height: .75rem;
+    margin: .3rem auto;
+    background-color: #26b8a7;
+    min-height: 38px !important;
+  }
+  .input-wrapper {
+    font-size: .25rem !important;
+  }
+  .item ion-label {
+    margin: 7px 8px 7px 0 !important;
+    font-size: 0.25rem;
+    //min-width:42px;
+  }
+  .header-ios .toolbar-ios:last-child .toolbar-background-ios{
+    border: none;
+  }
+  .item input {
+    margin: 7px 8px 7px 0 !important;
+  }
+  .item-inner {
+    border-bottom: 0 !important;
+  }
+  .text-input {
+    border-left: 1px solid #ddd;
+  }
+  .btn, .btn:hover {
+    width: 100%;
+    margin: 0 auto;
+    font-size: .3rem;
+    background-color: #FFFFFF !important;
+    color: #0DAF90;
+    height: .75rem;
+    line-height: .55rem;
+    border-radius: 3px;
+    margin-bottom: .5rem;
+    // margin-top: .3rem;
+  }
+  ion-item {
+    margin-bottom: .2rem !important; 
+  }
+  .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+    border-bottom: 0;
+    border-bottom-color: #fff;
+    -webkit-box-shadow: inset 0 -1px 0 0 #fff;
+    -moz-box-shadow: inset 0 -1px 0 0 #fff;
+    box-shadow: inset 0 -1px 0 0 #fff;
+  }
+  .item-md.item-input.item-input-has-focus .item-inner, .item-md.item-input.input-has-focus .item-inner {
+    border-bottom: 0 !important;
+    border-bottom-color: #fff !important;
+    -webkit-box-shadow: inset 0 -1px 0 0 #fff;
+    -moz-box-shadow: inset 0 -1px 0 0 #fff;
+    box-shadow: inset 0 -1px 0 0 #fff;
+  }
+  .c-white {
+    color: red;
+    width: 90%;
+    font-size: .3rem;
+    margin: 0 auto;
+    margin-bottom: .25rem;
+    /* font-weight: 600; */
+    font-family: monospace;
+  }
+  .findMM {
+    font-size: .3rem;
+    text-align: right;
+    float: right;
+    color: #fff;
+    text-decoration: underline;
+    text-decoration: none;
+  }
+  .findMM2{
+    font-size: .3rem;
+    text-align: left;
+    float: left;
+    color: #fff;
+    // text-decoration: underline;
+    text-decoration: none;
+  }
+  //my---------------------
+  #regsiter{
+    text-align: center;
+    color: white;
+    font-size: .3rem;
+    // margin-top: .3rem;
+    float: left;
+    text-decoration: none;
+  }
+  .item-input .label-md{
+    color: white;
+    font-size: .25rem;
+  }
+  .input-md[clearInput] .text-input{
+    color: white;
+    text-indent: .25rem;
+  }
+
+  
+ 
+  $text-input-placeholder-color:(white);
+  .text-input{
+    @include placeholder(white,12px);
+  }
+//my-----------------
+
+   .loginIcon{
+      width: .6rem;
+   }
+   .logo{
+     width: 25%;
+     margin: 1rem auto;
+     text-align: center;
+     vertical-align: middle;
+     margin-left: 35%;
+     margin-bottom: .1rem;
+   }
+   .regIcon{
+        width: .6rem;
+        
+        float: left;
+        position: relative;
+        top: .7rem;
+        left: .25rem;
+    }
+    ul li{
+      list-style: none;
+      font-size: .25rem;
+      height: 0.8rem;
+      width: 100%;
+      margin: .2rem auto;
+    }
+    .ulInput{
+      height: 3rem;
+    }
+    .ulInput ul{
+      height: 100%;
+    }
+    ul li input{
+      width: 100%;
+      height: 100%;
+      text-indent: 1rem;
+      border: none;
+      color: white;
+      border-radius: 2px;
+      background: #26bba7;
+      @include placeholder(white,1rem);
+    }
+    a{
+      text-decoration: none;
+    }
+}

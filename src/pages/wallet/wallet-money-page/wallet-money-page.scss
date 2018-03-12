@@ -1,0 +1,122 @@
+wallet-money-page{
+    .headerTitle{
+        font-size: .35rem;
+        height: .8rem;
+        line-height: .8rem;
+        text-align: center;
+        background-color: #45a7d8;
+        color: white;
+    }
+    .recordStyle{
+        height: 1.5rem;
+    }
+    .recordStyle ul li{
+        font-size: .3rem;
+        list-style: none;
+        width: 33.33%;
+        height: 1.5rem;
+        line-height: 1rem;
+        float: left;
+        background-color: white;
+        text-align: center;
+
+    }
+    .recordStyle ul li p{
+        height: .75rem;
+        line-height: .7rem;
+    }
+    .recordStyle ul li p:nth-child(1){
+            color: #8F8989;
+            font-size: .25rem;
+            line-height: 1.2rem;
+    }
+    .details{
+        width: 100%;
+        height: .8rem;
+        font-size: .3rem;
+        background-color: #F0F0F0;
+    }
+    .listDetails{
+        color: #564D4E;
+        line-height: .8rem;
+        text-indent: .4rem;
+        margin-left: .25rem;
+    }
+    .date{
+        display: block;
+        width: .5rem;
+        height: .5rem;
+        float: right;
+        margin-top: .15rem;
+        margin-right: .5rem;
+        // background-color: red;
+        position: relative;
+    }
+    .organe{
+        color: #FF723C;
+    }
+    //交易记录
+    .detailsList ul li{
+        height:1rem;
+        font-size: .3rem;
+        list-style: none;
+        border-bottom: 1px solid #EEEEEE;
+    }
+    .listDate{
+        width: 20%;
+        height: 100%;
+        float: left;
+        text-align: center;
+    }
+    .listDate p{
+        height: 50%;
+        line-height: .5rem;
+    }
+    .listDate p:nth-child(2){
+        color:#ACAFAD;
+        font-size: .25rem; 
+    }
+    .listImg{
+        width: 9%;
+        height: 100%;
+        float: left;
+    }
+    .listImg img{
+        width: 100%;
+        margin-top: .1rem;
+    }
+    .listStyle{
+        width:50% ;
+        height: 100%;
+        float: left;
+        font-size: .25rem;
+        text-indent: .1rem;
+        color: #544E4E;
+    }
+    .listStyle p{
+        height: 50%;
+        line-height: .5rem;
+    }
+    .listNum{
+        width: 21%;
+        height: 100%;
+        float: left;
+        line-height: 1rem;
+    }
+    //日期选择器插件
+   
+    #DATE{
+        width: 100%;
+    }
+    .datetime-text{
+        display: none;
+    }
+    .text-success{
+        line-height: 1rem !important;
+    }
+    .noData{
+        text-align: center;
+        font-size: .3rem;
+        margin-top: 3rem;
+    }
+}

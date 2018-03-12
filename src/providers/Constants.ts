@@ -1,0 +1,25 @@
+// export const GOODLIST_URL = 'http://rapapi.org/mockjsdata/18396/api/discove/goodlist';
+// "use strict";
+// Object.defineProperty(exports, "__esModule", { value: true });
+// exports.SELLINFO_URL = 'http://192.168.0.16:6020/home/getView';
+
+export const SELLINFO_URL = 'http://120.79.117.124/storeApp/home/getView';
+export const SELLORDER_URL = 'http://120.79.117.124/storeApp/orderInfoController/selectOrder';
+export const SELLORDERDETAIL_URL = 'http://120.79.117.124/storeApp/orderInfoController/selectOrderDetialPre';
+export const SELLORDERDETAIL1_URL = 'http://120.79.117.124/storeApp/orderInfoController/selectOrderDetialRec';
+export const ORDERBORN_URL = 'http://120.79.117.124/storeApp/ReportOrder/clickReportOrder';
+export const COMMENT_URL = 'http://120.79.117.124/storeApp/evaluate/getCommType';
+export const COMMENTSUBMIT_URL = 'http://120.79.117.124/storeApp/evaluate/addEvaluate';
+export const CANCELORDER_URL = 'http://120.79.117.124/storeApp/orderInfoController/undoOrder';
+export const CONFIRMORDER_URL = 'http://120.79.117.124/storeApp/orderInfoController/confirOrder';
+export const RELEASEORDER_URL = 'http://120.79.117.124/storeApp/ReportOrder/releaseOrder';
+export const FILEUPLOAD_URL = 'http://120.79.117.124/storeApp/fileUploadController/uploadImage';
+export const ORDERLIST_URL = 'http://120.79.117.124/storeApp/ReportOrder/getOrderList';
+export const MSG_URL = 'http://120.79.117.124/storeApp/message/getMsgList';
+export const EDITPW_URL = 'http://120.79.117.124/storeApp/storeInfo/updatePwd';
+export const BASICINFO_URL = 'http://120.79.117.124/storeApp/storeInfo/searchInfo';
+export const MSGDETAILS_URL = 'http://120.79.117.124/storeApp/message/getMessageDetails';
+export const UPDATEREGID_URL = 'http://120.79.117.124/storeApp/login/upteStoreRegId';
+export const APPUPDATE_URL = "http://www.buypb.cn/softDownLoad/xdllstore.apk";
+export const APPCONFIG_URL = "http://120.79.117.124/storeApp/login/getVerCode";
+export const PAGEJUMP_URL = "http://120.79.117.124/storeApp/message/pageJump";

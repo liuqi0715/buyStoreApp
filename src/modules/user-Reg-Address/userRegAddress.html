@@ -1,0 +1,86 @@
+
+
+<ion-header>
+    <ion-navbar id="titlePrice">
+      <ion-title>
+      注册
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content>
+<!-- <p>????</p> -->
+    <div class="contain">
+    <p id="addressIn">填写地址信息</p>
+      <div id="map" #map></div>
+      <!-- <div class="cityPiker2">
+          <city-picker item-content
+          [cancelText]="'取消'"
+          [doneText]="'完成'"
+          [separator]="' - '"
+          [citiesData]="cityData"
+          [(ngModel)]="cityName"
+          (ionChange)="cityChange($event)"
+          class='city_picker'>
+          </city-picker>  -->
+      <!-- </div> -->
+    
+            <p id="chose" (click)="fiveAddress()">请选择地址   <img alt="" src="assets/img/login/gengduo.png" class="more"></p>
+            <!-- <p class="cityPiker"> <input type="text" [(ngModel)]="addresInfo2" placeholder="请输入详细地址"></p> -->
+            <p class="cityPiker">  <ion-input type="text" [(ngModel)]="addresInfo2"  autocomplete="on" placeholder="请输入详细地址" class="plcolor" ></ion-input></p>
+          <!-- <p>您的参考地址：{{addresInfo2}}</p> -->
+     
+         
+            <!-- <p id="chose" (click)="fiveAddress()">请选择地址》》</p> -->
+            <button ion-button class="btn" (click)="next()" block>下一步</button>
+    </div>
+    <!-- 五级联动地址插件 -->
+    <div id="addressFixed">
+        <div class="toogle-address" *ngIf="newAddress" [ngClass]="{noMarginTop:newAddress}">
+            
+            <div class="toogle-title">
+                请选择地址
+                <span class="icon-close" (click)="reLoad()">×</span>
+            </div>
+            <div id="address2">
+              
+                <div class="address-header">
+                    <span class="provice address-now" (click)="provice()">请选择</span>
+                    <span class="city" (click)="city()" *ngIf="hasCity">请选择</span>
+                    <span class="area" (click)="area()" *ngIf="hasArea">请选择</span>
+                    <span class="town" (click)="town()" *ngIf="hasTown">请选择</span>
+                    <span class="stree" (click)="atree()" *ngIf="hasStree">请选择</span>
+                </div>
+                <!-- onclick="address(this)" -->
+                <div id="address-info" >
+                    <ul id="provice" >
+                       <li *ngFor=" let pro of provinceList" (click)="selectPro(pro,$event)" [ngClass]="{red:true==false}">
+                            {{pro.provinceName}}
+                       </li>
+                    </ul>
+                    <ul id="city">
+                        <li *ngFor=" let city of cityList" (click)="selectCity(city,$event)">{{city.cityName}}</li>
+                    </ul>
+                    <ul id="area">
+                       <li *ngFor="let area of areaList" (click)="selectArea(area,$event)">
+                            {{area.areaName}}
+                       </li>
+                    </ul>
+                    <ul id="town">
+                       <li *ngFor="let town of townList" (click)="selectTown(town,$event)">
+                        {{town.stName}}
+                       </li>
+                    </ul>
+                    <ul id="stree">
+                       <li *ngFor="let stree of streeList" (click)="selectStree(stree,$event)">
+                            {{stree.countryName}}
+                       </li>
+                    </ul>
+                </div>
+                <img src="assets/img/login/loading.gif" alt="" *ngIf="loading" class="loading">
+            </div>
+        </div>
+    </div>
+</ion-content>
+
+

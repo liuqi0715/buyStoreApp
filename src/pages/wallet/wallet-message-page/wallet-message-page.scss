@@ -1,0 +1,60 @@
+wallet-message-page {
+	.msg_time{
+		width: 100%;
+		height: .4rem;
+		color: #939393;
+		font-size: .24rem;
+		text-align: center;
+		margin-top: .3rem;
+	}
+	.msg_box{
+		position: relative;
+		width: 90%;
+		background: #FFF;
+		margin: 0 auto .4rem;
+		border-radius: .08rem;
+	}
+	.msg_box_head,.msg_box_body,.msg_box_bottom{
+		min-height: .8rem;
+		padding: 0 .3rem;
+		line-height: .8rem;
+	}
+	.msg_box_head label{
+		color: #2C2C2C;
+		float: left;
+		font-size: .28rem;
+		line-height: .8rem;
+	}
+	.msg_box_head span{
+		display: block;
+		width: .2rem;
+		height: .2rem;
+		float: right;
+		border-radius: 50%;
+		background: #ED6767;
+		margin-top: .3rem;
+	}
+	.msg_box_body{
+		text-align: justify;
+		border-bottom: .02rem solid #F5F5F5;
+	}
+	.msg_box_body img{
+		display: block;
+		width: 100%;
+	}
+	.msg_box_body p{
+		display: block;
+		width: 100%;
+	}
+	.msg_box_body,.msg_box_bottom{
+		color: #939393;
+		font-size: .24rem;
+	}
+	.msg_box_bottom span:nth-child(1){
+		float: left;
+	}
+	.msg_box_bottom span:nth-child(2){
+		font-size: .32rem;
+		float: right;
+	}
+}

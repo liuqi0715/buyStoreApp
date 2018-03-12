@@ -1,0 +1,70 @@
+
+<ion-content id="home">
+  <div #lyScroll id="home-content" class="scroll-content" scroll="false">
+    <!--头部滚动条-->
+    <div class="swiper-container headSlide">
+      <div class="swiper-wrapper headSlideBox">
+        <div class="swiper-slide" *ngFor="let item of headerSlideData">
+          <img class="swiper-img" alt="{{item.alt}}" src="{{item.src}}">
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <!--头条-->
+    <div class="home-notice">
+      <img src="assets/img/sell/laba.png">
+      <span>最近交易</span>
+      <div id="noticeSlider" class="swiper-container noticeSlide">
+        <div class="swiper-wrapper">
+        </div>
+      </div>
+    </div>
+
+    <section class="home-orderShow" *ngIf="!orderActive" (click)="goOrderDetail(orderCard)">
+      <div class="home-orderShow-up">
+        <div class="home-orderShow-tag">
+          {{orderCard.orderStatus}}
+        </div>
+        <h3>总货值：{{orderCard.amountPre}}元</h3>
+        <h3>总重量：{{orderCard.weightPre}}kg</h3>
+        <h6>{{orderCard.orderType}}</h6>
+        <h6>{{orderCard.createTime}}</h6>
+      </div>
+      <div class="home-orderShow-dn">
+        <ul>
+          <li><span>包含种类</span></li>
+          <li *ngFor="let ca of orderCard.catList">{{ca.catName}}</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="home-display" [ngClass]="{noMarginTop:!orderActive}">
+        <div class="home-btn home-btn-pos1" (click)="goOrderBorn(datas.collectorList)" *ngIf="orderActive"><div class="home-btn-inner"><p>向他报单</p></div></div>
+        <div id="home-swiper-navL">
+          <span class="tri-right"></span>
+        </div>
+        <div id="home-swiper-navR">
+          <span class="tri-left"></span>
+        </div>
+        <div class="swiper-container infoSlide">
+          <div class="swiper-wrapper">
+            <div class="home-display-card">
+              <span class="home-display-none">暂无报价</span>
+            </div>
+          </div>
+        </div>
+    </section>
+    <div class="home-btn home-btn-pos2" (click)="goOrderBorn()" *ngIf="orderActive"><div class="home-btn-inner"><p>公开报单</p></div></div>
+    <!--回到顶部的区块-->
+<!--     <div #btnBackTop class="back_top"></div> -->
+  </div>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+</ion-content>
+<!-- <div class="mode" (click)="changeMode()">i</div>
+<div class="mode way1" (click)="changeWay1()" *ngIf="!orderActive">1</div>
+<div class="mode way2" (click)="changeWay2()" *ngIf="!orderActive">2</div>
+<div class="mode way3" (click)="changeWay3()" *ngIf="!orderActive">3</div> -->

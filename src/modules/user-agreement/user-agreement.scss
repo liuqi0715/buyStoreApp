@@ -1,0 +1,41 @@
+user-agree{
+    // *{
+    //     font-size: 16px !important;
+    //   }
+    .contain{
+        padding: .24rem;
+    }
+    .title{
+        text-align: center;
+        font-size: .4rem;
+        margin: .25rem auto;
+        margin-top: 0;
+    }
+    .ban{
+        text-align: center;
+        font-size: .5rem;
+        margin: .25rem;
+    }
+    .info{
+        text-indent: .6rem;
+        font-size: .28rem;
+    }
+    .title2{
+        font-size: .32rem;
+        font-weight: 600;
+        margin: .2rem auto;
+    }
+    .text{
+        font-size: .28rem;
+        font-family: inherit;
+        line-height: .4rem;
+    }
+ul{
+    margin: 0;
+    padding: 0;
+}
+    .liText{
+        list-style: none;
+        text-indent: .32rem;
+    }
+}

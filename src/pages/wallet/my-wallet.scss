@@ -1,0 +1,223 @@
+page-wallet{
+  
+    .headerTop{
+        height: 4.2rem;
+        background: -webkit-linear-gradient(left top, #1ca696 , #32db64); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(bottom right, #1ca696 , #32db64); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(bottom right, #1ca696 , #32db64); /* Firefox 3.6 - 15 */
+        background: linear-gradient(to bottom right, #1ca696 , #32db64); /* 标准的语法（必须放在最后） */
+        padding-top: .2rem;
+    }
+    .headerTitle{
+        height: 1rem;
+        text-align: center;
+        line-height: 1rem;
+        color: white;
+        font-size: .4rem;
+        position: relative;
+    }
+    .row-cont{
+        text-align: center;
+        color: white;
+    }
+    .iconImg{
+        width: 1rem;
+        display: block;
+        margin: 0 auto;
+    }
+    .top{
+        margin-top: .30rem;
+    }
+    .money{
+        font-size: .3rem;
+        text-align: center;
+        color: white;
+        margin: -2px auto;
+    }
+    .contain{
+        // position: relative;
+    }
+    .addCard{
+        height: 1rem;
+        line-height: 1rem;
+        text-indent: .1rem;
+        color: #cccccc;
+        position: fixed;
+        left: 1px;
+        bottom: 5%;
+        font-size: .3rem;
+        width: 100%;
+        border-top: 1px solid #EEEEEE;
+        border-bottom: 1px solid #EEEEEE;
+
+    }
+    .addCard img{
+        width: .56rem;
+        float: left;
+        margin-left: .25rem;
+        margin-top: .2rem;
+    }
+    .more{
+        // float: right;
+        width: .6rem;
+        position: absolute;
+        right: 1%;
+        top: .15rem;
+    }
+    .motai2{
+        width: 100%;
+        height: 100%;
+        z-index: 9;
+        // background-color:#7F7F7F;
+        background: rgba(127, 127, 127, 0);
+        position: fixed;
+        left: 0;
+        top: 0;
+        // opacity: 0.8;
+    }
+    .moreList{
+        position: absolute;
+        right: 1%;
+        top: .95rem;
+        background-color: white;
+        color: #938A8B;
+        opacity: 1;
+        
+    }
+    .moreList:before{
+        content: "";
+        display: block;
+        width: .0.3rem;
+        height: 0;
+        position: absolute;
+        left: 2.3rem;
+        top: -0.44rem;
+        border-left: 0.3rem solid transparent;
+        border-right: 0.3rem solid transparent;
+        border-top: 0.3rem solid transparent;
+        border-bottom: 0.3rem solid #FFF;
+       }
+   .moreList ul li {
+       font-size: .3rem;
+        list-style: none;
+        line-height: 0.85rem;
+        border-bottom: 1px solid #ccc;
+    }
+   .moreList ul{
+        padding-left: 0.3rem;
+        padding-right: 0.3rem;
+    }
+    .moreList ul li img{
+        width: 0.5rem;
+        float:left;
+        margin-top: .15rem;
+    }
+    .top ul{
+        height: 1.2rem;
+    }
+    .top ul li{
+        float: left;
+        width: 33.3%;
+        font-size: .3rem;
+        height: 1.8rem ;
+        text-align: center;
+        color: white;
+    }
+    .payInfo{
+        font-size: .25rem;
+        border-radius: 5px;
+        position: relative;
+        left: 7.5%;
+        top: 4.5rem;
+        width: 85%;
+        background-color: white;
+        height: 4.5rem;
+        border-radius: 10px;
+        padding: 0.5rem;
+    }
+    .payTitle{
+        text-align: center;
+        font-size: .3rem;
+        margin-bottom: .25rem;
+    }
+    .payRules{
+        font-size: .28rem;
+        color: #ADADAD;
+        text-indent: .5rem;
+        line-height: .4rem;
+    }
+    .close{
+        float: right;
+        margin-top: -.2rem;
+    }
+    .knowInfo{
+        width: 95%;
+        background: #1CA696;
+        color: white;
+        height: .6rem;
+        margin: .25rem auto;
+        text-align: center;
+        line-height: .6rem;
+        border-radius: 5px;
+        margin-top: 0.5rem;
+    }
+    .scroll-content{
+        background-color: #FFFFFF;
+    }
+    //银行卡
+    .nowCard{
+        width: 90%;
+        margin:.5rem auto;
+        padding: .4rem;
+        height: 2.8rem;
+        background-color: #45A7D8;
+        color: white;
+        font-size: .28rem;
+        background-image: url("../assets/img/wallet/bankBgm.png");
+        background-position: right bottom;
+        background-repeat: no-repeat;
+        background-size: 25%;
+        border-radius: 3px;
+    }
+    .cardIcon{
+        width: 20%;
+        float: left;
+    }
+    .cardIcon img{
+        width: .8rem;
+    }
+    .cardInfo{
+        width: 80%;
+        float: right;
+        line-height: .65rem;
+        font-size: .31rem;
+    }
+    //返回按钮
+    .backIcon img{
+        width: .3rem;
+        margin-top: .3rem;
+        margin-right: .05rem;
+        float: left;
+    }
+    .backIcon{
+        float: left;
+        display: block;
+        margin-left: .15rem;
+        line-height: 1rem;
+    }
+    #titleWallet{
+        display: block;
+        width: 30%;
+        margin: 0 auto;
+        font-size: .4rem;
+    }
+    .motai{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        left: 0;
+        top: 1rem;
+        // background: white;
+        z-index: 999;
+    }
+}

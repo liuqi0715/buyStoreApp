@@ -1,0 +1,68 @@
+<ion-content>
+    <div class="headerTop">
+
+  
+   <div class="headerTitle">
+       <span (click)="back()" class="backIcon"> <img src="assets/img/wallet/back.png" alt=""> </span>
+       <!-- <img src="assets/img/wallet/back.png" alt="">  -->
+       <span id="titleWallet">我的钱包</span> 
+        <!-- <i class="icon ion-android-more-vertical"></i> -->
+        <img src="assets/img/wallet/more.png" alt="" class="more" (click)="getMore()">
+   </div>
+   <div class="top">
+       
+        <ul>
+            <li (click)="goRecharge()">
+                <img src="assets/img/wallet/huiyuan.png" class="iconImg">
+            充值
+            </li>
+            <li (click)="listRecord()">
+                <img src="assets/img/wallet/yue.png" class="iconImg">
+                余额
+                
+            </li>
+            <li (click)="getMo()">
+                <img src="assets/img/wallet/tixian.png" class="iconImg">
+                提现
+            </li>
+        </ul>
+        <p class="money"> <span>￥</span>{{totalAmount}}</p>
+   </div>
+</div>
+<!-- 使用中的银行卡 -->
+<div class="nowCard" *ngIf="hasNoCard">
+    <div class="cardIcon">
+        <img src="{{bankLogoPath}}" alt="">
+    </div>
+    <div class="cardInfo">
+        <p>{{bankName}}</p>
+        <p>储蓄卡</p>
+        <p><span style="margin-right:.25rem;">{{bankCardNo2}}</span><span style="margin-right:.25rem;">****</span><span style="margin-right:.25rem;">****</span>{{bankCardNo}}</p>
+    </div>
+</div>
+
+
+<div class="contain" (click)="addCard()">
+    <p class="addCard"><img src="assets/img/wallet/tianjia.png" alt="">添加银行卡</p>
+</div>
+
+<div class="motai2" *ngIf="getMoreInfo" (click)="noGet()">
+        <div class="moreList" *ngIf="listP">
+            <ul>
+                <li (click)="editPassword()"><img src="assets/img/wallet/pwdTop.png" alt=""> 修改交易密码</li>
+                <li (click)="editPhone()"><img src="assets/img/wallet/shouji.png" alt=""> 修改绑定手机</li>
+                <!-- <li (click)="changeCard()"><img src="../../assets/imgs/yinheng.png" alt=""> 修改默认银行卡</li> -->
+                <li (click)="needHelp()" style="border-bottom:0px;"><img src="assets/img/wallet/bangzhu.png" alt=""> 帮助</li>
+            </ul>
+        </div>
+        <div class="payInfo" *ngIf="rules">
+            <p class="payTitle">提现收费规则 <span class="close">X</span></p>
+            <p class="payRules">平台收费规则平台收费规则平台收费规则平台收费规则平台收费规则平台收费规则平台收费规则平台收费规则平台收费规则平台收费规则</p>
+            <div class="knowInfo" (click)="goBalance()">
+                我知道了
+            </div>
+        </div>
+
+</div>
+</ion-content>
+      

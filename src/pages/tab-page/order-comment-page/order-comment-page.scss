@@ -1,0 +1,108 @@
+order-comment-page {
+.ocom_area{
+  width: 100%;
+  height: 2.3rem;
+  padding-top: .6rem;
+}
+.ocom_area ul{
+  width: 4.5rem;
+  margin: 0 auto;
+}
+.ocom_area li{
+  width: 1.5rem;
+  height: 1rem;
+  float: left;
+}
+.ocom_area li img{
+  width: .8rem;
+  height: .8rem;
+  display: block;
+  margin: 0 auto .2rem;
+  overflow: hidden;
+}
+.ocom_area li label{
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: .26rem;
+}
+.ocom_tags{
+  width: 90%;
+  clear: both;
+  height: 2.56rem;
+  padding:.2rem;
+  background: #F3F5F5;
+  margin:0 auto .36rem;
+  border-radius: .06rem;
+}
+.ocom_tags span{
+  display: block;
+  font-size: .26rem;
+  color: #969595;
+}
+.ocom_tags ul{
+  width: 5.8rem;
+  margin:.2rem auto 0;
+}
+.ocom_tags ul li{
+  width: 1.8rem;
+  height: .6rem;
+  line-height: .6rem;
+  text-align: center;
+  color: #686868;
+  background: #FFF;
+  font-size: .26rem;
+  margin-right: .2rem;
+  margin-bottom: .2rem;
+  float: left;
+  border: .02rem solid #F3F5F5;
+  border-radius: .06rem;
+}
+.ocom_tags ul li:nth-child(3),.ocom_tags ul li:nth-child(6){
+  margin-right: 0;
+}
+.ocom_input{
+  display: block;
+  width: 90%;
+  height: 2.7rem;
+  margin:0 auto;
+  border: .02rem solid #EEEEEE;
+  color: #b7b3b3;
+  text-indent: -.2rem;
+  padding: .2rem;
+  font-size: .28rem;
+  border-radius: .06rem;
+}
+$text-input-placeholder-color:"#b7b3b3";
+.ocom_content button{
+  display: block;
+  width: 80%;
+  height: .8rem;
+  background: #1EA696;
+  text-align: center;
+  line-height: .8rem;
+  font-size: .36rem;
+  color: #FFF;
+  margin: 0 auto;
+  border-radius: .06rem;
+}
+.ocom_content p{
+  text-align: center;
+  font-size: .22rem;
+  color: #908e8e;
+  margin: .4rem auto 1rem;
+}
+// .ocom_con1{
+//   background-image:url("../assets/img/orderDetail/fengchangmanyi.png");
+//   background-size: 100% 100%;
+// }
+// .ocom_con2{
+//   background-image:url("../assets/img/orderDetail/manyi.png");
+//   background-size: 100% 100%;
+// }
+// .ocom_con3{
+//   background-image:url("../assets/img/orderDetail/tucao.png");
+//   background-size: 100% 100%;
+// }
+
+}

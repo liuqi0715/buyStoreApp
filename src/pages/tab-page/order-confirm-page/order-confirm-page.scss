@@ -1,0 +1,35 @@
+order-confirm-page {
+  .oc_content{
+    position: absolute;
+    height: auto;
+    bottom: 1rem;
+    font-size: .28rem;
+    background: #C9E6E8;
+  }
+  .oc_optBox{
+    height: 1rem;
+    float: right;
+    line-height: 1rem;
+  }
+  .oc_optBox ion-icon{
+    position: relative;
+    top: .06rem;
+    color: #FFF;
+    font-size: .6rem;
+  }
+  .oc_optBox_word{
+    margin: 0 0.2rem 0 0.1rem;
+    overflow: hidden;
+  }
+  .oc_optBox_word input{
+    font-size: .36rem;
+    display: inline-block;
+    width: 1rem;
+    height: .6rem;
+    border: none;
+    text-align: center;
+    line-height: .6rem;
+    color: #FFF;
+    background: #66CCCC;
+  }
+}

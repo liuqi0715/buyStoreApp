@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>我要报单</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="oc_content">
+    <div *ngFor="let good of datas, let idx = index">
+      <section class="oc_box oc_box_nav" *ngIf="good.batteryTypeList.length > 0">
+        <img src="assets/img/orderDetail/biaodan1.png" alt="biaodan1"/>
+        <p>{{good.catName}}</p>
+        <div class="oc_optBox">
+            <ion-icon ios="ios-remove-circle" md="md-remove-circle" *ngIf="canEdit != true" (click)="minus(idx)"></ion-icon>
+            <span class="oc_optBox_word"><input type="tel" (keyup)="limitIn(idx)" [(ngModel)] = "good.price" *ngIf="canEdit != true "/><span *ngIf="canEdit == true ">{{good.price}}</span>元/kg</span>
+            <ion-icon ios="ios-add-circle" md="md-add-circle" *ngIf="canEdit != true " (click)="plus(idx)"></ion-icon>
+        </div>
+      </section>
+      <section class="od_table oc_table" *ngIf="good.batteryTypeList.length > 0">
+          <table>
+            <thead>
+              <td *ngFor="let title of goodListTitle">
+                {{title}}
+              </td>
+            </thead>
+            <tbody>
+              <tr *ngFor="let list of good.batteryTypeList">
+                <td>{{list.modelName}}</td>
+                <td>{{list.unitPricePre}}</td>
+                <td>{{list.value}}</td>
+                <td><span>{{list.total}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+      </section>
+    </div>
+</ion-content>
+<div class="bottomBar">
+  <div class="bottomBar_l">
+      <p>总金额：{{totalPrice}}元</p>
+      <p>总重量：约{{totalWeight}}kg</p>
+  </div>
+  <div class="bottomBar_r" (click)="next()">发布订单</div>
+</div>
+

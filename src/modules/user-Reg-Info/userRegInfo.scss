@@ -1,0 +1,163 @@
+page-UserRegInfo{
+    html,body{
+        font-size: 16px !important;
+      }
+      ul li{
+        list-style: none;
+        font-size: .25rem;
+        height: 0.8rem;
+        width: 90%;
+        margin: .3rem auto;
+        position: relative;
+      }
+      .ulInput{
+          height: 5rem;
+          position: relative;
+      }
+      .ulInput ul{
+          height: 100%;
+      }
+      ul li input{
+        width: 100%;
+        height: 100%;
+        text-indent: 1rem;
+        border: 1px solid #D4D4D4;
+        border-radius: 2px;
+      }
+    .toolbar-background-md{
+        background-color: #0EAF9D;
+    }
+    .toolbar-title-md{
+        color: white;
+    }
+    .bar-button-default-md{
+        color: white;
+    }
+    .scroll-content{
+        background-color:#0EAF9D;
+    }
+    .header-md::after{
+        background-image: none;
+    }
+    .contain{
+        width: 92%;
+        height: 9.5rem;
+        background-color: white;
+        margin: 0.3rem auto;
+        border-radius: 3px;
+        padding-top: 1px;
+        // position: relative;
+    }
+    .input-wrapper{
+        font-size: .25rem;
+        height: 0.5rem;
+    }
+    .item-md{
+        width: 90%;
+        height: .5rem;
+        border: 1px solid #E8E8E8;
+        margin: 10px auto;
+    }
+    .regIcon{
+        width: .6rem;
+        /* float: left; */
+        position: absolute;
+        top: .1rem;
+        left: .18rem;
+    }
+    .btn, .btn:hover {
+        width: 90%;
+        margin: 50px auto;
+        background-color: #0DAF90;
+        font-size: .25rem;
+        color: white;
+        height: .65rem !important;
+        border-radius: .09rem;
+      }
+      //验证阿曼
+      .yzm-btn {
+        width: 80%;
+        height: .6rem;
+        line-height: .65rem;
+        font-size: .25rem;
+        float: right;
+        margin: 0 !important;
+        background-color: #0ab0e4;
+        border-radius: .04rem;
+      }
+      #getCode{
+        width: 2rem;
+        position: absolute;
+        right: 8%;
+        top: 1.2rem;
+        z-index: 999;
+      }
+      .errorTip {
+        text-indent: .32rem;
+        color: #f00;
+      }
+      .agreeText{
+          text-indent: .32rem;
+          color: black;
+          font-size: 12px;
+      }
+      .textInfo{
+        font-size: .24rem;
+      }
+      .alert-md .alert-head{
+        overflow-y: scroll;
+      }
+      .logo{
+        width: 1.5rem;
+        margin: 0px auto;
+        text-align: center;
+        vertical-align: middle;
+        margin-left: 35%;
+        // margin-bottom: .4rem;
+      }
+      .agreeI{
+          font-size: .3rem;
+      }
+      .agreeI input{
+        position: relative;
+        width: 0.35rem;
+        height: .35rem;
+        top: .06rem;
+      }
+      .toast-container{
+          width: 100% !important;
+          height: .5rem;
+          font-size: .25rem;
+      }
+      .toast-ios .toast-message{
+        width: 100% !important;
+        height: .6rem !important;
+        font-size: .25rem !important;
+        line-height: .6rem;
+    }
+      .toast-ios .toast-wrapper{
+          width: 100% !important;
+          text-align: center !important;
+
+        }
+    #liTop{
+        // margin-top: 0 !important;
+    }
+
+    //模态框
+    .motai{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        // background: white;
+        z-index: 999;
+    }
+    #loading{
+        width: 0.8rem;
+        position: fixed;
+        left: 45%;
+        top: 40%;
+    }
+}

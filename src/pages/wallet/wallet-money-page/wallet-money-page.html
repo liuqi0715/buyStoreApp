@@ -1,0 +1,74 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>我的余额</ion-title>
+    </ion-navbar>
+  </ion-header>
+<ion-content>
+    <!-- <div class="headerTitle">
+           <span (click)="back()">back</span> 我的余额
+    </div> -->
+    <div class="recordStyle">
+        <ul>
+            <li>
+                <p>可提现</p>
+                <p>{{cashAmount}}</p>
+            </li>
+            <li>
+                    <p>不可提现</p>
+                    <p>{{uncashAmount}}</p>
+            </li>
+            <li>
+                    <p>冻结不可用金额</p>
+                    <p>{{freezeUncashAmount}}</p>
+            </li>
+        </ul>
+    </div>
+    <div class="details">
+        <span class="listDetails">
+            账单详情      
+        </span>  
+        <span class="date" (click)="getDate()">
+            <img src="assets/img/wallet/DATE.png" alt="" id="DATE">
+                <ion-datetime displayFormat="MM YYYY" pickerFormat="MM YYYY"  (ionChange)="cityChange()" monthValues="1,2,3,4,5,6,7,8,9,10,11,12"  cancelText="取消" doneText="确定" [(ngModel)]="timeStarts"></ion-datetime>
+        </span>
+    </div>
+
+    <div class="detailsList">
+        <ul>
+            <li *ngFor="let a of BillList">
+                <div class="listDate">
+                    <p>{{a.date}}</p>
+                    <p>{{a.time}}</p>
+                </div>
+                <div class="listImg">
+                    <img src="http://192.168.0.177:6888{{a.img}}"alt="">
+                </div>
+                <div class="listStyle">
+                        <p [ngClass]="{'text-success': a.contact == null}">{{a.type}}</p>
+                        <P>{{a.contact}}</P>
+                </div>
+                <div class="listNum" [ngClass]="{'organe':true}">
+                   {{a.amount}}
+                </div>
+            </li>
+         
+        </ul>
+        
+
+        <p *ngIf="noData" class="noData">暂无数据</p>
+    </div>
+
+  
+
+ <!--下拉加载-->
+ <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="加载中...">
+        </ion-infinite-scroll-content>
+</ion-infinite-scroll>
+   
+<div class="motai" *ngIf="hasSuccess">
+    <img src="assets/img/login/loading.gif" alt="" id="loading">
+  </div>
+</ion-content>

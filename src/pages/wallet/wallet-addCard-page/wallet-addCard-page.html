@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>绑定取现银行卡</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+
+  <section class="input_list">
+
+    <div class="input_list_item">
+      <label>持卡人</label>
+      <input type="text" [(ngModel)] = "subObj.userName" placeholder="请输入您的在银行开户的真实姓名">
+    </div>
+
+    <!-- <div class="input_list_item">
+      <label stacked>手机号</label>
+      <input type="tel" [(ngModel)] = "subObj.phone" placeholder="请输入您的银行预留手机号码">
+    </div>
+    <div class="input_list_item">
+      <label stacked>身份证号</label>
+      <input type="tel" [(ngModel)] = "subObj.personNo" placeholder="请输入您的身份证号" >
+    </div> -->
+    <div class="input_list_item">
+      <label stacked>银行卡号</label>
+      <input type="tel" [(ngModel)]="subObj.bankNo" placeholder="请输入您的银行卡号"   (ngModelChange)="changeNo()" (blur)="checkBankInfo2()">
+      <!-- (blur)="checkBankInfo()" -->
+    </div>
+    <div class="input_list_item itemAno" style="position: relative;" (click)="goBankInfo()">
+        {{bankCodeInfo}}
+        <img src="assets/img/wallet/gengduo.png" alt="" id="more">
+    </div>
+  </section>
+
+  <button ion-button outline class="wa_btn" (click)="submit()">确定</button>
+
+  <div class="motai" *ngIf="hasSuccess">
+    <img src="assets/img/login/loading.gif" alt="" id="loading">
+  </div>
+</ion-content>
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ionic App</title>
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4e8ef7">
+  <!--插件css-->
+  <link href="build/main.css" rel="stylesheet">
+  <link href="assets/css/flex.css" rel="stylesheet">
+  <link href="assets/css/swiper-3.4.2.min.css" rel="stylesheet">
+  <!--<script type="text/javascript" src="assets/js/adapt.js"></script>-->
+  <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="assets/js/swiper-3.4.2.min.js"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/getscript?v=2.0&ak=S2XBCnEYouwQYSpqxcpX2BP1"></script>
+  <script src="cordova.js"></script>
+</head>
+<body>
+
+  <!-- Ionic's root component and where the app will load -->
+  <ion-app></ion-app>
+
+ <!-- The polyfills js is generated during the build process -->
+  <script src="build/polyfills.js"></script>
+
+  <script src="build/vendor.js"></script>
+
+  <!-- The bundle js is generated during the build process -->
+  <script src="build/main.js"></script>
+  <script>
+    var dpr = window.devicePixelRatio;
+
+    // alert(window.innerWidth +"/"+window.innerHeight+"/"+window.devicePixelRatio);
+    switch(dpr)
+    {
+    case 1:
+      document.documentElement.style.fontSize="100px";
+      break;
+    case 2:
+      document.documentElement.style.fontSize="50px";
+      break;
+    default:
+      document.documentElement.style.fontSize="50px";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>基本信息</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="mi_list"> 
+    <span>门店头像</span><div (click)="changeImg()" id="stroeImg"><img  *ngIf="hasImg" onerror="javascript:this.src='assets/img/default.png';" [src]="user.storeImage"></div>
+  </div>
+  <div class="mi_list"> 
+    <span>姓名</span><span>{{user.userName}}</span>
+  </div>
+  <div class="mi_list"> 
+    <span>地址</span><span>{{datas.areaName}}{{datas.streetCountry}}</span>
+  </div>
+  <div class="mi_list"> 
+    <span>手机号码</span><span>{{user.mobilePhone}}</span>
+  </div>
+  <div class="mi_list"> 
+    <span>微信账号</span><div id="mi_change"><img src="assets/img/wallet/changeWX.png" alt="" (click)="changeWX()"></div><span id="mi_WXphone">{{user.refereePhone}}</span>
+  </div>
+</ion-content>
+

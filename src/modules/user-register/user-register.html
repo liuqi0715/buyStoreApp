@@ -1,0 +1,73 @@
+
+<ion-header>
+    <ion-navbar id="titlePrice">
+      <ion-title>
+        用户注册
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content >
+    <div id="content">
+      
+      <p id="writeInfo" style="margin-bottom:0;">填写基本信息</p>
+      <p><input type="text" placeholder="店铺名称" class="ion-input" [(ngModel)]="stroe.stroeName"></p>
+      <p><input type="text" placeholder="店铺负责人" class="ion-input" [(ngModel)]="stroe.stroePerson"></p>
+      <p><input type="tel" placeholder="店主微信号" class="ion-input" [(ngModel)]="stroe.stroePersonPhone"></p>
+      <!-- <p><input type="text" placeholder="商户类型" class="ion-input"></p> -->
+     <p class="input_list_item itemAno" style="width: 90%;margin: 0 auto;position:relative;">
+        <!-- <select name="" id="select" [ngModel]="StoreT"  (ngModelChange)="StoreT=$event;getType()" >
+          <option selected value="">请选择店铺类型</option>
+       
+          <option [value]="Store.configValue" *ngFor="let Store of StoreType" >{{Store.configName}}</option>
+          
+        </select> -->
+        <ion-select [(ngModel)]="StoreT" id="select" (ngModelChange)="StoreT=$event;getType()" okText="确定"   id="wa_select" cancelText="取消"> 
+          <ion-option selected="">请选择店铺类型</ion-option>
+          <!-- <ion-option *ngFor="let vo of cityList" value="{{vo.id}}">{{vo.name}}</ion-option>  -->
+          <ion-option [value]="Store.configValue"  *ngFor="let Store of StoreType"  >{{Store.configName}}</ion-option>
+        </ion-select> 
+
+     </p>
+     
+     <p class="ion-input" id="address" (click)="address()">
+
+    {{addressSer}}
+     <img alt="" src="assets/img/login/gengduo.png" class="more">
+     </p>
+      <div id="imgDivs">
+
+        <div id="stroeImg" (click)="stroeImg()">
+          
+            <!-- <img src="{{path}}" alt="" *ngIf="hasnotImg" id="imgSize"> -->
+            <div *ngIf="hasImg">
+                <img src="assets/img/login/camera.png" alt="" class="camera">
+                门店图片
+            </div>
+          
+        </div>
+
+        <div id="license" (click)="license()">
+          
+          <div *ngIf="linseImg">
+              <img src="assets/img/login/camera.png" alt="" class="camera">
+              营业执照
+          </div>
+
+
+          </div>
+      </div>
+      
+      <!-- <div *ngFor="let a of datas" style="width:100%;height:40px;background:red;">{{a.a}}</div> -->
+
+      <!-- <p><button (click)="testImg()"> 上传</button></p> -->
+
+      <p class="errorTip" *ngIf="errorTip">{{errorTipMsg}}</p>
+      
+      <button ion-button class="btn" (click)="regsiter()" block>确认注册</button>
+    </div>
+
+    <div class="motai" *ngIf="hasSuccess">
+      <img src="assets/img/login/loading.gif" alt="" id="loading">
+    </div>
+</ion-content>

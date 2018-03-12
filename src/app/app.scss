@@ -1,0 +1,536 @@
+// http://ionicframework.com/docs/v2/theming/
+
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+*{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+.toolbar{
+	height: 1.08rem;
+}
+.toolbar-background{
+	background: #1CA696;
+}
+.bar-button{
+	padding: 0 .16rem;
+	padding-top: .2rem;
+}
+.back-button,.back-button-icon,.toolbar-title{
+	font-size: .36rem !important;
+	min-height: .36rem !important;
+	color: #FFF;
+}
+.bottomBar{
+	position: absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	height: 1rem;
+	width: 100%;
+	background: #FFF;
+	font-size: .28rem;
+	border-top: 1px solid #EAEAEA;
+}
+.bottomBar_l{
+	float: left;
+	padding-top: 8px; 
+}
+.bottomBar_l p{
+	line-height: .24rem;
+	font-size: .28rem;
+	margin: .08rem 0 .14rem .24rem;
+	color: #7E817C;
+}
+.bottomBar_r{
+	height: 1rem;
+	width: 30%;
+	float: right;
+	color:#FFF;
+	text-align: center;
+	line-height: 1rem;
+	background: #1FA695;
+}
+.tab-button{
+	height: 1rem;
+	max-width: 4.8rem !important;
+}
+.tab-button-icon{
+	margin-top: .04rem !important;
+	height: .6rem !important;
+	min-width: .7rem !important;
+	font-size: .6rem !important;
+}
+.tab-button-text{
+	font-size: .2rem;
+}
+.swiper-pagination-bullet{
+	width: .16rem;
+	height: .16rem;
+}
+.od_table{
+	width: 96%;
+	min-height: .6rem;
+	background: #FFF;
+	border-radius: .08rem;
+	margin: .2rem auto 0;
+}
+.od_table table{
+	width: 100%;
+	padding: 0 .1rem;
+}
+.od_table table tr{
+	border-bottom: .02rem solid #EFEFEF;
+}
+.od_table table td{
+	text-align: center;
+	font-size: .28rem;
+	height: .5rem;
+	color: #68828D;
+	line-height: .5rem;
+	border: .02rem solid #FFF;
+}
+.oc_box{
+	width: 95%;
+	min-height: .6rem;
+	border-radius: .12rem;
+	margin: .24rem auto;
+	box-shadow: .02rem .02rem .08rem rgba(0,0,0,.3);
+} 
+.oc_box_nav{
+	background: #66CCCC;
+	height: 1rem;
+	line-height: 1rem;
+	padding:0 .4rem 0 .3rem;
+	color: #FFF;
+	font-size: .28rem;
+}
+.oc_box_nav img{
+	width: .5rem;
+	height: .5rem;
+	display:block;
+	float: left;
+	margin: .25rem .2rem 0 0;
+}
+.oc_box_nav p{
+	font-size: .32rem;
+	float: left;
+}
+.oc_table{
+	border-radius: .12rem;
+}
+.oc_table thead td{
+	font-size: .26rem;
+	color: #3f3d3c;
+}
+.oc_table td span{
+	display: inline-block;
+	height: .3rem;
+	min-width: 1rem;
+	padding: .02rem .15rem;
+	background: #EFADB4;
+	text-align: center;
+	line-height: .3rem;
+	color: #FFF;
+	border-radius: .12rem;
+}
+.item-block{
+	min-height: .44rem;
+}
+.input_list{
+	width: 85%;
+	margin: .8rem auto;
+	padding-top: .4rem;
+}
+.input_list label{
+	position: relative;
+	display: block;
+	float: left;
+	width: 28%;
+	height: .8rem;
+	line-height: .8rem;
+	height: .8rem !important;
+	font-size: .28rem;
+}
+.input_list label img{
+	position: absolute;
+	top: 50%;
+	left: .2rem;
+	width: .4rem;
+	height: .4rem;
+	margin-top: -.2rem;
+}
+.input_list_item{
+	color: #8F8E8F;
+	height: .8rem;
+	border: .02rem solid #D4D4D4;
+	border-radius: .06rem;
+	margin-bottom: .4rem;
+	padding-left: .2rem;
+	overflow: hidden;
+}
+.input_list input{
+	display: block;
+	border: none;
+	float: left;
+	height: .8rem;
+	font-size: .28rem;
+	line-height: .6rem;
+	width:calc(72% - .2rem);
+}
+.button{
+	display: block;
+	height: .8rem;
+	font-size: .32rem;
+	background: #1CA696;
+	margin: 0 auto;
+	color: #FFF;
+}
+.chooseList{
+    position: absolute;
+    width: 70%;
+    min-height: 2rem;
+    top: 50%;
+    left: 50%;
+    background: #FFF;
+    border-radius: .1rem;
+    transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+}
+ion-toast{
+	max-width: 4rem !important;
+	left: 50%;
+	transform:translateX(-50%);
+}
+.toast-wrapper{
+	width: auto !important;
+	background: rgba(0,0,0,.6) !important;
+	border-radius: .08rem !important;
+}
+.toast-message {
+	padding: .2rem !important;
+}
+.loading-content{
+	font-size: .28rem !important;
+}
+ion-app{
+	font-size: .28rem !important;
+}
+.inner-center{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform:translate(-50%,-50%);
+	-o-transform:translate(-50%,-50%);
+	-ms-transform:translate(-50%,-50%);
+	-moz-transform:translate(-50%,-50%);
+	-webkit-transform:translate(-50%,-50%);
+}
+.noNet img{
+	display: block;
+	width: 1.48rem;
+	height: 2.63rem;
+}
+
+.noContent img{
+	display: block;
+	width: 2rem;
+	height: 2rem;
+}
+
+//日期插件--------------
+.picker-md .picker-wrapper{
+	height: 5.2rem;
+}
+
+.picker-wrapper{
+	max-width: 10rem;
+}
+.picker-md .picker-button{
+	height: .88rem;
+}
+.picker-md .picker-columns {
+    height: 4.32rem;
+    -webkit-perspective: 36rem;
+    perspective: 36rem;
+}
+.picker-md .picker-col{
+	padding: 0 .16rem;
+}
+.picker-md .picker-opts{
+	max-width: 1.4rem !important;
+	top: 1.54rem;
+    font-size: .44rem;
+    line-height: .84rem;
+    color: #000;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    pointer-events: none;
+}
+.picker-md .picker-opt{
+	margin: 0;
+    height: 4.3rem;
+    font-size: .44rem;
+    line-height: .84rem;
+}
+.item{
+	font-size: .28rem;
+}
+.picker-ios .picker-toolbar{
+	height: .88rem;
+}
+.picker-md .picker-wrapper{
+	height: 5.2rem !important;
+}
+.picker-ios .picker-opt{
+	font-size: .4rem;
+	height: .8rem;
+	line-height: .8rem;
+}
+.picker-ios .picker-wrapper{
+	height: 5.2rem !important;
+}
+.picker-ios .picker-prefix, .picker-ios .picker-suffix, .picker-ios .picker-opts{
+	max-width: 1.36rem !important;
+	top: 1.54rem;
+	font-size: .4rem;
+	line-height: .84rem;
+}
+.picker-md .picker-opt{
+	height: .52rem;
+	font-size: .44rem;
+	line-height: .84rem;
+}
+.picker-columns{
+	height: 4.32rem !important;
+}
+.picker-ios .picker-below-highlight{
+	top: 2.3rem;
+	height: 2.38rem;
+}
+.picker-toolbar-button{
+	line-height: .08rem;
+}
+.picker-button, .picker-button.activated{
+	height: .88rem;
+}
+.button{
+	font-size: .32rem;
+}
+.picker-ios .picker-above-highlight{
+	height: 1.62rem;
+}
+.toast-ios .toast-message{
+	padding: .1rem;
+    font-size: .3rem;
+    color: #fff;
+}
+.toast-ios .toast-wrapper{
+	width: 100%;
+	left: 0;
+	right: 0;
+	border-radius:0;
+	text-align: center;
+	max-width: 100%; 
+}
+.toast-ios .toast-wrapper.toast-bottom{
+	bottom: -.05rem;
+}
+ion-infinite-scroll{
+	font-size: .3rem;
+}
+.alert-wrapper{
+	max-width:5.4rem !important;
+	border-radius:.26rem !important;
+}
+.alert-wrapper{
+	min-width: 5rem !important;
+}
+.alert-head{
+	padding: .24rem .32rem .14rem !important;
+}
+.alert-title{
+    margin-top: .16rem !important;
+    font-size: .34rem !important;
+}
+.alert-message:empty{
+	padding: 0 0 .24rem 0 !important;
+}
+.alert-ios .alert-message {
+    max-height: 2.4rem !important;
+}
+.alert-message,.alert-input-group {
+    padding: 0 .32rem .42rem !important;
+    font-size: .26rem !important;
+}
+.alert-button-group {
+    margin-right: -0.011rem !important;
+}
+.alert-button {
+    height: .88rem !important;
+    border-top: 0.011rem solid #dbdbdf !important;
+    border-right: 0.011rem solid #dbdbdf !important;
+    font-size: .34rem !important;
+}
+.alert-button {
+	font-size: .28rem !important;
+	line-height: .4rem !important;
+}
+/*登录Icon*/
+.input-ios .text-input-clear-icon{
+	width: .6rem !important;
+	background-size: .4rem !important;
+	background-repeat: no-repeat !important;
+	background-color: #26B8A7;
+	right: 0;
+	top: .09rem;
+}
+/*选择照片方式*/
+
+.action-sheet-wrapper{
+	max-width: 100%;
+}
+.action-sheet-container{
+	padding: 0 .2rem !important;
+}
+.action-sheet-group{
+	margin-bottom: .16rem !important;
+	border-radius: .26rem !important;
+}
+.action-sheet-ios .action-sheet-button{
+	margin: 0;
+	padding: .26rem !important;
+	min-height: .51rem !important;
+	border-bottom: 0.55px solid #d6d6da !important;
+	font-size: .32rem !important;
+	color: #007aff !important;
+	background: transparent !important;
+}
+.action-sheet-title{
+	font-size: .3rem !important;
+	padding: .36rem !important;
+}
+
+.list-ios > .item-block:first-child{
+	border-top:none !important; 
+}
+//下拉选框
+.alert-ios [aria-checked=true] .alert-radio-label{
+	color: #488aff;
+    font-size: .25rem;
+}
+
+.alert-ios .alert-radio-label{
+	padding: .25rem;
+    font-size: .25rem;
+}
+ion-select{
+	max-width: 100%
+}
+.select-ios{
+	padding: 0;
+}
+.select-ios .select-icon .select-icon-inner{
+	left: -70%;
+    top: 90%;
+    margin-top: 0px;
+}
+
+//模态框
+.motai{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	// background: white;
+	z-index: 999;
+}
+#loading{
+	width: 0.8rem;
+	position: fixed;
+	left: 45%;
+	top: 40%;
+}
+//tab切换
+.segment-ios .segment-button{
+	width: 0;
+    height: .8rem;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #488aff;
+    font-size: .25rem;
+    line-height: .8rem;
+}
+//非热门银行搜索
+.searchbar-ios .searchbar-input{
+	padding: 0 28px;
+    border-radius: 5px;
+    height: .6rem;
+    font-size: .25rem;
+    font-weight: 400;
+    color: #000;
+    background-color: #fff;
+}
+.picker-ios .picker-toolbar-button:last-child .picker-button{
+	float: right;
+}
+.header-ios .toolbar-background-ios{
+	border-width: 0 !important;
+}
+//顶部header;
+.toolbar-ios ion-title{
+	padding-top: .2rem;
+}
+//弹出输入框
+
+ion-alert.alert-top{
+    padding-top: 2rem;
+  }
+  .alert-ios .alert-title{
+	font-weight: 500;
+  }
+  //适配设备Height : 460px
+
+  @media only screen and (max-width: 360px), only screen and (max-device-height:470px) {
+	html,body {
+		font-size: 45px !important;
+	}
+  }
+
+// .chooseList_dot{
+// 	display: inline-block;
+// 	width: .4rem;
+// 	height: .4rem;
+// 	border-radius: 50%;
+// 	border: .04rem solid #626262;
+// }
+// .chooseList_dot span{
+// 	position: absolute;
+// 	display: inline-block;
+// 	width: .4rem;
+// 	height: .4rem;
+// 	border-radius: 50%;
+// 	border: .04rem solid #626262;
+// }
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
