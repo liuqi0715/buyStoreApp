@@ -48,21 +48,10 @@
 
 全局常量的编写是有意义的比如图片地址，URL等
 
-<code>
-<pre>
-export const APP_SERVE_URL = 'http://88.128.18.193:8080/';
 
-export const FILE_SERVE_URL = 'http://88.128.18.144:3333/';
-
- export const APP_SERVE_URL = 'http://localhost:8100';
-
-export const FILE_SERVE_URL = 'http://localhost:8100/kit_file_server';
-</pre>
-</code>
 
 #### 更多详细的看下面的思维导图吧，是自己做的笔记 更详细内容在gif文件中的思维导图 ####
 
-<img src="https://raw.githubusercontent.com/dicallc/ionic3_angular4_JD/master/gif/daotu.png"  alt="上海鲜花港 - 郁金香" />
 
 ### 结语： ###
 1.耗时两周自学angular4和ionic3，其实很多东西不一样了，还好有SS，自从学了前端，一直在墙外看资料，看了很多人记录的帖子，觉得应该回报一下开源了。
@@ -102,7 +91,6 @@ export const FILE_SERVE_URL = 'http://localhost:8100/kit_file_server';
 <br>
 
 
-<img src="https://raw.githubusercontent.com/dicallc/ionic3_angular4_JD/master/gif/20170509172835.png"  alt="上海鲜花港 - 郁金香" />
 
  
 
@@ -114,7 +102,6 @@ export const FILE_SERVE_URL = 'http://localhost:8100/kit_file_server';
 
 
 <br>
-<img src="https://raw.githubusercontent.com/dicallc/ionic3_angular4_JD/master/gif/image.png"  alt="上海鲜花港 - 郁金香" />
 
 
 <b>5/11/2017 12:24:00 PM  </b>
