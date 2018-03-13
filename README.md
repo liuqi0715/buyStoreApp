@@ -1,6 +1,6 @@
-## ionic3_angular4_JD ##
+## ionic3_angular4_APP ##
 
-最近在逛淘宝的时候，居然看到有人在卖我的源码，标价十元，已经卖出几份，为买了的人心疼，为了打击二道贩子
+
 
 ##### 现代码所用采用GPL协议开源！！！！！禁止用作商业用途！！ ####
 ##### 现代码所用采用GPL协议开源！！！！！禁止用作商业用途！！ ####
@@ -17,16 +17,7 @@
 ##### 2.ionic serve  ####
 
 
-##### 3有需要使用android/ios平台 ####
-
-
-       ionic platform add ios/android
-
-##### 4运行android/ios平台####
-	ionic run android/ios
-
-
-##### 5.预览界面 ####
+##### 3.预览界面 ####
 
 ----------
 
@@ -34,13 +25,7 @@
 
 
 
-#### 6.可预览android版本apk
 
-[点击下载apk](https://github.com/dicallc/ionic3_angular4_JD/raw/master/gif/android-release.apk)
-
-#### 7.源码查看
-
-[点击打开代码地址](https://github.com/dicallc/ionic3_angular4_JD)
 
 ----------
 ### 再次记录从NG1-4一下坑吧 ###
