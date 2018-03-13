@@ -22,7 +22,7 @@
     </div> -->
     <div class="input_list_item">
       <label stacked>银行卡号</label>
-      <input type="tel" [(ngModel)]="subObj.bankNo" placeholder="请输入您的银行卡号"   (ngModelChange)="changeNo()" (blur)="checkBankInfo2()">
+      <input type="tel" [(ngModel)]="subObj.bankNo" placeholder="请输入您的银行卡号"   (keyup)="changeNo()" (blur)="checkBankInfo2()">
       <!-- (blur)="checkBankInfo()" -->
     </div>
     <div class="input_list_item itemAno" style="position: relative;" (click)="goBankInfo()">

@@ -24,7 +24,8 @@ export class orderBornPage {
   public navTitle = [];
   datas : any = []; 
   offline:boolean=false;
-  noContent:boolean=false;
+  firstOffline:boolean=false;
+  noContent:boolean=true;
   dataTemp1:any[] = new Array();
 
   constructor(
@@ -70,6 +71,9 @@ export class orderBornPage {
 
     self.network.onDisconnect().subscribe(()=>{
           self.offline=true; 
+          if(self.datas.length == 0){
+            self.firstOffline = true;
+          }
           self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
@@ -122,7 +126,7 @@ export class orderBornPage {
                   self.navTitle.push(self.datas[k].catName);
                 }
               }
-              console.log(self.navTitle);
+              self.firstOffline = false;
               self.slcItem(0);
            }
 
@@ -138,8 +142,11 @@ export class orderBornPage {
         }
       }
     }).catch(function(err){
+        if(self.offline==false && self.datas.length != 0){
+           self.firstOffline = false;
+        }
         loading.dismiss();
-        self.toast(err);
+        self.toast("服务器异常，请重试");
     });
   }
 

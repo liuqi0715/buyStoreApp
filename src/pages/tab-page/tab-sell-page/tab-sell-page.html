@@ -41,7 +41,7 @@
     </section>
 
     <section class="home-display" [ngClass]="{noMarginTop:!orderActive}">
-        <div class="home-btn home-btn-pos1" (click)="goOrderBorn(datas.collectorList)" *ngIf="orderActive"><div class="home-btn-inner"><p>向他报单</p></div></div>
+        <div class="home-btn home-btn-pos1" (click)="goOrderBorn(datas.collectorList)" *ngIf="orderActive"><div class="home-btn-inner"><p><span *ngIf="!publicOnly">向他报单</span><span *ngIf="publicOnly">公开报单</span></p></div></div>
         <div id="home-swiper-navL">
           <span class="tri-right"></span>
         </div>
@@ -56,7 +56,7 @@
           </div>
         </div>
     </section>
-    <div class="home-btn home-btn-pos2" (click)="goOrderBorn()" *ngIf="orderActive"><div class="home-btn-inner"><p>公开报单</p></div></div>
+    <div class="home-btn home-btn-pos2" (click)="goOrderBorn()" *ngIf="orderActive && !publicOnly"><div class="home-btn-inner"><p>公开报单</p></div></div>
     <!--回到顶部的区块-->
 <!--     <div #btnBackTop class="back_top"></div> -->
   </div>

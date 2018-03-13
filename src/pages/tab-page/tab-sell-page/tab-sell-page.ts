@@ -43,6 +43,7 @@ export class TabSell {
   public datas = "";
   offline:boolean=false;
   firstLoad:boolean=true;
+  publicOnly:boolean=false;
   recycleIdx = null;
   orderCard: any = {};
   alias: string = 'test';
@@ -68,18 +69,44 @@ export class TabSell {
   ionViewDidLoad() {
     this.orderActive = true;    /****/
     this.firstLoad = false;
-    this.checkNetwork();
+    this.getInfoDatas(null);
     // this.initJPush();
   }
 
+  ionViewDidLeave() {
+     if(this.oSwiper1){
+        this.oSwiper1.stopAutoplay();
+     }
+     if(this.swiper1){
+        this.swiper1.stopAutoplay();
+     }
+  }
+
   ionViewWillEnter() {
-    this.getInfoDatas(null);
+     if(this.oSwiper1){
+        this.oSwiper1.startAutoplay();
+     }
+     if(this.swiper1){
+        this.swiper1.startAutoplay();
+     }
+     this.checkNetwork();
+  }
+
+  ionViewDidEnter() {
+    if(sessionStorage.getItem("firstLoad") == "false" && this.offline==false){
+        this.getInfoDatas(null);
+    }
   }
 
   doRefresh(refresher) {
     var self = this;
     // this.oSwiper1=null;
     // this.swiper1=null;
+    if(this.offline == true){
+        this.toast('无网络连接，请检查');
+        refresher.cancel();
+        return;
+    }
 
     self.getInfoDatas(refresher); 
   }
@@ -147,6 +174,7 @@ export class TabSell {
          if(refresher){
            refresher.cancel();
          }
+         self.toast("服务器异常，请重试");
     });
     this.urlService.postDatas(SELLORDER_URL,data).then(function(resp){
       if(resp){
@@ -172,6 +200,7 @@ export class TabSell {
          if(refresher){
            refresher.cancel();
          }
+         self.toast("服务器异常，请重试");
     });
   }
 
@@ -251,17 +280,25 @@ export class TabSell {
    }
 
   goOrderBorn(data) {
-    if(data !== undefined){
-      this.navCtrl.push(orderBornPage, {
-         "recycleId":data[this.recycleIdx].recycleId,
-         "recyclePhone":data[this.recycleIdx].recyclePhone,
-         "public":true
-      });
+
+    if(this.publicOnly == false){
+        if(data !== undefined){
+          this.navCtrl.push(orderBornPage, {
+             "recycleId":data[this.recycleIdx].recycleId,
+             "recyclePhone":data[this.recycleIdx].recyclePhone,
+             "public":true
+          });
+        }else{
+          this.navCtrl.push(orderBornPage, {
+             "public":false
+          });
+        }
     }else{
-      this.navCtrl.push(orderBornPage, {
-         "public":false
-      });
+        this.navCtrl.push(orderBornPage, {
+           "public":false
+        });
     }
+
     // window.location.href = "https://ionicframework.com/docs/native/file-transfer/";
 //     var winObj = window.open('https://ionicframework.com/docs/native/file-transfer/'); 
 //     var loop = setInterval(function() {     
@@ -273,6 +310,12 @@ export class TabSell {
   }
 
   goOrderDetail(orderCard){
+
+    if(this.offline == true){
+        this.toast('无网络连接，请检查');
+        return;
+    }
+
     let self = this;
 
     let data = {
@@ -474,8 +517,12 @@ private initInfoBox(infoDatas) {
            
           })
       }
+      self.publicOnly = false;
       self.recycleIdx = 0;
   }else{
+      self.publicOnly = true;
+      $("#home-swiper-navL").hide();
+      $("#home-swiper-navR").hide();
       $(".infoSlide .swiper-wrapper").empty().append('<div class="home-display-card"><span class="home-display-none">暂无报价</span></div>');
   }
 

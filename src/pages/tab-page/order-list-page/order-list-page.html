@@ -10,10 +10,10 @@
     <p><span>{{list.createTime}}</span><span>{{list.payStatus}}</span></p>
   </div>
 
-  <div class="inner-center noNet" *ngIf="noContent == false && offline == true" (click)="reload()">
+  <div class="inner-center noNet" *ngIf="noContent == true && firstOffline == true" (click)="reload()">
     <img src="assets/img/noNet.png" alt="无网络">
   </div>
-  <div class="inner-center noContent" *ngIf="noContent == true && offline == false">
+  <div class="inner-center noContent" *ngIf="noContent == true && firstOffline == false">
       <img src="assets/img/noContent.png" alt="暂无内容">
   </div>
 

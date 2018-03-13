@@ -10,7 +10,7 @@
         <div class="od_map_circleInner">{{orderInfoBean.orderStatus}}</div>
       </div>
   </section>
-  <section class="od_time" *ngIf="offline == false">
+  <section class="od_time" *ngIf="firstOffline == false">
       <div class="od_time_box">
         <div class="od_time_box_l">
           <div class="od_time_box_dot"><ion-icon name="arrow-up"></ion-icon></div>
@@ -26,7 +26,7 @@
         </div>
       </div>
   </section>
-  <section class="od_info" *ngIf="orderInfoBean.orderStatusId != '1' ">
+  <section class="od_info" *ngIf="firstOffline == false && orderInfoBean.orderStatusId != '1' ">
       <div class="od_map_img">
         <img src="{{recyclesInfoBean.recycleImage}}" onerror="javascript:this.src='assets/img/default.png';" width="100%" height="100%"/>
       </div>
@@ -40,7 +40,7 @@
         </ul>
       </div>
   </section>
-  <section class="od_table" *ngIf="offline == false">
+  <section class="od_table" *ngIf="firstOffline == false">
       <table>
         <thead>
           <td *ngFor="let title of goodListTitle">
@@ -58,7 +58,7 @@
       </table>
   </section>
 
-  <div class="noNet" style="margin: .8rem auto 0;" *ngIf="offline == true" (click)="reload()">
+  <div class="noNet" style="width:1.48rem;margin: .8rem auto 0;" *ngIf="firstfirstOffline == true" (click)="reload()">
     <img src="assets/img/noNet.png" alt="无网络">
   </div>
 </ion-content>

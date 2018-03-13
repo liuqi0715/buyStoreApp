@@ -110,7 +110,6 @@ export class orderCommentPage {
     });
   }
   getTag(tag,idx){
-    this.subObj.lable = null;
     this.tagIdArray = [];
     this.commTags[idx].check = !this.commTags[idx].check
     if(this.commTags && this.commTags.length){
@@ -160,7 +159,7 @@ export class orderCommentPage {
         return;
     }
 
-    if(this.subObj.lable == null){
+    if(this.tagIdArray.length == 0){
         this.toast('请选择标签');
         return;
     }

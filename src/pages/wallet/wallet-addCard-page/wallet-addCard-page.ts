@@ -40,6 +40,7 @@ export class addCardPage {
   hasSuccess=false; //默认不显示
   offline:boolean=false;
   bankNo;  //将银行卡重新赋值给一个变量；
+  maxBankNo = "";
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
       public http: Http, 
@@ -108,20 +109,31 @@ export class addCardPage {
       //   console.log("//")
       // }
 
-      var len=this.subObj.bankNo.length;
-      this.subObj.bankNo = this.subObj.bankNo.replace(/[^\d]/g,"");
-      // var num=parseInt(((this.subObj.bankNo).length)/4);
-      var num=Math.floor(((this.subObj.bankNo).length)/4);
-      var last=(this.subObj.bankNo.length)%4;
-      var n=0;
-      var temp="";
-      for(var i=0;i<num;i++){
-          temp=temp+" "+this.subObj.bankNo.substring(n,n+4);
-          n=n+4;
+      // var len=this.subObj.bankNo.length;
+      // this.subObj.bankNo = this.subObj.bankNo.replace(/[^\d]/g,"");
+      // // var num=parseInt(((this.subObj.bankNo).length)/4);
+      // var num=Math.floor(((this.subObj.bankNo).length)/4);
+      // var last=(this.subObj.bankNo.length)%4;
+      // var n=0;
+      // var temp="";
+      // for(var i=0;i<num;i++){
+      //     temp=temp+" "+this.subObj.bankNo.substring(n,n+4);
+      //     n=n+4;
+      // }
+      // if(last == 0){
+      //   return;
+      // }else{
+      //   temp=temp+" "+this.subObj.bankNo.substring(this.subObj.bankNo.length-last,this.subObj.bankNo.length);
+      // }
+      // this.subObj.bankNo = temp;
+
+      this.subObj.bankNo = (this.subObj.bankNo).replace(/[^\d]/g,"").replace(/(\d{4})(?=\d)/g, "$1 "); 
+      if((this.subObj.bankNo).replace(/[^\d]/g,"").length == 22){
+        this.maxBankNo = this.subObj.bankNo;
+      }else if((this.subObj.bankNo).replace(/[^\d]/g,"").length > 22){
+        this.subObj.bankNo = this.maxBankNo;
       }
-      temp=temp+" "+this.subObj.bankNo.substring(this.subObj.bankNo.length-last,this.subObj.bankNo.length);
-      this.subObj.bankNo = temp;
-      if((this.subObj.bankNo).length>6){
+      if((this.subObj.bankNo).replace(/[^\d]/g,"").length == 6){
         this.checkBankInfo();
       } 
    
@@ -134,51 +146,48 @@ export class addCardPage {
       if((this.subObj.bankNo)!=null){
       this.bankNo = ((this.subObj.bankNo).replace(/[^\d]/g,""));//将银行卡重新赋值给一个变量；
 
-            console.log(reg.test(this.subObj.bankNo))
-            console.log(((this.subObj.bankNo).toString()).length)
-            if(((this.subObj.bankNo).toString()).length==6){
-              let param={
-                  "data": {
-                    "cardNo":(this.subObj.bankNo).replace(/[^\d]/g,"")
-                  }
-              }
-              if(this.offline == true){
-                this.toast('无网络连接，请检查');
-                return;
-               }
-              this.hasSuccess = true;
-              let self = this;
-              this.urlService.postDatas(interfaceUrls.checkBankInfo,param).then(function(resp){
-                if(resp){
-                  self.hasSuccess = false;
-                  if(resp.errorinfo==null){
-                      if(resp.data.bankFullName!=""){
-                        console.log(resp,"??");
-                        // self.bankCodeInfo = resp.data.bankclsname2;
-                        self.bankCodeInfo = resp.data.bankFullName;
-                        self.servicesInfo.bankInfo = resp.data;
-                        self.bankName = self.bankCodeInfo;
-                        self.bankCode = resp.data.bankCode;
-                      }else{
-                        self.bankCodeInfo="请选择银行卡名称"
-                      }
-                  }else{
-                    // self.toast(resp.errorinfo.errormessage);
-                    console.log(resp.errorinfo.errormessage);
-                    
-                       if(resp.errorinfo.errorcode=="10003"){
-                        self.app.getRootNav().setRoot(UserLogin);
-                      }
-                  }
+          console.log(reg.test(this.subObj.bankNo))
+          console.log(((this.subObj.bankNo).toString()).length)
+            let param={
+                "data": {
+                  "cardNo":(this.subObj.bankNo).replace(/[^\d]/g,"")
                 }
-              })
-              .catch(function(error){
-                console.log(error)
-                // self.toast("服务器异常,请稍后再试。")
+            }
+            if(this.offline == true){
+              this.toast('无网络连接，请检查');
+              return;
+             }
+            this.hasSuccess = true;
+            let self = this;
+            this.urlService.postDatas(interfaceUrls.checkBankInfo,param).then(function(resp){
+              if(resp){
                 self.hasSuccess = false;
-              })
-              ;
-          }
+                if(resp.errorinfo==null){
+                    if(resp.data.bankFullName!=""){
+                      console.log(resp,"??");
+                      // self.bankCodeInfo = resp.data.bankclsname2;
+                      self.bankCodeInfo = resp.data.bankFullName;
+                      self.servicesInfo.bankInfo = resp.data;
+                      self.bankName = self.bankCodeInfo;
+                      self.bankCode = resp.data.bankCode;
+                    }else{
+                      self.bankCodeInfo="请选择银行卡名称"
+                    }
+                }else{
+                  // self.toast(resp.errorinfo.errormessage);
+                  console.log(resp.errorinfo.errormessage);
+                  
+                     if(resp.errorinfo.errorcode=="10003"){
+                      self.app.getRootNav().setRoot(UserLogin);
+                    }
+                }
+              }
+            })
+            .catch(function(error){
+              console.log(error)
+              // self.toast("服务器异常,请稍后再试。")
+              self.hasSuccess = false;
+            });
       }
   }
 //光标离开时请求；

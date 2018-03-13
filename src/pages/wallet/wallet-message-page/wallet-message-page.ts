@@ -24,6 +24,7 @@ export class messagePage {
   currentPage: any = 0;
   maxPage: any = 1;
   offline: boolean = false;
+  firstOffline:boolean=false;
   noContent: boolean = false;
 
   constructor(public navCtrl: NavController, 
@@ -60,6 +61,9 @@ export class messagePage {
 
     self.network.onDisconnect().subscribe(()=>{
           self.offline=true; 
+          if(self.msgList.length == 0){
+            self.firstOffline = true;
+          }
           self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
@@ -70,10 +74,10 @@ export class messagePage {
 
   getInfoDatas(){
 
-    if(this.offline == true){
-       this.toast('无网络连接，请检查');
-       return;
-    }
+    // if(this.offline == true){
+    //    // this.toast('无网络连接，请检查');
+    //    return;
+    // }
 
     let loading = this.loadingCtrl.create({
       spinner: 'dots',
@@ -104,6 +108,7 @@ export class messagePage {
              for(var i = 0;i<resp.data.msgList.length;i++){
                 self.msgList.push(resp.data.msgList[i]);
              }
+             self.firstOffline = false;
            }
         }else{
           if(resp.errorinfo.errorcode=="10003"){
@@ -112,7 +117,13 @@ export class messagePage {
         }
       }
     }).catch(function(err){
-      self.toast(err);
+      if(self.offline==false && self.msgList.length != 0){
+         self.firstOffline = false;
+      }
+      if(self.msgList.length == 0){
+         self.noContent = true;
+      }
+      self.toast("服务器异常，请重试");
       loading.dismiss();
     });
 

@@ -27,6 +27,7 @@ export class orderDetailPage {
   orderStateWater: any = [];
   recyclesInfoBean: any = {};
   offline:boolean=false;
+  firstOffline:boolean=false;
   public latitude = null;
   public longitude = null;
 
@@ -58,11 +59,14 @@ export class orderDetailPage {
     let self = this;
 
     self.network.onDisconnect().subscribe(()=>{
-        self.offline=true; 
+        self.offline = true; 
+        if(self.datas.length == 0){
+          self.firstOffline = true;
+        }
         self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
-          self.offline=false; 
+        self.offline=false; 
     });
   }
 
@@ -113,7 +117,7 @@ export class orderDetailPage {
             self.orderInfoBean = resp.data.orderInfoBean;
             self.orderStateWater = resp.data.orderStateWater;
             self.recyclesInfoBean = resp.data.recyclesInfoBean;
-            console.log(self.datas);
+            self.firstOffline = false;
            
         }else{
            /*token失效的问题*/
@@ -121,6 +125,11 @@ export class orderDetailPage {
             self.app.getRootNav().setRoot(UserLogin);
           }
         }
+      }
+    }).catch(function(){
+      self.toast("服务器连接异常");
+      if(self.offline==false && self.datas.length != 0){
+         self.firstOffline = false;
       }
     });
   }

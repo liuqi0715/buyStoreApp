@@ -13,7 +13,7 @@
       <span>{{datas.remarks}}</span>
     </div>
 </section>
-<ion-content class="oa_content">
+<ion-content class="oa_content" [ngClass]="{oa_content_noBottom:datas.orderStatusId != 3}">
   <div class="oa_conBox" *ngIf="offline == false"> 
       <section class="oc_box oc_box_nav oa_box">
         <img src="assets/img/orderDetail/biaodan.png" alt="biaodan"/>
@@ -46,7 +46,7 @@
     <img src="assets/img/noNet.png" alt="无网络">
   </div>
 </ion-content>
-<div class="bottomBar">
+<div class="bottomBar" *ngIf = "datas.orderStatusId == 3">
   <div class="bottomBar_r oa_btn1" (click)="confirmOrder()">确认订单</div>
 <!--   <div class="bottomBar_r oa_btn2" (click)="cancelOrder()">取消订单</div>  *ngIf = "datas.orderStatusId == 3"-->
 </div>

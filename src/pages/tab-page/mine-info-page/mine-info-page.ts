@@ -193,7 +193,7 @@ uploadStoreImg() {
     }, (err) => {
       // alert(err)
       console.log(err,"??");
-      this.toast("上传失败");
+      this.toast(err);
     });
 }
   changeWxPhone(wx){

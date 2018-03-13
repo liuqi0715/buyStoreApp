@@ -500,12 +500,6 @@ ion-alert.alert-top{
   }
   //适配设备Height : 460px
 
-  @media only screen and (max-width: 360px), only screen and (max-device-height:470px) {
-	html,body {
-		font-size: 45px !important;
-	}
-  }
-
 // .chooseList_dot{
 // 	display: inline-block;
 // 	width: .4rem;

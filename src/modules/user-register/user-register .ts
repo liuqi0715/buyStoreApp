@@ -156,6 +156,7 @@ export class UserRegister {
         console.log(this.camera,"???")
         const options: CameraOptions = {
             quality: 100,
+
             destinationType: this.camera.DestinationType.FILE_URI,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,

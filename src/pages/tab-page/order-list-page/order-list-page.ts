@@ -19,6 +19,7 @@ export class orderListPage {
   maxPage: any = 1;
   orderList: any = [];
   offline: boolean = false;
+  firstOffline:boolean=false;
   noContent: boolean = false;
 
   constructor(
@@ -34,12 +35,9 @@ export class orderListPage {
     ) {
   }
 
-  ionViewDidLoad(){
-    this.getInfoDatas();
-  }
-
-  ionViewDidEnter() {
+  ionViewDidEnter(){
     this.checkNetwork();
+    this.getInfoDatas();
   }
 
   reload(){
@@ -64,6 +62,9 @@ export class orderListPage {
 
     self.network.onDisconnect().subscribe(()=>{
           self.offline=true; 
+          if(self.orderList.length == 0){
+            self.firstOffline = true;
+          }
           self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
@@ -74,10 +75,10 @@ export class orderListPage {
 
   getInfoDatas(){
     
-    if(this.offline == true){
-         this.toast('无网络连接，请检查');
-         return;
-    }
+    // if(this.offline == true){
+    //      // this.toast('无网络连接，请检查');
+    //      return;
+    // }
 
     let loading = this.loadingCtrl.create({
       spinner: 'dots',
@@ -108,6 +109,7 @@ export class orderListPage {
                  self.orderList.push(resp.data.orderList[i]);
                  self.maxPage = resp.data.totalPage;
               }
+              self.firstOffline = false;
             }
         }else{
           self.toast(resp.errorinfo);
@@ -118,7 +120,13 @@ export class orderListPage {
         }
       }
     }).catch(function(err){
-      self.toast(err);
+      if(self.offline==false && self.orderList.length != 0){
+         self.firstOffline = false;
+      }
+      if(self.orderList.length == 0){
+         self.noContent = true;
+      }
+      self.toast("服务器异常，请重试");
       loading.dismiss();
     });
 
