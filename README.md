@@ -21,7 +21,6 @@
 
 ----------
 
-<img src="https://raw.githubusercontent.com/dicallc/ionic3_angular4_JD/master/gif/GIF.gif"  alt="上海鲜花港 - 郁金香" />
 
 
 
