@@ -11,7 +11,7 @@
     </div> -->
     <div class="card">
         <div class="cardImg">
-            <img src="assets/img/wallet/bank.png" alt="">
+            <img src="{{bankLogoPath}}" alt="">
         </div> 
         <div>{{bankName}}</div>
         <div>尾号{{bankCardNo}}储蓄卡</div>
@@ -23,12 +23,19 @@
             </li>
             <li id="money">
                 <span class="danwei">￥</span>
-                <input type="number" class="money" [(ngModel)]="balance" (ngModelChange)="changeMon()">
+                <input type="tel" class="money" [(ngModel)]="balance" (keyup)="changeMon()">
                 <span id="allIn" (click)="allIn()">全部提现</span>
             </li>
             <li>
                 可用余额{{cashAmount}}元
             </li>
+        </ul>
+    </div>
+    <div class="accTInfo">
+        <ul>
+            <li>提现额度说明</li>
+            <li>单笔提现：最低<span style="color:#F4B04D">{{acctInfo.DBTXZD}}</span>元，最高<span style="color:#F4B04D">{{acctInfo.DBTXZG}}</span>元</li>
+            <li>单日提现：最高<span style="color:#F4B04D">{{acctInfo.DRTXZG}}</span>元</li>
         </ul>
     </div>
     <div class="affirmGet" (click)="affirmGet()" >
@@ -39,4 +46,5 @@
     <div class="motai" *ngIf="hasSuccess">
         <img src="assets/img/login/loading.gif" alt="" id="loading">
       </div>
+      <!-- <p (click)="testPik()">测试</p> -->
 </ion-content>

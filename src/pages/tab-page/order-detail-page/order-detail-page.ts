@@ -126,6 +126,7 @@ export class orderDetailPage {
           }
         }
       }
+      self.firstOffline = false;
     }).catch(function(){
       self.toast("服务器连接异常");
       if(self.offline==false && self.datas.length != 0){

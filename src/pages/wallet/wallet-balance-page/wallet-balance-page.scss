@@ -35,7 +35,7 @@ wallet-balance-page{
     }
     .cardImg img{
         margin-top: .3rem;
-        width: .9rem;
+        width: .85rem;
         margin-left: .1rem;
     }
     .card div{
@@ -112,10 +112,21 @@ wallet-balance-page{
         text-align: center;
         color: white;
         border-radius: 2px;
-
+        font-size: .2rem;
     }
     .withdraws{
         // background-color: red;
         // text-indent: -.3rem !important;
+    }
+    .accTInfo{
+        width: 95%;
+        background-color: white;
+        border-radius: 5px;
+        height: 1.5rem;
+        margin: 0 auto;
+        line-height: .5rem;
+        text-indent: .25rem;
+        color: #939192;
+        margin-bottom: 0.75rem;
     }
 }

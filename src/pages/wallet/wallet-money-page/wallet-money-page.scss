@@ -80,13 +80,14 @@ wallet-money-page{
         width: 9%;
         height: 100%;
         float: left;
+        margin: 0 1% 0 1%;
     }
     .listImg img{
         width: 100%;
         margin-top: .1rem;
     }
     .listStyle{
-        width:50% ;
+        width:42% ;
         height: 100%;
         float: left;
         font-size: .25rem;
@@ -98,10 +99,13 @@ wallet-money-page{
         line-height: .5rem;
     }
     .listNum{
-        width: 21%;
+        width: 26%;
         height: 100%;
         float: left;
         line-height: 1rem;
+        text-align: right;
+        margin-right: 0%;
+        padding-right: 2%;
     }
     //日期选择器插件
    
@@ -118,5 +122,10 @@ wallet-money-page{
         text-align: center;
         font-size: .3rem;
         margin-top: 3rem;
+    }
+    @media only screen and (max-width: 320px){
+        .recordStyle ul li{
+            font-size: .25rem
+        }
     }
 }

@@ -83,11 +83,16 @@ export class TabSell {
   }
 
   ionViewWillEnter() {
+     var slideIdx = sessionStorage.getItem("infoIdx");
      if(this.oSwiper1){
         this.oSwiper1.startAutoplay();
      }
      if(this.swiper1){
         this.swiper1.startAutoplay();
+     }
+     if(this.swiper2){
+       console.log(slideIdx);
+        this.swiper2.slideTo(slideIdx, 10, false);
      }
      this.checkNetwork();
   }
@@ -153,6 +158,7 @@ export class TabSell {
            if(self.swiper2){
               self.swiper2.destroy(false);
            }
+           sessionStorage.setItem("infoIdx",'0');
            self.datas = resp.data;
            self.initInfoBox(self.datas);
            self.initNoticeSlide();
@@ -178,7 +184,6 @@ export class TabSell {
     });
     this.urlService.postDatas(SELLORDER_URL,data).then(function(resp){
       if(resp){
-        console.log(resp);
         if(resp.errorinfo == null){
           self.orderActive = false;                /*****/
           self.orderCard = resp.data.orderInfo;
@@ -299,14 +304,6 @@ export class TabSell {
         });
     }
 
-    // window.location.href = "https://ionicframework.com/docs/native/file-transfer/";
-//     var winObj = window.open('https://ionicframework.com/docs/native/file-transfer/'); 
-//     var loop = setInterval(function() {     
-//     if(winObj.closed) {    
-//         clearInterval(loop);    
-//         alert('closed');    
-//     }    
-// }, 1000);
   }
 
   goOrderDetail(orderCard){
@@ -356,35 +353,6 @@ export class TabSell {
     });
   }
 
-  // changeMode(){
-  //   this.orderActive = !this.orderActive;
-  // }
-
-  // changeWay1(){
-  //   this.orderCard.pathway = "1";
-  // }
-
-  // changeWay2(){
-  //   this.orderCard.pathway = "2";
-  // }
-
-  // changeWay3(){
-  //   this.orderCard.pathway = "3";
-  // }
-
-  // private headerChangeColor() {
-  //   //https://segmentfault.com/a/1190000008653690
-  //   let headdiv = this.lyScrollDiv.nativeElement;
-  //   var nowOpacity = 0;
-  //   // let lHeadBgdiv= this.greetBgDiv.nativeElement;
-  //   headdiv.onscroll = function (event) {
-  //     if (this.scrollTop / 250 < .85) {
-  //       nowOpacity = this.scrollTop / 250;
-  //     }
-  //     // lHeadBgdiv.style.opacity = nowOpacity;
-  //   }
-  // }
-
   // 初始化滚动条
   private initNoticeSlide() {
 
@@ -408,6 +376,8 @@ export class TabSell {
 
 
 private initInfoBox(infoDatas) {
+
+  var self = this;
 
   function slidedata(data){
     var starsDom = '<p>', wordsDom = '<ul>', goodsDom = '<ul>', starsLen = 0;
@@ -468,30 +438,34 @@ private initInfoBox(infoDatas) {
       }
 
       this.swiper2 = new Swiper('.infoSlide', {
-        roundLengths : true, 
+        roundLengths : false, 
         initialSlide :0,
-        speed:600,
-        autoplay :false,
-        slidesPerView:"auto",
+        // speed:600,
+        // autoplay :false,
+        slidesPerView :"auto",
         centeredSlides : true,
         followFinger : false,
-        observer:true,
-        observeParents:true
+        observer :true,
+        observeParents :true,
+        watchSlidesProgress : true
       });
 
-      // this.swiper2.on('slideChangeStart',function(swiper){
-           
-      //     swiper.lockSwipes();
-
-      // });
-
-      var self = this;
+      self.swiper2.slides[1].style.transform='scale(0.95)';
       $("#home-swiper-navL").show();
       if(this.swiper2.on){
           this.swiper2.on('slideChangeEnd',function(swiper){
             swiper.unlockSwipes();    
-            console.log(swiper.activeIndex);
             self.recycleIdx = swiper.activeIndex;
+            sessionStorage.setItem("infoIdx",self.recycleIdx);
+            self.swiper2.slides[swiper.activeIndex].style.transform='scale(1)';
+            if(swiper.activeIndex + 1 <= datas.collectorList.length - 1){
+              self.swiper2.slides[swiper.activeIndex + 1].style.transform='scale(0.95)';
+            }
+            
+            if(swiper.activeIndex - 1 >= 0){
+              self.swiper2.slides[swiper.activeIndex - 1].style.transform='scale(0.95)';
+            }
+            
             if(swiper.activeIndex == 0){
               $("#home-swiper-navL").show();
             }else{
@@ -503,19 +477,22 @@ private initInfoBox(infoDatas) {
             }else{
               $("#home-swiper-navR").hide();
             }
-            // if(swiper.activeIndex==1){    
-            //     swiper.prependSlide(slidedata(today-pre));
-            // }
-            // if(swiper.activeIndex==0){    
-            //     swiper.prependSlide(slidedata(datas[datas.length - 1]));
-            // }
-
-            // if(swiper.activeIndex==swiper.slides.length-2){
-            //   next++;
-            //   swiper.appendSlide(slidedata(today+next));
-            // }
            
-          })
+          });
+
+        // this.swiper2.on('progress',function(swiper, progress){
+        //   var slide = swiper.slides[self.recycleIdx];
+        //   var es = slide.style;
+        //   es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform = 'scale('+1*slide.progress+')';
+          
+        //   if(self.recycleIdx + 1 <= datas.collectorList.length - 1){
+        //     var slide1 = swiper.slides[self.recycleIdx + 1];
+        //     var es1 = slide1.style;
+        //     es1.webkitTransform = es1.MsTransform = es1.msTransform = es1.MozTransform = es1.OTransform = es1.transform = 'scale('+1*slide.progress+')';
+        //   }
+
+        // });
+
       }
       self.publicOnly = false;
       self.recycleIdx = 0;

@@ -18,8 +18,8 @@ export class orderListPage {
   currentPage: any = 0;
   maxPage: any = 1;
   orderList: any = [];
-  offline: boolean = false;
-  firstOffline:boolean=false;
+  offline: boolean = true;
+  firstOffline:boolean = true;
   noContent: boolean = false;
 
   constructor(
@@ -36,11 +36,14 @@ export class orderListPage {
   }
 
   ionViewDidEnter(){
+    this.currentPage = 0;
+    this.orderList = [];
     this.checkNetwork();
     this.getInfoDatas();
   }
 
   reload(){
+    this.currentPage = 0;
     this.getInfoDatas();
   }
 
@@ -64,8 +67,9 @@ export class orderListPage {
           self.offline=true; 
           if(self.orderList.length == 0){
             self.firstOffline = true;
+            self.noContent = true;
           }
-          self.toast('无网络连接，请检查');
+          // self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
           self.offline=false; 
@@ -109,7 +113,6 @@ export class orderListPage {
                  self.orderList.push(resp.data.orderList[i]);
                  self.maxPage = resp.data.totalPage;
               }
-              self.firstOffline = false;
             }
         }else{
           self.toast(resp.errorinfo);
@@ -119,6 +122,7 @@ export class orderListPage {
             }
         }
       }
+      self.firstOffline = false;
     }).catch(function(err){
       if(self.offline==false && self.orderList.length != 0){
          self.firstOffline = false;
@@ -126,6 +130,7 @@ export class orderListPage {
       if(self.orderList.length == 0){
          self.noContent = true;
       }
+      console.log(err);
       self.toast("服务器异常，请重试");
       loading.dismiss();
     });
@@ -133,11 +138,6 @@ export class orderListPage {
   }
 
   doInfinite(infiniteScroll){
-
-    if(this.offline == true){
-         this.toast('无网络连接，请检查');
-         return;
-    }
 
     if(this.currentPage < this.maxPage){
         ++this.currentPage;
@@ -167,7 +167,7 @@ export class orderListPage {
               }
             }
           }).catch(function(err){
-            self.toast(err);
+            self.toast('服务器异常，请重试');
           });
         }, 500);
 

@@ -36,7 +36,7 @@ export class WalletMoney {
   count = 0;      //计算总页数与    cout(数量相区别这里是总页数)
   // timeStarts;
   cashAmount;//可提现
-  uncashAmount;//不可体现
+  freezeCashAmount;//不可提现
   freezeUncashAmount;//冻结不可用
   BillList;
   date = new Date();
@@ -138,7 +138,7 @@ export class WalletMoney {
           if(data.errorinfo==null){
             console.log(data);
             this.cashAmount = data.data.cashAmount;
-            this.uncashAmount = data.data.uncashAmount;
+            this.freezeCashAmount = data.data.freezeCashAmount;
             this.freezeUncashAmount = data.data.freezeUncashAmount;
           }
            

@@ -246,7 +246,7 @@ uploadStoreImg() {
           }
         },
         {
-          text: '确认',
+          text: '确定',
           handler: data => {
             console.log('Saved clicked',data);
             if(data.WXphone==""){

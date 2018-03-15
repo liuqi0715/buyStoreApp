@@ -110,7 +110,8 @@ export class chartConfig {
                        color:'#FFF',
                        fontSize:Math.ceil(12*ratio),
                        position:'top',
-                       distance:10
+                       offset:[20,-10]
+                       // distance:10
                     },
                     data:null,      //接受数据++++++++++++++++++++++++
                     itemStyle : {

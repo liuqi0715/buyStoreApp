@@ -24,7 +24,7 @@ export class messagePage {
   currentPage: any = 0;
   maxPage: any = 1;
   offline: boolean = false;
-  firstOffline:boolean=false;
+  firstOffline: boolean = true;
   noContent: boolean = false;
 
   constructor(public navCtrl: NavController, 
@@ -56,6 +56,11 @@ export class messagePage {
     toast.present();
   }
 
+  reload(){
+    this.currentPage = 0;
+    this.getInfoDatas();
+  }
+
   checkNetwork(){
     let self = this;
 
@@ -63,8 +68,9 @@ export class messagePage {
           self.offline=true; 
           if(self.msgList.length == 0){
             self.firstOffline = true;
+            self.noContent = true;
           }
-          self.toast('无网络连接，请检查');
+          // self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
           self.offline=false; 
@@ -108,7 +114,6 @@ export class messagePage {
              for(var i = 0;i<resp.data.msgList.length;i++){
                 self.msgList.push(resp.data.msgList[i]);
              }
-             self.firstOffline = false;
            }
         }else{
           if(resp.errorinfo.errorcode=="10003"){
@@ -116,6 +121,7 @@ export class messagePage {
           }
         }
       }
+      self.firstOffline = false;
     }).catch(function(err){
       if(self.offline==false && self.msgList.length != 0){
          self.firstOffline = false;
@@ -130,11 +136,6 @@ export class messagePage {
   }
 
   doInfinite(infiniteScroll){
-
-    if(this.offline == true){
-        this.toast('无网络连接，请检查');
-        return;
-    }
 
     if(this.currentPage < this.maxPage){
         ++this.currentPage;
@@ -164,6 +165,8 @@ export class messagePage {
                 }
               }
             }
+          }).catch(function(err){
+            self.toast('服务器异常，请重试');
           });
 
         }, 500);

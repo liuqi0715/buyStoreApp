@@ -179,14 +179,22 @@ export class WalletPage {
         // this.getMoreInfo = true;
         this.rules=true;
         this.listP = false;
-        this.navCtrl.push(BalancePage)
+        this.navCtrl.push(BalancePage).then(() => {
+          const index = this.navCtrl.getActive().index;
+          console.log(index);
+          // this.navCtrl.remove(1, 2);
+          });
       }else{
         this.toast("您还没有添加过银行卡");
       }
      
     }
     listRecord(){
-      this.navCtrl.push(WalletMoney)
+      this.navCtrl.push(WalletMoney).then(() => {
+        const index = this.navCtrl.getActive().index;
+          console.log(index);
+        // this.navCtrl.remove(1, 2);
+      });
     }
     addCard(){
       this.navCtrl.push(addCardPage);

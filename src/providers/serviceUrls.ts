@@ -5,7 +5,7 @@
 
 // const urls ="http://192.168.0.13:6020";        
 // const urls2 = "http://192.168.0.13:6020";    //李子
-// const urls3 = "http://192.168.0.13:6888";    //张
+// const urls5 = "http://192.168.0.16:6888";    //张
 // const urls4 = "http://192.168.0.13:6888";    //添加银行卡
 
 const urls = "http://120.79.117.124/storeApp";        
@@ -52,6 +52,7 @@ export const interfaceUrls = {
     addUserByNoLogin:urls4+"/pay/accountInfo/addUserByNoLogin",        //未登录开户
     openAccountQuery2:urls4+"/pay/accountInfo/openAccountQuery",       //进入钱包查询开户是否
     getBindInformation:urls3+"/pay/accountInfo/getBindInformation",        //查询虚拟卡信息
+    queryAccCheck:urls+"/pay/accountInfo/queryAccCheck",                    //查询今日提现/充值最大限额；
     exitApp:urls+"/storeInfo/deleteToken",                                //退出登录
 
     /*-------------------------------------修改微信账号-----------------------------*/

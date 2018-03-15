@@ -281,16 +281,20 @@ export class TabMine {
     this.navCtrl.push(changePasswordPage);
   }
   //退出登录app
-  confirm(str: string = '您确定此操作吗？', okStr: string = '确定', noStr: string = '取消'): Promise<any> {
+  confirm(str: string = '您确定此操作吗？',  noStr: string = '取消',okStr: string = '确定',): Promise<any> {
     return new Promise((resolve, reject) => {
         return this.alertCtrl.create({
-            title: "提示", message: str, enableBackdropDismiss: false, buttons: [{
-                text: okStr, handler: resolve
-            }, {
+            title: "提示", 
+            message: str,
+             enableBackdropDismiss: false,
+              buttons: [ {
                 text: noStr, handler: () => {
                     reject('操作被取消')
                 }
-            }]
+            },{
+              text: okStr, 
+              handler: resolve
+          },]
         }).present();
     });
 }

@@ -23,9 +23,9 @@ export class orderBornPage {
   public totalWeight = 0;
   public navTitle = [];
   datas : any = []; 
-  offline:boolean=false;
-  firstOffline:boolean=false;
-  noContent:boolean=true;
+  offline:boolean = false;
+  firstOffline:boolean = true;
+  noContent:boolean = false;
   dataTemp1:any[] = new Array();
 
   constructor(
@@ -71,10 +71,11 @@ export class orderBornPage {
 
     self.network.onDisconnect().subscribe(()=>{
           self.offline=true; 
-          if(self.datas.length == 0){
+          if(self.models.length == 0){
             self.firstOffline = true;
+            self.noContent = true;
           }
-          self.toast('无网络连接，请检查');
+          // self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
           self.offline=false; 
@@ -126,7 +127,6 @@ export class orderBornPage {
                   self.navTitle.push(self.datas[k].catName);
                 }
               }
-              self.firstOffline = false;
               self.slcItem(0);
            }
 
@@ -141,10 +141,15 @@ export class orderBornPage {
           }
         }
       }
+      self.firstOffline = false;
     }).catch(function(err){
         if(self.offline==false && self.datas.length != 0){
            self.firstOffline = false;
         }
+        if(self.models.length == 0){
+          self.noContent = true;
+        }
+        
         loading.dismiss();
         self.toast("服务器异常，请重试");
     });

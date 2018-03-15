@@ -238,12 +238,14 @@ ion-app{
 	display: block;
 	width: 1.48rem;
 	height: 2.63rem;
+	z-index: 1000;
 }
 
 .noContent img{
 	display: block;
 	width: 2rem;
 	height: 2rem;
+	z-index: 1000;
 }
 
 //日期插件--------------
@@ -494,11 +496,51 @@ ion-select{
 
 ion-alert.alert-top{
     padding-top: 2rem;
-  }
-  .alert-ios .alert-title{
+}
+.alert-ios .alert-title{
 	font-weight: 500;
-  }
-  //适配设备Height : 460px
+}
+
+ @media only screen and (max-width: 424px) and (max-device-height:850px) {
+ html,body {
+     font-size:75px !important;
+ }
+}
+ @media only screen and (max-width: 414px) and (max-device-height:736px) {
+ html,body {
+     font-size:55px !important;
+ }
+}
+ @media only screen and (max-width: 375px) and (max-device-height:667px) {
+ html,body {
+     font-size:50px !important;
+ }
+}
+ @media only screen and (max-width: 360px) and (max-device-height:780px) {
+ html,body {
+     font-size:64px !important;
+ }
+}
+ @media only screen and (max-width: 360px) and (max-device-height:640px) {
+ html,body {
+     font-size:50px !important;
+ }
+}
+ @media only screen and (max-width: 360px) and (max-device-height:600px) {
+ html,body {
+     font-size:40px !important;
+ }
+}
+ @media only screen and (max-width: 320px) and (max-device-height:800px) {
+ html,body {
+     font-size:55px !important;
+ }
+}
+ @media only screen and (max-width: 320px) and (max-device-height:600px) {
+ html,body {
+     font-size:42px !important;
+ }
+}
 
 // .chooseList_dot{
 // 	display: inline-block;

@@ -11,15 +11,15 @@
         <ul>
             <li>
                 <p>可提现</p>
-                <p>{{cashAmount}}</p>
+                <p><span>￥</span> {{cashAmount}}</p>
             </li>
             <li>
                     <p>不可提现</p>
-                    <p>{{uncashAmount}}</p>
+                    <p><span>￥</span> {{freezeCashAmount}}</p>
             </li>
             <li>
                     <p>冻结不可用金额</p>
-                    <p>{{freezeUncashAmount}}</p>
+                    <p><span>￥</span> {{freezeUncashAmount}}</p>
             </li>
         </ul>
     </div>
@@ -41,7 +41,7 @@
                     <p>{{a.time}}</p>
                 </div>
                 <div class="listImg">
-                    <img src="http://192.168.0.177:6888{{a.img}}"alt="">
+                    <img src="http://120.79.117.124/storeApp{{a.img}}"alt="">
                 </div>
                 <div class="listStyle">
                         <p [ngClass]="{'text-success': a.contact == null}">{{a.type}}</p>

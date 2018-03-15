@@ -330,14 +330,14 @@ checkBankInfo2(){
         "token":this.servicesInfo.token,         
       }
       let self = this;
-      this.urlService.postDatas(interfaceUrls.addCard,param).then(function(resp){
+      this.urlService.postDatas(interfaceUrls.checkAddCard,param).then(function(resp){
             if(resp){
                   if(resp.errorinfo==null){
-                      console.log(resp,"==")
+                      // console.log(resp,"==")
                       if(resp.data.susses=="Y"){
-                          self.navCtrl.pop();
+                          self.navCtrl.popToRoot();    //绑定卡成功后去到跟页面
                       }else{
-                        self.toast("操作失败")
+                        self.toast("操作失败");
                       }
 
                   }else{

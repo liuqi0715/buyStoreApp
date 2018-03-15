@@ -66,10 +66,7 @@ export class changePhonePage {
   }
 
   submit(){
-    console.log(this.subObj);
-    if(this.subObj.oldphone.length==0){
-        this.toast("请输入旧手机号")
-    }else if(this.subObj.newphone.length==0){
+  if(this.subObj.newphone.length==0){
       this.toast("请输入新手机号")
     }else if(!(/^1[34578]\d{9}$/.test(this.subObj.newphone))){
       this.toast("请输入正确的新手机号");
