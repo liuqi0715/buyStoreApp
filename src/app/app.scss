@@ -233,19 +233,18 @@ ion-app{
 	-ms-transform:translate(-50%,-50%);
 	-moz-transform:translate(-50%,-50%);
 	-webkit-transform:translate(-50%,-50%);
+	z-index: 1000;
 }
 .noNet img{
 	display: block;
 	width: 1.48rem;
 	height: 2.63rem;
-	z-index: 1000;
 }
 
 .noContent img{
 	display: block;
 	width: 2rem;
 	height: 2rem;
-	z-index: 1000;
 }
 
 //日期插件--------------
@@ -541,6 +540,14 @@ ion-alert.alert-top{
      font-size:42px !important;
  }
 }
+
+//弹出框
+.alert-sub-title{
+    text-align: initial;
+    color: black !important;
+    margin-top: .2rem;
+  }
+
 
 // .chooseList_dot{
 // 	display: inline-block;

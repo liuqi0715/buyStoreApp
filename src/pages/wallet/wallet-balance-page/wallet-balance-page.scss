@@ -53,11 +53,12 @@ wallet-balance-page{
     }
     .getMoney{
         font-size: .25rem;
-        height: 3rem;
+        height: auto;
         width: 95%;
         margin: 0 auto;
         background-color: white;
         margin-bottom: .7rem;
+        padding-bottom: .25rem;
     }
     .getMoney ul li{
         list-style: none;
@@ -128,5 +129,10 @@ wallet-balance-page{
         text-indent: .25rem;
         color: #939192;
         margin-bottom: 0.75rem;
+    }
+    .hasCharge p{
+        text-indent: .25rem;
+        line-height: .5rem;
+        color: #939192;
     }
 }

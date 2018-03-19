@@ -71,7 +71,7 @@ export class chartConfig {
                 type: 'value',
                 min: 0,
                 max: 0,
-                splitNumber:5,      //200
+                splitNumber:10,      //200
                 axisLine:{              //这个属性是改变坐标轴X轴颜色，和字体颜色
                     lineStyle:{
                         color:'#88CCC8',

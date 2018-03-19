@@ -49,6 +49,7 @@ export class TabSell {
   alias: string = 'test';
   // msgList:Array<any>=[];
   msgList:any = {};
+  firstClick:boolean=true;
   // firstTime1:any = true;
   // firstTime2:any = true;
   devicePlatform:any = {};
@@ -70,6 +71,7 @@ export class TabSell {
     this.orderActive = true;    /****/
     this.firstLoad = false;
     this.getInfoDatas(null);
+    this.checkNetwork();
     // this.initJPush();
   }
 
@@ -82,24 +84,22 @@ export class TabSell {
      }
   }
 
-  ionViewWillEnter() {
-     var slideIdx = sessionStorage.getItem("infoIdx");
-     if(this.oSwiper1){
-        this.oSwiper1.startAutoplay();
-     }
-     if(this.swiper1){
-        this.swiper1.startAutoplay();
-     }
-     if(this.swiper2){
-       console.log(slideIdx);
-        this.swiper2.slideTo(slideIdx, 10, false);
-     }
-     this.checkNetwork();
-  }
-
   ionViewDidEnter() {
+    var self = this;
+    var slideIdx = sessionStorage.getItem("infoIdx");
     if(sessionStorage.getItem("firstLoad") == "false" && this.offline==false){
         this.getInfoDatas(null);
+    }
+    if(this.oSwiper1){
+        this.oSwiper1.startAutoplay();
+    }
+    if(this.swiper1){
+        this.swiper1.startAutoplay();
+    }
+    if(this.swiper2){
+       setTimeout(function(){
+         self.swiper2.slideTo(slideIdx, 10, false);
+       },200);
     }
   }
 
@@ -151,12 +151,15 @@ export class TabSell {
         if(resp.errorinfo == null){
            if(self.oSwiper1){
               self.oSwiper1.destroy(false);
+              self.oSwiper1 = null;
            }
            if(self.swiper1){
               self.swiper1.destroy(false);
+              self.swiper1 = null;
            }
            if(self.swiper2){
               self.swiper2.destroy(false);
+              self.swiper2 = null;
            }
            sessionStorage.setItem("infoIdx",'0');
            self.datas = resp.data;
@@ -235,8 +238,8 @@ export class TabSell {
                   option.xAxis.data.push(chartData[j].date);
                   option.series[0].data.push(chartData[j].price);
               }
-              option.yAxis.min = Math.min.apply(null, option.series[0].data) - Math.min.apply(null, option.series[0].data)/2;
-              option.yAxis.max = Math.max.apply(null, option.series[0].data) + Math.max.apply(null, option.series[0].data)/2;
+              option.yAxis.min = Math.min.apply(null, option.series[0].data) - Math.min.apply(null, option.series[0].data)/10;
+              option.yAxis.max = Math.max.apply(null, option.series[0].data) + Math.max.apply(null, option.series[0].data)/10;
               if(i == 0){
                 option_l = option;
               }else if(i == chartDatas.length - 1){
@@ -306,56 +309,60 @@ export class TabSell {
 
   }
 
-  goOrderDetail(orderCard){
+  goOrderDetail(orderCard){ 
+    let self = this; 
+    if(self.firstClick == true){
+        self.firstClick = false;
+        if(this.offline == true){
+            this.toast('无网络连接，请检查');
+            return;
+        }
 
-    if(this.offline == true){
-        this.toast('无网络连接，请检查');
-        return;
+        let data = {
+           "data":{
+
+           },
+           "token":this.servicesInfo.token
+        };
+        this.urlService.postDatas(SELLORDER_URL,data).then(function(resp){
+            self.firstClick = true;
+            if(resp){
+              if(resp.errorinfo == null){
+
+                self.orderCard = resp.data.orderInfo;
+                if(self.orderCard.pathway == "1"){
+                  self.navCtrl.push(orderDetailPage, {
+                    "orderNo":orderCard.orderNo
+                  });
+                }else if(self.orderCard.pathway == "2"){
+                  self.navCtrl.push(orderAgreePage, {
+                    "orderNo":orderCard.orderNo
+                  });
+                }else{
+                  self.navCtrl.push(orderCommentPage, {
+                    "orderId":orderCard.orderId,
+                    "orderNo":orderCard.orderNo,
+                    "recycleId":orderCard.recycleId,
+                    "recyclePhone":orderCard.recyclePhone
+                  });
+                }
+
+              }else{
+                if(resp.errorinfo.errorcode=="10003"){
+                  self.app.getRootNav().setRoot(UserLogin);
+                }
+              }
+            }
+        }).catch(function(err){
+           self.firstClick = true;
+        });
     }
 
-    let self = this;
-
-    let data = {
-       "data":{
-
-       },
-       "token":this.servicesInfo.token
-    };
-
-    this.urlService.postDatas(SELLORDER_URL,data).then(function(resp){
-      if(resp){
-        if(resp.errorinfo == null){
-
-          self.orderCard = resp.data.orderInfo;
-          if(self.orderCard.pathway == "1"){
-            self.navCtrl.push(orderDetailPage, {
-              "orderNo":orderCard.orderNo
-            });
-          }else if(self.orderCard.pathway == "2"){
-            self.navCtrl.push(orderAgreePage, {
-              "orderNo":orderCard.orderNo
-           });
-          }else{
-            self.navCtrl.push(orderCommentPage, {
-              "orderId":orderCard.orderId,
-              "orderNo":orderCard.orderNo,
-              "recycleId":orderCard.recycleId,
-              "recyclePhone":orderCard.recyclePhone
-            });
-          }
-
-        }else{
-          if(resp.errorinfo.errorcode=="10003"){
-            self.app.getRootNav().setRoot(UserLogin);
-          }
-        }
-      }
-    });
   }
 
   // 初始化滚动条
   private initNoticeSlide() {
-
+    $("#noticeSlider .swiper-wrapper").empty();
     function addNotice(data){
         return '<div class="swiper-slide"><div class="swiper-slide">'+'<span>'+ data.createTime +'</span>'+'<span>'+ data.catName +'</span>'+'<span>'+ data.weightRec +'</span>'+'<span>'+ data.priceRec +'</span>'+'</div></div>';
     }  
@@ -367,7 +374,7 @@ export class TabSell {
 
     this.swiper1 = new Swiper('#noticeSlider', {
       direction:'vertical',
-      autoplay: 2000,
+      autoplay: 3000,
       loop: true,
       observer:true,
       observeParents:true
@@ -438,34 +445,31 @@ private initInfoBox(infoDatas) {
       }
 
       this.swiper2 = new Swiper('.infoSlide', {
-        roundLengths : false, 
+        // roundLengths : false, 
         initialSlide :0,
         // speed:600,
         // autoplay :false,
-        slidesPerView :"auto",
-        centeredSlides : true,
-        followFinger : false,
+        // followFinger : false,
         observer :true,
         observeParents :true,
-        watchSlidesProgress : true
-      });
+        slidesPerView : 'auto',
+        centeredSlides : true,
+        watchSlidesProgress : true,
+        onProgress: function(swiper){
+            for (var i = 0; i < swiper.slides.length; i++){
+              var slide = swiper.slides[i];
+              var progress = slide.progress;
+          // scale = 1 - Math.min(Math.abs(progress * 0.2), 1);
+              var es = slide.style;
+              es.opacity = 1 - Math.min(Math.abs(progress/2),1);
+              es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform = 'translate3d(0px,0,'+(-Math.abs(progress*150))+'px)';
 
-      self.swiper2.slides[1].style.transform='scale(0.95)';
-      $("#home-swiper-navL").show();
-      if(this.swiper2.on){
-          this.swiper2.on('slideChangeEnd',function(swiper){
-            swiper.unlockSwipes();    
+            }
+        },
+        onSetTransition: function(swiper, speed) {
             self.recycleIdx = swiper.activeIndex;
             sessionStorage.setItem("infoIdx",self.recycleIdx);
-            self.swiper2.slides[swiper.activeIndex].style.transform='scale(1)';
-            if(swiper.activeIndex + 1 <= datas.collectorList.length - 1){
-              self.swiper2.slides[swiper.activeIndex + 1].style.transform='scale(0.95)';
-            }
-            
-            if(swiper.activeIndex - 1 >= 0){
-              self.swiper2.slides[swiper.activeIndex - 1].style.transform='scale(0.95)';
-            }
-            
+            // console.log(self.recycleIdx);
             if(swiper.activeIndex == 0){
               $("#home-swiper-navL").show();
             }else{
@@ -477,23 +481,22 @@ private initInfoBox(infoDatas) {
             }else{
               $("#home-swiper-navR").hide();
             }
-           
-          });
+            
+            for (var i = 0; i < swiper.slides.length; i++) {
+              var es = swiper.slides[i].style;
+              es.webkitTransitionDuration = es.MsTransitionDuration = es.msTransitionDuration = es.MozTransitionDuration = es.OTransitionDuration = es.transitionDuration = speed + 'ms';
+            }
+        }
+      });
 
-        // this.swiper2.on('progress',function(swiper, progress){
-        //   var slide = swiper.slides[self.recycleIdx];
-        //   var es = slide.style;
-        //   es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform = 'scale('+1*slide.progress+')';
-          
-        //   if(self.recycleIdx + 1 <= datas.collectorList.length - 1){
-        //     var slide1 = swiper.slides[self.recycleIdx + 1];
-        //     var es1 = slide1.style;
-        //     es1.webkitTransform = es1.MsTransform = es1.msTransform = es1.MozTransform = es1.OTransform = es1.transform = 'scale('+1*slide.progress+')';
-        //   }
+      // self.swiper2.slides[1].style.transform='scale(0.95)';
+      $("#home-swiper-navL").show();
+      // if(this.swiper2.on){
+      //     this.swiper2.on('slideChangeEnd',function(swiper){
+      //       swiper.unlockSwipes();              
+      //     });
+      // }
 
-        // });
-
-      }
       self.publicOnly = false;
       self.recycleIdx = 0;
   }else{

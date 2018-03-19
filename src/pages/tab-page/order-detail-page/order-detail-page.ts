@@ -10,6 +10,7 @@ import { Network } from '@ionic-native/network';
 import { App } from 'ionic-angular';
 import { UserLogin } from "../../../modules/user-login/user-login";
 // declare let cordova:any;
+declare var $; 
 declare var BMap;
 declare let baidumap_location: any;
 @Component({
@@ -189,10 +190,12 @@ export class orderDetailPage {
           }
           this.map.centerAndZoom(point2, level);
       }
-      this.map.addEventListener('touchstart',function(){  
+      this.map.addEventListener('touchstart',function(){ 
+        $("#od_map_tip").hide();
         self.touchTime = Math.floor(new Date().getTime());
       });
       this.map.addEventListener('touchend',function(){
+        $("#od_map_tip").show();
         (self.duration as any) = Math.floor(new Date().getTime() - self.touchTime); 
         if(self.duration < 100){
           self.mapDetail();

@@ -7,23 +7,19 @@
 
   <section class="input_list">
 
-    <div class="input_list_item">
+    <div class="input_list_item" id="input_list_itemInfo">
       <label>持卡人</label>
-      <input type="text" [(ngModel)] = "subObj.userName" placeholder="请输入您的银行开户姓名">
+      <!-- <input type="text" [(ngModel)] = "subObj.userName" placeholder="请输入您的银行开户姓名"> -->
+      {{subObj.userName}}
+      <img src="assets/img/wallet/bangzhu.png" alt="" class="nameInfo" (click)="showInfo()">
     </div>
 
-    <!-- <div class="input_list_item">
-      <label stacked>手机号</label>
-      <input type="tel" [(ngModel)] = "subObj.phone" placeholder="请输入您的银行预留手机号码">
-    </div>
-    <div class="input_list_item">
-      <label stacked>身份证号</label>
-      <input type="tel" [(ngModel)] = "subObj.personNo" placeholder="请输入您的身份证号" >
-    </div> -->
+
     <div class="input_list_item">
       <label stacked>银行卡号</label>
       <input type="tel" [(ngModel)]="subObj.bankNo" placeholder="请输入您的银行卡号"   (keyup)="changeNo()" (blur)="checkBankInfo2()">
       <!-- (blur)="checkBankInfo()" -->
+      <img src="assets/img/wallet/getBInfo.png" alt="" class="nameInfo" (click)="checkBImg()">
     </div>
     <div class="input_list_item itemAno" style="position: relative;" (click)="goBankInfo()">
         {{bankCodeInfo}}

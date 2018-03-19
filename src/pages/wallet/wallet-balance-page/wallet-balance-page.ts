@@ -48,7 +48,51 @@ export class BalancePage {
     "DBTXZD":"0",
     "DBTXZG":"0",
     "DRTXZG":"0",
+    "TXFLZD":0,    //提现最低费用
+    "TXFL":"0.0003",    //提现费率
+    "TXFLZG":200,      //单笔提现手续费最高
   };  //提现金额的限制
+  hasCharge = true;  //控制手续费的显示
+  showCharge = false;  //默认不显示手续费值
+  needCharge;          //提现需要多少费率
+  needCharge2;          //暂时存一下  
+
+  eventData = [
+    {
+    "day": 1519516800,
+    "class": "weekend",
+    "text": "2月25日",
+    "editlinks": true,
+    "hisLinks": false,
+    "pclass": "num other_month_num",
+    "isHoliday": true,
+    "showHoliday": false,
+    "num": null,
+    "tnum": null
+    },
+    {
+    "day": 1519603200,
+    "class": "weekend",
+    "text": "2月26日",
+    "editlinks": true,
+    "hisLinks": false,
+    "pclass": "num other_month_num",
+    "isHoliday": false,
+    "showHoliday": false,
+    "num": null,
+    "tnum": null
+    }];
+
+    
+    ionViewDidEnter(){
+      let a;
+      for(a in this.eventData){
+            if(this.eventData[a].day===1519603200){
+              console.log(this.eventData[a].pclass)
+            }
+           
+      }
+    }
   toast(actions){
     let toast = this.toastCtrl.create({
       message: actions,
@@ -76,17 +120,27 @@ export class BalancePage {
   
   allIn(){
     this.balance = this.balance2;
+    this.hasCharge = false;  //控制手续费的显示
+    this.showCharge = true;  //默认不显示手续费值
+    this.needCharge2 = (this.balance*Number(this.acctInfo.TXFL)).toFixed(2);
+    if(this.needCharge2>200){
+      this.needCharge = 200
+    }else{
+      this.needCharge = this.needCharge2;
+    }
   }
   affirmGet(){
-    
-      let pattern = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/
+    // if(this.acctInfo.DBTXZD>this.balance||this.balance>this.acctInfo.DBTXZG){
+    //   this.toast("提现金额范围有误。");
+    //   this.balance = "";
+    //   this.needCharge = 0;
+    // }else
+      let pattern = /^([1-9][\d]{0,9}|0)(\.[\d]{1,2})?$/
       if(pattern.test(this.balance)==false){
         this.toast("金额输入有误。");
         this.balance = "";
-      }else if(this.acctInfo.DBTXZD>this.balance||this.balance>this.acctInfo.DBTXZG){
-        this.toast("提现金额范围有误。");
-        this.balance = "";
-      }else{
+        this.needCharge = 0;        
+      }else {
         this.hasSuccess = true;
         let params={
           "data":{
@@ -106,8 +160,6 @@ export class BalancePage {
           if(resp){
               if(resp.errorinfo==null){
                 self.hasSuccess = false;
-                  // window.location.href = resp.data.resultUrl;
-                  // window.open(resp.data.resultUrl,"_self")
                   let options = {
                     location: 'yes',
                     clearcache: 'yes',
@@ -132,6 +184,7 @@ export class BalancePage {
 
               }else{
                   self.toast(resp.errorinfo.errormessage);
+                  self.balance = "";
                   self.hasSuccess = false;
                   if(resp.errorinfo.errorcode=="10003"){
                     self.app.getRootNav().setRoot(UserLogin);
@@ -243,27 +296,48 @@ this.urlService.postDatas(interfaceUrls.getSubAccountAmount,param2).then(functio
   a = 0;
  changeMon(){
     this.balance = (this.balance).replace(/[^\d^\.]+/g,'');
-    let regMoney = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
+    let regMoney = /^([1-9][\d]{0,9}|0)(\.[\d]{1,2})?$/;
     console.log(this.balance)
     
-    if(this.balance.length>1){
+    if(this.balance.length>=1){
       if(regMoney.test(this.balance)==false){
         this.a = this.a+1
         if(this.a>1){
           this.balance = ""
           this.toast("金额输入有误。");
           this.a = 0;
+          this.needCharge = 0;
+          
+        }if(this.balance>99999999999){
+          this.balance = "";
+          // this.toast("金额输入有误。");
+          this.needCharge = 0;
         }
        
       }else{
-        // if(this.acctInfo.DBTXZD>this.balance||this.balance>this.acctInfo.DBTXZG){
-        //   this.toast("单笔提现金额有误。")
-        // }else{
-        //   this.balance = this.balance;
-        // }
         this.balance = this.balance;
+        this.hasCharge = false;  //控制手续费的显示
+        this.showCharge = true;  //默认不显示手续费值
+       
+        this.needCharge2 = (this.balance*Number(this.acctInfo.TXFL)).toFixed(2);
+        if(this.needCharge2>200){
+          this.needCharge = 200
+        }else{
+          this.needCharge = this.needCharge2;
+        }
       }
     
+    }else if(this.balance.length<=1){
+      console.log("??")
+        if(regMoney.test(this.balance)==true){
+          console.log("==")
+          this.needCharge2 = (this.balance*Number(this.acctInfo.TXFL)).toFixed(2);
+          if(this.needCharge2>200){
+            this.needCharge = 200
+          }else{
+            this.needCharge = this.needCharge2;
+          }
+        }
     }
  }
 
@@ -281,7 +355,7 @@ this.urlService.postDatas(interfaceUrls.getSubAccountAmount,param2).then(functio
    if(resp){
        if(resp.errorinfo==null){
           console.log(resp)
-          self2.acctInfo = resp.data.data;
+          self2.acctInfo = resp.data;
           console.log(self2.acctInfo)
        }else{
          self2.toast(resp.errorinfo.errormessage);

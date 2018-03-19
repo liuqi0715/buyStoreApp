@@ -26,10 +26,15 @@
                 <input type="tel" class="money" [(ngModel)]="balance" (keyup)="changeMon()">
                 <span id="allIn" (click)="allIn()">全部提现</span>
             </li>
-            <li>
+            <li *ngIf="hasCharge">
                 可用余额{{cashAmount}}元
             </li>
+
         </ul>
+        <div *ngIf="showCharge" class="hasCharge">
+            <p>额外扣除￥{{needCharge}}元手续费（费率{{acctInfo.TXFL}}，{{acctInfo.TXFLZG}}元封顶）。</p>
+            <p>活动期间平台补贴￥{{needCharge}}元手续费，实际手续费0元。</p>
+        </div>
     </div>
     <div class="accTInfo">
         <ul>

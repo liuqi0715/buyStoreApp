@@ -113,9 +113,7 @@ export class myInfoPage {
   
 
   takePicture(){
-    console.log(this.servicesInfo.userPhone)
-    console.log("门店照片");
-    console.log(this.camera,"???")
+ 
     const options: CameraOptions = {
         quality: 100,
         destinationType: this.camera.DestinationType.FILE_URI,
@@ -140,7 +138,7 @@ export class myInfoPage {
 
 
       }, (err) => {
-        this.toast("上传头像添加失败。")
+        this.toast("上传头像失败。")
       });
 }
 //选择照片上传
@@ -164,7 +162,7 @@ shosePicture(){
         )
     .catch(
         function(e){         
-          self0.toast("照片添加失败。")
+          self0.toast("上传头像失败。")
         }
     );
 }
@@ -239,10 +237,10 @@ uploadStoreImg() {
       ],
       buttons: [
         {
-          text: '取消',
+          text: '关闭',
           handler: data => {
             console.log('Cancel clicked',data);
-            self.toast("操作取消");
+            // self.toast("操作取消");
           }
         },
         {
@@ -250,7 +248,7 @@ uploadStoreImg() {
           handler: data => {
             console.log('Saved clicked',data);
             if(data.WXphone==""){
-              self.toast("未进行修改")
+              // self.toast("未进行修改")
             }else{
               self.changeWxPhone(data);
             }

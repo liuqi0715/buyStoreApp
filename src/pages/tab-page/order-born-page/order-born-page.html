@@ -4,10 +4,10 @@
   </ion-navbar>
 </ion-header>
 
-<div class="bOrder_subbar">
+<ion-row class="bOrder_subbar">
     <div class="bOrder_subbar_item" *ngFor="let title of navTitle, let idx = index" (click)="slcItem(idx)">{{title}}</div>
     <div id="initSlideLine"></div>
-</div>
+</ion-row>
 <ion-content class="bOrder_main" has-bouncing="true">
     <div class="bOrder_slcbox" *ngFor="let m of models, let idx = index">
          <div class="bOrder_slcbox_l">

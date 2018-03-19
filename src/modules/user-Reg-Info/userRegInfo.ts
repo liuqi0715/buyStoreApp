@@ -37,7 +37,7 @@ export class UserRegInfo {
 
     hasClick=false;
     hq = "获取验证码";
-    num = 120;
+    num = 60;
     agreeI=false;    //阅读并同意协议
 
     hasSuccess=false;    //显示模态框
@@ -191,7 +191,7 @@ export class UserRegInfo {
                             clearInterval(timer);
                             self.hasClick = false;
                             self.hq = "重新获取";
-                            self.num = 120;
+                            self.num = 60;
                             return;
                         }
                         self.num--;

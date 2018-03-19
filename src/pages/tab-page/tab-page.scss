@@ -1,13 +1,51 @@
 page-learn-tab-page {
-  .tabs-md .tab-button {
-    min-height: 5rem;
-  }
+	.tabs-md .tab-button {
+		min-height: 5rem;
+	}
 
-  .tab-button-icon {
-    color: rgba(103, 103, 103, 0.7) !important;
-  }
+	.tab-button-icon {
+		color: rgba(103, 103, 103, 0.7) !important;
+	}
 
-  .tab-button[aria-selected=true] .tab-button-icon {
-    color: #387ef5 !important;
-  }
+	.tab-button[aria-selected=true] .tab-button-icon,.tabs-ios .tab-button:hover:not(.disable-hover), .tabs-ios .tab-button[aria-selected=true]{
+		color: #59BEB2 !important;
+	}
+
+	.ion-tab-icon-base {
+		width: 32px !important;
+		height: 32px !important;
+		padding: 4px 4px 2px;
+		min-width: 0 !important;
+		height: 32px;
+	}
+
+	$tabImageName: 'home' 'mine';
+	@for $i from 1 to 3 {
+		//for ios
+	    .ion-ios-tab-#{nth($tabImageName, $i)} {
+	        @extend .ion-tab-icon-base;
+	        content: url("../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_on.png");
+	    }
+	    .ion-ios-tab-#{nth($tabImageName, $i)}-outline {
+	        @extend .ion-tab-icon-base;
+	        content: url("../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_off.png");
+	    }
+	// for android
+		.tab-button[aria-selected=true] {
+			.ion-tab-#{nth($tabImageName, $i)} {
+				@extend .ion-tab-icon-base;
+				content: url("../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_on.png");
+			} 
+		}
+		.tab-button[aria-selected=false] {
+			.ion-tab-#{nth($tabImageName, $i)} {
+				@extend .ion-tab-icon-base;
+				content: url("../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_off.png");
+			}
+		}
+	}
+	.ion-ios-tab-task,.ion-ios-tab-task-outline,.ion-ios-tab-master,.ion-ios-tab-master-outline{
+		width: 30px !important;
+		height: 32px !important;
+	}
 }

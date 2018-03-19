@@ -34,4 +34,19 @@ wallet-addCard-page {
   .input_list label{
     width: 20%;
   }
+  .input_list_item{
+    position: relative;
+    line-height: .8rem;
+  }
+  .nameInfo{
+    position: absolute;
+    right: 1%;
+    top: .05rem;
+    width: .65rem;
+  }
+  .alert-sub-title{
+    text-align: initial;
+    color: black !important;
+    margin-top: .2rem;
+  }
 }
