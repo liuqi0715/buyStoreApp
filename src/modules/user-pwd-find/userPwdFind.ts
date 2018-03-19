@@ -46,7 +46,7 @@ export class UserPwdFind {
     toast(actions){
         let toast = this.toastCtrl.create({
           message: actions,
-          duration: 2000,
+          duration: 3000,
           position:'bottom'
 
         });
@@ -115,13 +115,11 @@ export class UserPwdFind {
                 console.log(resp)
                 if(resp){
                     if(resp.errorinfo==null){
-                        console.log(resp.data);
                         setTimeout(function(){
                             self.toast("密码修改成功,请重新登录。")
                             localStorage.setItem("token","");
                             self.navCtrl.pop();
-                          },2000);
-                      
+                        },2000);
                     }else{
                         console.log(resp,"??")
                         // self.errorTip = true;

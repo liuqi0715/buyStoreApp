@@ -22,9 +22,11 @@ order-agree-page {
   }
   .oa_content{
     position: absolute;
+    width: 100%;
     height: auto;
     top: 4.2rem;
     bottom: 1rem;
+    overflow: scroll;
     background: #F3F5F5;
   }
   .oa_content_noBottom{
@@ -56,22 +58,22 @@ order-agree-page {
     top: 1.2rem;
     color: #FFF;
     text-align: center;
-    border-radius: 50%;
-    overflow: hidden;
     transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     -o-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
-    border: .06rem solid rgba(255,255,255,.3);
+    background: url(../assets/img/orderDetail/circle.png);
+    background-size: 100% 100%;
   }
-  // .oa_display_inner img{
-  //   position: absolute;
-  //   top: -.08rem;
-  //   left: .28rem;
-  //   width: 2.46rem;
-  //   height: 2.46rem;
-  // }
+  .oa_display_inner img{
+    position: absolute;
+    display: block;
+    top: 0rem;
+    left: 0rem;
+    width: 2.46rem;
+    height: 2.46rem;
+  }
   .oa_display_inner h4{
     font-size: .36rem;
     margin: .8rem auto .3rem;
@@ -146,17 +148,20 @@ order-agree-page {
     float: right;
   }
   .od_detailList{
-    padding: .2rem .2rem .1rem;
+    padding: 0 0 .2rem .5rem;
   }
-  .od_detailList p{
-    font-size: .3rem;
+  .od_detailList li{
+    display: inline-block;
+    width: 48%;
+    font-size: .28rem;
     color: #68828D;
-    text-indent: .8rem;
-    margin-bottom: .2rem;
+    text-align: left;
+    margin: 0 0 .1rem 0;
   }
   .oa_table{
     width: 95%;
     margin-top: 0;
+    clear: both;
     border-radius: 0 0 .12rem .12rem;
     box-shadow: 0 0.04rem 0.08rem rgba(0, 0, 0, 0.1);
   }
@@ -173,5 +178,42 @@ order-agree-page {
   .oc_table td span{
     height: .36rem;
     line-height: .36rem;
+  }
+  #oa_total .oc_box_nav{
+    padding: 0;
+    height: .8rem;
+  }
+  #oa_total .oc_box_nav p{
+    width: 2.6rem;
+    height: .4rem;
+    color: #80CECE;
+    background: #FFF;
+    text-indent: .5rem;
+    font-size: .28rem;
+    line-height: .4rem;
+    border-radius: 0 .8rem .8rem 0;
+    margin: .2rem 0 0 0;
+  }
+  #oa_total .od_detailList{
+    padding-bottom: .06rem;
+    background: #80CECE;
+  }
+  #oa_total .oc_box_nav{
+    border-bottom: none;
+    background: #80CECE;
+    color: #FFF;
+  }
+  #oa_total .od_detailList li{
+    color: #FFF;
+  }
+  .spining {
+      -webkit-animation: rotation1 5s ease-in-out infinite;
+      animation: rotation1 5s ease-in-out infinite;
+  }
+  @-webkit-keyframes rotation1{
+      0%{
+        -webkit-transform: rotate(0deg);
+      }
+      100%{-webkit-transform: rotate(360deg);}
   }
 }

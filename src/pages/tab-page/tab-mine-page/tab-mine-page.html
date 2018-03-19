@@ -46,13 +46,13 @@
   <!-- <ion-spinner name="bubbles"></ion-spinner> -->
 
   <div class="info">
-    <p class="fontS" (click)="goBasicInfo()"> <img src="assets/img/wallet/jiben.png" class="iconImg iconImg2">基本信息 <img alt="" src="assets/img/wallet/gengduo.png" class="more"></p>
-    <p class="fontS" *ngIf="whetherAccount" (click)="goAccount()"> <img src="assets/img/wallet/kaihu.png" class="iconImg iconImg2">开户 <img alt="" src="assets/img/wallet/gengduo.png" class="more"></p>
+    <section class="fontS" (click)="goBasicInfo()"> <img src="assets/img/wallet/jiben.png" class="iconImg iconImg2">基本信息 <img alt="" src="assets/img/wallet/gengduo.png" class="more"></section>
+    <section  class="fontS" *ngIf="whetherAccount" (click)="goAccount()"> <img src="assets/img/wallet/kaihu.png" class="iconImg iconImg2">开户 <img alt="" src="assets/img/wallet/gengduo.png" class="more"></section>
   </div>
   <div class="asked">
-      <a href="tel:4006800913" style="color:#000;text-decoration:none;"><p class="fontS"> <img src="assets/img/wallet/dianhua.png" class="iconImg iconImg2">联系客服<img alt="" src="assets/img/wallet/gengduo.png" class="more"></p></a>
-      <p class="fontS" (click)="editPassword()"> <img src="assets/img/wallet/mima.png" class="iconImg iconImg2">修改登录密码 <img alt="" src="assets/img/wallet/gengduo.png" class="more"></p>
-      <p class="fontS"  (click)="exitApp()"> <img src="assets/img/wallet/exitApp.png" class="iconImg iconImg2" id="exitApp">退出登录 <img alt="" src="assets/img/wallet/gengduo.png" class="more"></p>
+      <a href="tel:4006800913" style="color:#000;text-decoration:none;"><section class="fontS"> <img src="assets/img/wallet/dianhua.png" class="iconImg iconImg2">联系客服<img alt="" src="assets/img/wallet/gengduo.png" class="more"></section ></a>
+      <section class="fontS" (click)="editPassword()"> <img src="assets/img/wallet/mima.png" class="iconImg iconImg2">修改登录密码 <img alt="" src="assets/img/wallet/gengduo.png" class="more"></section>
+      <section class="fontS"  (click)="exitApp()"> <img src="assets/img/wallet/exitApp.png" class="iconImg iconImg2" id="exitApp">退出登录 <img alt="" src="assets/img/wallet/gengduo.png" class="more"></section>
   </div>
   <!-- <div class="motai" *ngIf="hasSuccess">
     <img src="assets/img/login/loading.gif" alt="" id="loading">

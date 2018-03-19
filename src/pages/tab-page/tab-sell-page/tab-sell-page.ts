@@ -42,7 +42,6 @@ export class TabSell {
   public orderActive = true;
   public datas = "";
   offline:boolean=false;
-  firstLoad:boolean=true;
   publicOnly:boolean=false;
   recycleIdx = null;
   orderCard: any = {};
@@ -69,13 +68,11 @@ export class TabSell {
 
   ionViewDidLoad() {
     this.orderActive = true;    /****/
-    this.firstLoad = false;
-    this.getInfoDatas(null);
     this.checkNetwork();
     // this.initJPush();
   }
 
-  ionViewDidLeave() {
+  ionViewWillLeave() {
      if(this.oSwiper1){
         this.oSwiper1.stopAutoplay();
      }
@@ -85,22 +82,7 @@ export class TabSell {
   }
 
   ionViewDidEnter() {
-    var self = this;
-    var slideIdx = sessionStorage.getItem("infoIdx");
-    if(sessionStorage.getItem("firstLoad") == "false" && this.offline==false){
-        this.getInfoDatas(null);
-    }
-    if(this.oSwiper1){
-        this.oSwiper1.startAutoplay();
-    }
-    if(this.swiper1){
-        this.swiper1.startAutoplay();
-    }
-    if(this.swiper2){
-       setTimeout(function(){
-         self.swiper2.slideTo(slideIdx, 10, false);
-       },200);
-    }
+    this.getInfoDatas(null);
   }
 
   doRefresh(refresher) {
@@ -137,7 +119,6 @@ export class TabSell {
   }
 
   getInfoDatas(refresher){
-    sessionStorage.setItem("firstLoad", "false");
     let data = {
        "data":{
 
@@ -183,6 +164,12 @@ export class TabSell {
          if(refresher){
            refresher.cancel();
          }
+         if(self.oSwiper1){
+            self.oSwiper1.startAutoplay();
+         }
+         if(self.swiper1){
+            self.swiper1.startAutoplay();
+         }
          self.toast("服务器异常，请重试");
     });
     this.urlService.postDatas(SELLORDER_URL,data).then(function(resp){
@@ -221,7 +208,6 @@ export class TabSell {
 
     // this.oSwiper1.appendSlide(addSwiper(i+1));
     var chartDatas = (this.datas as any).refPriceList;
-    
     if(chartDatas){
       for(var i = 0;i < chartDatas.length;i++){      
           htmlContain = htmlContain + addSwiper(chartDatas[i].catName,i+1);
@@ -234,12 +220,17 @@ export class TabSell {
               option.xAxis.data = [];
               option.series[0].data = [];
               var chartData = chartDatas[i].timePriceArry;
+              var obj = {
+                date:" ",
+                price:""
+              }
+              chartData.unshift(obj);
               for(var j = chartData.length - 1;j>=0;j--){
                   option.xAxis.data.push(chartData[j].date);
                   option.series[0].data.push(chartData[j].price);
               }
-              option.yAxis.min = Math.min.apply(null, option.series[0].data) - Math.min.apply(null, option.series[0].data)/10;
-              option.yAxis.max = Math.max.apply(null, option.series[0].data) + Math.max.apply(null, option.series[0].data)/10;
+              option.yAxis.min = Math.min.apply(null, option.series[0].data) - Math.min.apply(null, option.series[0].data)/2;
+              option.yAxis.max = Math.max.apply(null, option.series[0].data) + Math.max.apply(null, option.series[0].data)/2;
               if(i == 0){
                 option_l = option;
               }else if(i == chartDatas.length - 1){
@@ -255,7 +246,7 @@ export class TabSell {
             // slidesPerView: 0,
             paginationClickable: true,
             // centeredSlides: true,
-            autoplay: 2000,
+            autoplay: 5000,
             autoplayDisableOnInteraction: false,
             loop: true,
             // 如果需要分页器
@@ -374,10 +365,11 @@ export class TabSell {
 
     this.swiper1 = new Swiper('#noticeSlider', {
       direction:'vertical',
-      autoplay: 3000,
+      autoplay: 3500,
       loop: true,
       observer:true,
-      observeParents:true
+      observeParents:true,
+      autoplayDisableOnInteraction: false
     });
   }
 

@@ -44,7 +44,7 @@ export class UserOpenAccount {
     let toast = this.toastCtrl.create({
         message: actions,
         duration: 3000,
-        position:'bottom'
+        position:'middle'
 
     });
     toast.present();
@@ -93,7 +93,7 @@ export class UserOpenAccount {
         }else if(reg.test(this.personNum)==false){
             this.toast("您的身份证号输入有误。")
         }else if(regName.test(this.personName)==false){
-                this.toast("姓名仅支持2-7为的汉字。")
+                this.toast("姓名仅支持2-7位的汉字。")
         }else if(!(/^1[34578]\d{9}$/.test(this.personPhone))){
             this.toast("手机号输入有误。")
         }else{

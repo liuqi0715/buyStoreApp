@@ -1,52 +1,62 @@
-<section class="oa_head">
-    <div class="oa_head_back" (click)="goBack()"><ion-icon name="arrow-back"></ion-icon></div>
-    <span>我的订单</span>
-</section>
-<section class="oa_display">
-    <div class="oa_display_inner">
-<!--       <img src="assets/img/orderDetail/tuxing.png" alt="tuxing.png"> -->
-      <h4>¥ {{datas.totalMoney}}元</h4>
-      <h6>{{datas.orderStatus}}</h6>
-    </div>
-    <div class="home-notice">
-      <img src="assets/img/sell/laba.png">
-      <span>{{datas.remarks}}</span>
-    </div>
-</section>
-<ion-content class="oa_content" [ngClass]="{oa_content_noBottom:datas.orderStatusId != 3}">
-  <div class="oa_conBox" *ngIf="offline == false"> 
-      <section class="oc_box oc_box_nav oa_box">
-        <img src="assets/img/orderDetail/biaodan.png" alt="biaodan"/>
-        <p>订单详情</p>
-        <span>{{datas.totalMoney}} 元</span>
-      </section>
-      <section class="od_table oc_table oa_table od_detailList">
-        <p *ngFor="let sm of datas.statements, let idx = index">{{sm.docType}} : <span>{{sm.amount}} 元</span></p>
-      </section>
-  </div>
-  <div *ngFor="let cat of catLists, let idx = index" class="oa_conBox"> 
-      <section class="oc_box oc_box_nav oa_box">
-        <img src="assets/img/orderDetail/biaodan.png" alt="biaodan"/>
-        <p>{{cat.catName}}</p>
-        <span>{{cat.catAmount}} 元</span>
-        <span style="margin-right:.3rem;">{{cat.catWeight}} kg </span>
-      </section>
-      <section class="od_table oc_table oa_table">
-          <table>
-              <tr *ngFor="let good of cat.orderGoodsList">
-                <td>{{good.modelName}}</td>
-<!--                 <td>{{good.quantityPre}}</td> -->
-                <td><span>{{good.unitPricePre}}</span> 元</td>
-                <td><span>{{good.quantityRec}}</span> 只</td>
-              </tr>
-          </table>
-      </section>
-  </div>
+<ion-content>
+
+  <section class="oa_head">
+      <div class="oa_head_back" (click)="goBack()"><ion-icon name="arrow-back"></ion-icon></div>
+      <span>我的订单</span>
+  </section>
+  <section class="oa_display">
+      <div class="oa_display_inner">
+        <img src="assets/img/orderDetail/circle_r.png" class="spining" alt="circle">
+        <h4>¥ {{datas.totalMoney}}元</h4>
+        <h6>{{datas.orderStatus}}</h6>
+      </div>
+      <div class="home-notice">
+        <img src="assets/img/sell/laba.png">
+        <span>{{datas.remarks}}</span>
+      </div>
+  </section>
+
+  <section class="oa_content" [ngClass]="{oa_content_noBottom:datas.orderStatusId != 3}">
+      <div class="oa_conBox" *ngIf="offline == false" id="oa_total"> 
+          <section class="oc_box oc_box_nav oa_box">
+<!--             <img src="assets/img/tabs/icon_home_on.png" alt="biaodan"/> -->
+            <p>订单详情</p>
+          </section>
+          <section class="od_table oc_table oa_table od_detailList">
+            <ul>
+               <li>总金额 : {{datas.totalMoney}} 元</li>
+               <li *ngFor="let sm of datas.statements, let idx = index">{{sm.docType}} : <span>{{sm.amount}} 元</span></li>
+            </ul>
+          </section>
+      </div>
+      <div *ngFor="let cat of catLists, let idx = index" class="oa_conBox"> 
+          <section class="oc_box oc_box_nav oa_box">
+            <img src="assets/img/orderDetail/biaodan.png" alt="biaodan"/>
+            <p>{{cat.catName}}</p>
+            <span>{{cat.catAmount}} 元</span>
+            <span style="margin-right:.3rem;">{{cat.catWeight}} kg </span>
+          </section>
+          <section class="od_table oc_table oa_table">
+              <table>
+                  <tr *ngFor="let good of cat.orderGoodsList">
+                    <td>{{good.modelName}}</td>
+    <!--                 <td>{{good.quantityPre}}</td> -->
+                    <td><span>{{good.unitPricePre}}</span> 元</td>
+                    <td><span>{{good.quantityRec}}</span> 只</td>
+                  </tr>
+              </table>
+          </section>
+      </div>
+  </section>
+
   <div class="noNet" style="margin: 1.1rem auto 0;" *ngIf="offline == true" (click)="reload()">
     <img src="assets/img/noNet.png" alt="无网络">
   </div>
+
+  <div class="bottomBar" *ngIf = "datas.orderStatusId == 3">
+    <div class="bottomBar_r oa_btn1" (click)="confirmOrder()">确认订单</div>
+  <!--   <div class="bottomBar_r oa_btn2" (click)="cancelOrder()">取消订单</div>  *ngIf = "datas.orderStatusId == 3"-->
+  </div>
+
 </ion-content>
-<div class="bottomBar" *ngIf = "datas.orderStatusId == 3">
-  <div class="bottomBar_r oa_btn1" (click)="confirmOrder()">确认订单</div>
-<!--   <div class="bottomBar_r oa_btn2" (click)="cancelOrder()">取消订单</div>  *ngIf = "datas.orderStatusId == 3"-->
-</div>
+

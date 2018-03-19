@@ -1,8 +1,10 @@
 order-detail-page {
   .oc_content{
     position: absolute;
+    width: 100%;
     height: auto;
     bottom: 1rem;
+    overflow: scroll;
     background: #DFF0F0;
   }
 
@@ -30,7 +32,7 @@ order-detail-page {
     -ms-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
-    background: rgba(255,255,255,.6);
+    background: rgba(255,255,255,.8);
     z-index: 1000;
   }
   .od_map_circle{

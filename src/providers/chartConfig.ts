@@ -28,9 +28,9 @@ export class chartConfig {
             // },
             grid: {
                 left: '4%',
-                right: '5%',
+                right: '-3%',
                 bottom: '19%',
-                top:"6%",
+                top:"10%",
                 containLabel: true,
             },
             label:{ 
@@ -56,9 +56,6 @@ export class chartConfig {
                              color:'#FFF',
                              width:Math.ceil(2*ratio),//这里是为了突出显示加上的,这里是X轴宽度
                          }
-                },
-                nameTextStyle:{
-                  color:'#FFF'
                 }
                 // splitLine: {        //这里设置的是分割线条的颜色
                 //     lineStyle: {
@@ -110,7 +107,7 @@ export class chartConfig {
                        color:'#FFF',
                        fontSize:Math.ceil(12*ratio),
                        position:'top',
-                       offset:[20,-10]
+                       offset:[10,-5]
                        // distance:10
                     },
                     data:null,      //接受数据++++++++++++++++++++++++

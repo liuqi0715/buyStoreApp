@@ -3,6 +3,7 @@
   <div #lyScroll id="home-content" class="scroll-content" scroll="false">
     <!--头部滚动条-->
     <div class="swiper-container headSlide">
+      <div class="home-cover"></div>
       <div class="swiper-wrapper headSlideBox">
         <div class="swiper-slide" *ngFor="let item of headerSlideData">
           <img class="swiper-img" alt="{{item.alt}}" src="{{item.src}}">

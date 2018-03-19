@@ -394,7 +394,7 @@ takePicture(){
       self.storeImage = imageData;
       self.uploadStoreImg();
 
-    }, (err) => { 
+    }, (err) => {
       self.toast("上传银行卡失败。")
     });
 }

@@ -63,7 +63,7 @@ li{
 .tab-button-icon{
 	margin-top: .04rem !important;
 	height: .6rem !important;
-	min-width: .7rem !important;
+	min-width: .6rem !important;
 	font-size: .6rem !important;
 }
 .tab-button-text{
@@ -500,6 +500,12 @@ ion-alert.alert-top{
 	font-weight: 500;
 }
 
+.alert-sub-title{
+text-align: initial;
+color: black !important;
+margin-top: .2rem;
+}
+
  @media only screen and (max-width: 424px) and (max-device-height:850px) {
  html,body {
      font-size:75px !important;
@@ -540,14 +546,6 @@ ion-alert.alert-top{
      font-size:42px !important;
  }
 }
-
-//弹出框
-.alert-sub-title{
-    text-align: initial;
-    color: black !important;
-    margin-top: .2rem;
-  }
-
 
 // .chooseList_dot{
 // 	display: inline-block;
