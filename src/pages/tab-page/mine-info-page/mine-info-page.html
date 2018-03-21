@@ -19,5 +19,8 @@
   <div class="mi_list"> 
     <span>微信账号</span><div id="mi_change"><img src="assets/img/wallet/changeWX.png" alt="" (click)="changeWX()"></div><span id="mi_WXphone">{{user.refereePhone}}</span>
   </div>
+  <div class="tm_headImg" *ngIf="openHeadImg" (click)="closeHeadImg()">
+    <img src="{{user.storeImage}}" alt="头像" onerror="javascript:this.src='assets/img/default.png';">
+</div>
 </ion-content>
 

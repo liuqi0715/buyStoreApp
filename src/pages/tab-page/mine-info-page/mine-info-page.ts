@@ -14,7 +14,7 @@ import { AlertController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { UserLogin } from "../../../modules/user-login/user-login";
 import { interfaceUrls } from "../../../providers/serviceUrls";
-
+declare var $; 
 @Component({
   selector: 'mine-info-page',
   templateUrl: 'mine-info-page.html',
@@ -27,6 +27,8 @@ export class myInfoPage {
   storeImage="";  //门店照片地址
   hasImg = true;  //默认显示图片
   WXphone="";  //微信账号
+  openHeadImg = false;  //点击扩大之后查看头像
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -98,6 +100,11 @@ export class myInfoPage {
           text: '从相册中选择',
           handler: () => {
              this.shosePicture()
+          }
+        },{
+          text: '查看大图',
+          handler: () => {
+             this.showPic()
           }
         },{
           text: '取消',
@@ -261,8 +268,18 @@ uploadStoreImg() {
     prompt.present();
   }
   
+//查看大图
 
 
+closeHeadImg(){
+  this.openHeadImg = false;
+  $("ion-header").css({"display":""})
+}
+showPic(){
+  this.openHeadImg = true;
+  $("ion-header").css({"display":"none"})
+  
+}
 
 
 }

@@ -18,7 +18,7 @@
 
   <div class="mine-header grid">
     <div class="big-title">我的</div>
-    <div class="headImg">
+    <div class="headImg" (click)="showHeadImg()">
       <img src="{{storeImage}}" alt="头像" onerror="javascript:this.src='assets/img/default.png';" class="imgHeader" id="userImg">
     </div>
     <div class="sub-title">{{userName}}</div>
@@ -57,4 +57,8 @@
   <!-- <div class="motai" *ngIf="hasSuccess">
     <img src="assets/img/login/loading.gif" alt="" id="loading">
   </div> -->
+  <div class="tm_headImg" *ngIf="openHeadImg" (click)="closeHeadImg()">
+    <img src="{{storeImage}}" alt="头像" onerror="javascript:this.src='assets/img/default.png';">
+  </div>
 </ion-content>
+

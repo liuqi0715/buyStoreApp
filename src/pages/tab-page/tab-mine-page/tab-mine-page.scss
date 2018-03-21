@@ -124,4 +124,39 @@ page-tab-more-page-page {
   .notReadMore{
     width: .5rem !important;
   }
+  .tm_headImg{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    // background-color: rgba($color: #ccc, $alpha: 0.8)
+    background-color: black;
+  }
+  .tm_headImg img{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -webkit-animation-name:'ripple';/*动画属性名，也就是我们前面keyframes定义的动画名*/
+    -webkit-animation-duration: 0.5s;/*动画持续时间*/
+    -webkit-animation-timing-function: linear; /*动画频率，和transition-timing-function是一样的*/
+    -webkit-animation-delay: 0s;/*动画延迟时间*/
+    // -webkit-animation-iteration-count: infinite;/*定义循环资料，infinite为无限次*/
+    // -webkit-animation-direction: alternate;/*定义动画方式*/
+
+  }
+  @keyframes ripple {
+    0% {
+      width:0%;
+    } 
+    50%{
+      width: 50%;
+    }
+    100% {
+      width:100%;
+    }
+  }
+
 }

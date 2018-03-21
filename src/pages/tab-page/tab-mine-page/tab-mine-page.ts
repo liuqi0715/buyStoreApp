@@ -66,7 +66,7 @@ export class TabMine {
   notRead:any= 0;//未读信息条数
   offline:boolean=false;
   version:any = null;
-  
+  openHeadImg = false;  //点击扩大之后查看头像
   checkNetwork(){
     let self = this;
 
@@ -335,5 +335,13 @@ export class TabMine {
     // this.navCtrl.push(orderListPage);
     console.log("work");
   }
-
+  closeHeadImg(){
+    this.openHeadImg = false;
+    $(".tabbar").css({"display":""})
+  }
+  showHeadImg(){
+    this.openHeadImg = true;
+    $(".tabbar").css({"display":"none"})
+    
+  }
 }
