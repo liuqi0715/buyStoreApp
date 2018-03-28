@@ -4,6 +4,7 @@ import { NavController, NavParams} from 'ionic-angular';
 import { urlService } from "../../../providers/urlService";
 import { ORDERLIST_URL} from "../../../providers/Constants";
 import { orderAgreePage } from "../order-agree-page/order-agree-page";
+import { orderDetailPage } from "../order-detail-page/order-detail-page";
 import { ToastController, LoadingController } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { servicesInfo } from"../../../providers/service-info";//公共信息
@@ -177,10 +178,17 @@ export class orderListPage {
   }
 
   goDetail(list){
-    this.navCtrl.push(orderAgreePage, {
-      "orderNo":list.orderNo
-      // "orderNo":"O20180201000005"
-    });
+    if(list.orderStatus == "7" || list.orderStatus == "8" || list.orderStatus == "9"){
+      this.navCtrl.push(orderDetailPage, {
+        "orderNo":list.orderNo
+        // "orderNo":"O20180201000005"
+      });
+    }else{
+      this.navCtrl.push(orderAgreePage, {
+        "orderNo":list.orderNo
+        // "orderNo":"O20180201000005"
+      });
+    }
   }
 
 }

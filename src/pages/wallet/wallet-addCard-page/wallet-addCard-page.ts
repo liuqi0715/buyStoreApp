@@ -95,7 +95,7 @@ export class addCardPage {
   //获取所有的银行卡名称
   ionViewWillEnter(){
     console.log(this.servicesInfo.bankInfo,"===")
-      if(this.servicesInfo.bankInfo==""||this.servicesInfo.bankInfo==undefined){
+      if(this.servicesInfo.bankInfo==""||this.servicesInfo.bankInfo==undefined||this.subObj.bankNo==""){
         this.bankCodeInfo = "请选择银行卡名称";
       }else{
         this.bankCodeInfo = this.servicesInfo.bankInfo.bankFullName;
@@ -416,8 +416,8 @@ chosePicture(){
   );
 }
 uploadStoreImg() {
+this.hasSuccess  = true;
 var self = this;
-
 const fileTransfer: FileTransferObject = this.FileTransfer.create();
 // const apiPath = interfaceUrls.uploadImage+"?key="+ self.user.mobilePhone+"&type="+2;
 const apiPath = interfaceUrls.getTenxAiRecognized;
@@ -430,12 +430,13 @@ let options: FileUploadOptions = {
 
 fileTransfer.upload(self.storeImage, apiPath, options)
   .then((data ) => {
+      self.hasSuccess  = false;
       console.log(self.storeImage);
       data.response = JSON.parse(data.response);
       if((data as any).response.errorinfo==null){
         console.log(data.response)
         self.checkBinfo =  (data as any).response.data;  //查询到的银行卡信息
-        // alert(JSON.stringify(data.response));
+
         self.subObj.bankNo = (self.checkBinfo.bcNo).replace(/[^\d]/g,"").replace(/(\d{4})(?=\d)/g, "$1 ");       //银行卡号
       
         self.checkBankInfo2();      //重新查询银行名称
@@ -450,6 +451,7 @@ fileTransfer.upload(self.storeImage, apiPath, options)
    
   }, (err) => {
     // alert(err)
+    self.hasSuccess  = false;
     console.log(err,"??");
     // self.toast(err);
   });

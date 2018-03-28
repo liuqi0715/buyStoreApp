@@ -219,7 +219,7 @@ export class UserRegAddress {
 
         }
 
-        map.addEventListener("click", showInfo);
+        // map.addEventListener("click", showInfo);
 
 
 /*-----------------------------------------------地图拖动--------------------------------------------*/

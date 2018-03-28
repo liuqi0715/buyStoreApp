@@ -57,7 +57,8 @@
   <!-- <div class="motai" *ngIf="hasSuccess">
     <img src="assets/img/login/loading.gif" alt="" id="loading">
   </div> -->
-  <div class="tm_headImg" *ngIf="openHeadImg" (click)="closeHeadImg()">
+  <div class="tm_headImg" id="addCladd" *ngIf="openHeadImg" (click)="closeHeadImg()">
+
     <img src="{{storeImage}}" alt="头像" onerror="javascript:this.src='assets/img/default.png';">
   </div>
 </ion-content>

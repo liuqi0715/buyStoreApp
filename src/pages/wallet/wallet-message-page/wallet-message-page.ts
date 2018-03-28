@@ -177,6 +177,7 @@ export class messagePage {
   }
 
   detail(msg){
+      console.log(msg);
       if(msg.msgType == 1){
         this.navCtrl.push(msgDetails,{
           "msgContentId":msg.jpusMsgId
@@ -186,7 +187,7 @@ export class messagePage {
           this.navCtrl.push(orderAgreePage,{
             orderNo:msg.orderNo
           });
-        }else if(msg.orderStatusNo == 1){
+        }else if(msg.orderStatusNo == 1 || msg.orderStatusNo == 4){
           this.navCtrl.push(orderDetailPage,{
             orderNo:msg.orderNo
           });

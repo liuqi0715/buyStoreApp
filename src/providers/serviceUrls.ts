@@ -56,7 +56,7 @@ export const interfaceUrls = {
     /*------------------------------频繁修改处注释用--------------------------------*/
     queryAccCheck:urls+"/pay/accountInfo/queryAccCheck",                    //查询今日提现/充值最大限额；
     // getTenxAiRecognized:"http://192.168.0.13:6888/tenx/getTenxAiRecognized",
-    getTenxAiRecognized:urls+"/tenx/getTenxAiRecognized",                    //上传银行卡识别卡号信息
+    getTenxAiRecognized:urls+"/pay/tenx/getTenxAiRecognized",                    //上传银行卡识别卡号信息
     exitApp:urls+"/storeInfo/deleteToken",                                //退出登录
 
     /*-------------------------------------修改微信账号-----------------------------*/

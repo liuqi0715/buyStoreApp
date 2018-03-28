@@ -199,8 +199,10 @@ export class orderBornPage {
 
    // 输入数量，获取相应输入值
    limitIn(idx){
-     if(this.models[idx].value !=="" && this.models[idx].value !==" " && this.models[idx].value !==null && this.models[idx].value > 0 && this.models[idx].value < 999){
+     if(this.models[idx].value !=="" && this.models[idx].value !==" " && this.models[idx].value !==null && this.models[idx].value > 0 && this.models[idx].value <= 9999){
         this.models[idx].value = parseInt(this.models[idx].value);
+     }else if(this.models[idx].value > 9999){
+        this.models[idx].value = 9999;
      }else{
         this.models[idx].value = 0;
      }
@@ -208,10 +210,10 @@ export class orderBornPage {
    };
    //递增
    plus(idx){
-     if(this.models[idx].value < 999){
+     if(this.models[idx].value < 9999){
         this.models[idx].value = parseInt(this.models[idx].value) + 1;
      }else{
-        this.models[idx].value = 999;
+        this.models[idx].value = 9999;
      }
      this.countAll();
    };

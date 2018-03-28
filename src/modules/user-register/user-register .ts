@@ -126,18 +126,18 @@ export class UserRegister {
     }
     checkNetwork(){
         let self = this;
-    
+
         self.network.onDisconnect().subscribe(()=>{
-              self.offline=true; 
+              self.offline=true;
               self.toast('无网络连接，请检查');
         });
         self.network.onConnect().subscribe(()=>{
-              self.offline=false; 
+              self.offline=false;
         });
-    
+
       }
     ionViewDidLoad(){
-        this.checkNetwork()        
+        this.checkNetwork()
     }
     getType(){
         // console.log(t.configValue);
@@ -163,7 +163,7 @@ export class UserRegister {
             targetWidth: 500,
             targetHeight: 500
           }
-          this.camera.getPicture(options).then((imageData) => {      
+          this.camera.getPicture(options).then((imageData) => {
             this.hasnotImg=true;
             let base64Image = 'data:image/jpeg;base64,' + imageData;
             this.path = imageData;
@@ -216,21 +216,21 @@ export class UserRegister {
                         box2.innerHTML = "";
                         var img2 = document.createElement("img");
                         img2.src = url;
-                        self0.storeLicenseImage = url;                       
+                        self0.storeLicenseImage = url;
                         img2.setAttribute("class","imgSize")
                         box2.appendChild(img2);
-                        self0.uploadLicenseImg()                  
+                        self0.uploadLicenseImg()
                     }
                 }
             )
         .catch(
-            function(e){         
+            function(e){
                 self0.toast("照片添加失败。")
             }
         );
     }
 
-//上传图片地址---- 
+//上传图片地址----
 uploadStoreImg() {
     var self = this;
     console.log(self.servicesInfo.userPhone)
@@ -250,7 +250,7 @@ uploadStoreImg() {
             this.StoreUrl =  (data as any).response.data.url;
           }
        console.log(data.response)
-       
+
       }, (err) => {
         // alert(err)
         console.log(err,"??");
@@ -271,14 +271,14 @@ uploadLicenseImg() {
     };
 
     fileTransfer.upload(this.storeLicenseImage, apiPath, options)
-      .then((data) => {       
+      .then((data) => {
         data.response = JSON.parse(data.response);
         if((data as any).response.errorinfo==null){
           this.LicenseUrl =  (data as any).response.data.url;
         }
         console.log(data.response)
       }, (err) => {
-        alert(err)
+        // alert(err)
         console.log(err,"??");
         this.toast(err);
       });
@@ -286,7 +286,7 @@ uploadLicenseImg() {
 
 
   testImg(){
-    alert("12")
+    // alert("12")
     this.uploadStoreImg();
     this.uploadLicenseImg();
 }
@@ -351,7 +351,7 @@ uploadLicenseImg() {
 
     regsiter(){
         // this.navCtrl.push(UserOpenAccount);    //仅做测试用，正式环境需要注释
-      
+
         if(this.offline == true){
             this.toast('无网络连接，请检查');
             return;
@@ -362,15 +362,15 @@ uploadLicenseImg() {
         // let regPhone= new RegExp(/^[a-zA-Z\d_]{5,}$/);//微信号
         // [a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}
         if(this.stroe.stroeName==""||this.stroe.stroeName==undefined){
-            
+
             this.toast("请输入正确的店铺名称")
             return;
         }else if(this.stroe.stroePerson==""||this.stroe.stroePerson==undefined||regName.test(this.stroe.stroePerson)==false){
-          
+
             this.toast("请输入正确的姓名");
             return;
         }else  if(this.stroe.stroePersonPhone==""||this.stroe.stroePersonPhone==undefined){
-           
+
             this.toast("请输入微信账号");
             return;
         }else if(this.StoreT==""||this.StoreT==undefined){
@@ -391,7 +391,7 @@ uploadLicenseImg() {
             this.toast("请输入详细地址");
             return;
         }else if(this.StoreUrl==null){
-             this.toast("门店图片上传失败")   
+             this.toast("门店图片上传失败")
              return;
         }else if(this.LicenseUrl==null){
             this.toast("营业执照图片上传失败")
@@ -427,38 +427,38 @@ uploadLicenseImg() {
                         self.toast("注册成功");
                         // msgCode
                         self.servicesInfo.orgId = data.data.userId    //不确定
-                        self.servicesInfo.creditCode = data.data.creditCode;    //社会统一信用代码 
+                        self.servicesInfo.creditCode = data.data.creditCode;    //社会统一信用代码
                         if(self.servicesInfo.creditCode==null || self.servicesInfo.creditCode==""){
                             self.servicesInfo.creditCode =  data.data.registerNo;    //注册号
                         }
-                        
+
                         if(data.data.state=="1"){
                             setTimeout(()=>{
                                 self.navCtrl.push(UserOpenAccount);
                             },2000)
-                            
+
                         }else if(data.data.state=="0"){
                             setTimeout(()=>{
                                 self.app.getRootNav().setRoot(UserLogin);
                             },2000)
-                           
+
                         }
-                       
+
                         self.hasSuccess = false;
                     }else{
                         self.toast(data.errorinfo.errormessage);
                         self.hasSuccess = false;
                     }
-    
-    
+
+
                 })
 
             })
             .catch(err => {
                     this.toast("操作取消。");
             })
-          
-        
+
+
 
         }
     }

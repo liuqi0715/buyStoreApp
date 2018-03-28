@@ -7,6 +7,7 @@ order-confirm-page {
     background: #C9E6E8;
   }
   .oc_optBox{
+    width: 3.4rem;
     height: 1rem;
     float: right;
     line-height: 1rem;
@@ -21,10 +22,17 @@ order-confirm-page {
     margin: 0 0.2rem 0 0.1rem;
     overflow: hidden;
   }
+  .oc_optBox_word1{
+    float: right;
+  }
+  .oc_optBox_word1 span{
+    font-size: .36rem;
+    margin-right: .2rem;
+  }
   .oc_optBox_word input{
     font-size: .36rem;
     display: inline-block;
-    width: 1rem;
+    width: 1.2rem;
     height: .6rem;
     border: none;
     text-align: center;

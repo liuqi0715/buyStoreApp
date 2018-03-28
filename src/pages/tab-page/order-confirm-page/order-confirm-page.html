@@ -10,7 +10,7 @@
         <p>{{good.catName}}</p>
         <div class="oc_optBox">
             <ion-icon ios="ios-remove-circle" md="md-remove-circle" *ngIf="canEdit != true" (click)="minus(idx)"></ion-icon>
-            <span class="oc_optBox_word"><input type="tel" (keyup)="limitIn(idx)" [(ngModel)] = "good.price" *ngIf="canEdit != true "/><span *ngIf="canEdit == true ">{{good.price}}</span>元/kg</span>
+            <span class="oc_optBox_word" [ngClass]="{oc_optBox_word1:canEdit == true}"><input type="tel" (keyup)="limitIn(idx)" [(ngModel)] = "good.price" *ngIf="canEdit != true "/><span *ngIf="canEdit == true ">{{good.price}}</span>元/kg</span>
             <ion-icon ios="ios-add-circle" md="md-add-circle" *ngIf="canEdit != true " (click)="plus(idx)"></ion-icon>
         </div>
       </section>

@@ -7,6 +7,7 @@ import { orderDetailPage } from "../pages/tab-page/order-detail-page/order-detai
 import { orderAgreePage } from "../pages/tab-page/order-agree-page/order-agree-page";
 import { orderCommentPage } from "../pages/tab-page/order-comment-page/order-comment-page";
 import { msgDetails } from "../pages/wallet/wallet-msgDetails-page/wallet-msgDetails-page";
+import { messagePage } from "../pages/wallet/wallet-message-page/wallet-message-page";
 import { adsPage } from "../pages/ads/ads-page";
 // import {Splash} from "../pages/splash/splash";
 
@@ -167,6 +168,10 @@ export class MyApp {
                         });
                       }else if(orderStatusNo == 3){
                         self.nav.push(orderCommentPage,{
+                          orderNo:orderNo
+                        });
+                      }else if(orderStatusNo == 4){
+                        self.nav.push(messagePage,{
                           orderNo:orderNo
                         });
                       }

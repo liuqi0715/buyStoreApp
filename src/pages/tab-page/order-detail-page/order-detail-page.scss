@@ -1,6 +1,7 @@
 order-detail-page {
   .oc_content{
     position: absolute;
+    top: 0;
     width: 100%;
     height: auto;
     bottom: 1rem;
@@ -26,13 +27,13 @@ order-detail-page {
     width: 4.6rem;
     height: .5rem;
     text-align: center;
-    color: #A0A0A0;
+    color: #F0A767;
     transform: translateX(-50%);
     -o-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
-    background: rgba(255,255,255,.8);
+    background: rgba(255,255,255,.9);
     z-index: 1000;
   }
   .od_map_circle{
@@ -195,6 +196,7 @@ order-detail-page {
     overflow: hidden;
   }
   .od_map_img img{
+    border-radius: 50%;
     display: block;
   }
   .od_table{

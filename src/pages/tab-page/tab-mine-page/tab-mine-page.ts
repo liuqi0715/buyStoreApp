@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,AlertController,App } from 'ionic-angular';
+import { NavController, NavParams,AlertController,App,Platform } from 'ionic-angular';
 import { WalletPage } from "./../../wallet/my-wallet";
 import { orderListPage } from "../order-list-page/order-list-page";
 import { myInfoPage } from "../mine-info-page/mine-info-page";
@@ -39,10 +39,13 @@ export class TabMine {
            private alertCtrl: AlertController,
            private app: App,
            private network: Network,
-           private appVersion:AppVersion
+           private appVersion:AppVersion,
+           public  platform: Platform,
     ) {
       console.log(this.servicesInfo.token,"token")
+    
   }
+
   toast(actions){
     let toast = this.toastCtrl.create({
       message: actions,
@@ -80,10 +83,19 @@ export class TabMine {
 
   }
   ionViewDidLoad() {
+      //test
+ 
+
     this.checkNetwork();
     this.appVersion.getVersionNumber().then((version) => {
         this.version = version;
     }); 
+    let self = this;
+    document.addEventListener("backbutton",function(){
+        self.openHeadImg = false;
+        $(".tabbar").css({"display":""});
+        $("#addCladd img").removeClass("anmiate");
+    }, false); //返回键  
   }
 //获取个人信息
   ionViewDidEnter(){
@@ -337,11 +349,22 @@ export class TabMine {
   }
   closeHeadImg(){
     this.openHeadImg = false;
-    $(".tabbar").css({"display":""})
+    $(".tabbar").css({"display":""});
+    $("#addCladd img").removeClass("anmiate");
+    // setTimeout()
   }
   showHeadImg(){
     this.openHeadImg = true;
-    $(".tabbar").css({"display":"none"})
+    $(".tabbar").css({"display":"none"});
+   
+    setTimeout(()=>{
+      $("#addCladd img").addClass("anmiate");
+    },100)
+    // this.platform.registerBackButtonAction(()=>{
+    //     this.openHeadImg = false;
+    // })
     
   }
+ 
+    
 }

@@ -1,24 +1,26 @@
 order-list-page {
+  .ol_content{
+    background: #F5F5F5;
+  }
   .ol_list{
-    width: 94%;
-    margin:0 auto;
-    height: 1.2rem;
-    padding-top: .2rem;
-    border-bottom: .02rem solid #F5F5F5;
+    position: relative;
+    width: 96%;
+    margin:.2rem auto;
+    height: 1.6rem;
+    padding: .1rem 0 0 .2rem; 
+    background: #FFF;
+    border-radius: .1rem;
   }
   .ol_list p{
     width: 100%;
     height: .42rem;
-    margin-bottom: .16rem;
+    margin-bottom: .1rem;
   }
-  .ol_list p span:nth-child(1){
-    float: left;
-  }
-  .ol_list p span:nth-child(2){
-    float: right;
+  .ol_list p:nth-child(2){
+    text-indent: .6rem;
   }
   .ol_list p:nth-child(1) span:nth-child(1){
-    color: #726D6D;
+    color: #43BFB2;
     font-size: .32rem;
   }
   .ol_list p:nth-child(1) span:nth-child(2){
@@ -26,12 +28,30 @@ order-list-page {
     font-size: .32rem;
   }
   .ol_list p:nth-child(2) span:nth-child(1){
+    color: #FF7C62;
+    font-size: .32rem;
+  }
+  .ol_list p:nth-child(3) span:nth-child(1){
     color: #A5A09F;
     font-size: .26rem;
   }
-  .ol_list p:nth-child(2) span:nth-child(2){
-    color: #A5A09F;
-    font-size: .26rem;
+  .ol_list_tag{
+    position: absolute;
+    display: block;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: .08rem;
+    background: #43BFB2;
+    text-align: center;
+    line-height: 1.2rem;
+    color: #FFF;
+    top: 50%;
+    right: .3rem;
+    transform:translateY(-50%);
+    -o-transform:translateY(-50%);
+    -ms-transform:translateY(-50%);
+    -moz-transform:translateY(-50%);
+    -webkit-transform:translateY(-50%);
   }
 
 }

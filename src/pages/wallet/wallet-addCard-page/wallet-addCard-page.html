@@ -29,8 +29,9 @@
 
   <button ion-button outline class="wa_btn" (click)="submit()">确定</button>
 
-  <div class="motai" *ngIf="hasSuccess">
-    <img src="assets/img/login/loading.gif" alt="" id="loading">
+  <div class="motai" >
+      <!-- #95B8E7       border: 1px solid rgb(149, 184, 231);     border-radius: 15px !important;-->
+    <img src="assets/img/login/loading.gif" alt="" id="loading" *ngIf="hasSuccess">
   </div>
 </ion-content>
 

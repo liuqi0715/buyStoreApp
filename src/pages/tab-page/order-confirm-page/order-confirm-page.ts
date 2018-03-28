@@ -105,8 +105,8 @@ export class orderConfirmPage {
         var dataArray = this.datas[i].batteryTypeList;
         for(var j = 0;j < dataArray.length;j++){
            dataArray[j].unitPricePre = Math.round((parseFloat(this.datas[i].price)*parseFloat(dataArray[j].commWeight))*Math.pow(10, 2))/Math.pow(10, 2);
-           dataArray[j].total = Math.round((parseFloat(this.datas[i].price)*parseFloat(dataArray[j].commWeight)*parseFloat(dataArray[j].value))*Math.pow(10, 2))/Math.pow(10, 2);
-           this.totalPrice = Math.round((this.totalPrice+parseFloat(this.datas[i].price)*parseFloat(dataArray[j].commWeight)*parseFloat(dataArray[j].value))*Math.pow(10, 2))/Math.pow(10, 2);
+           dataArray[j].total = Math.round(dataArray[j].unitPricePre*parseInt(dataArray[j].value)*Math.pow(10, 2))/Math.pow(10, 2);
+           this.totalPrice = Math.round((this.totalPrice+dataArray[j].total)*Math.pow(10, 2))/Math.pow(10, 2);
            this.totalWeight = Math.round((this.totalWeight+parseFloat(dataArray[j].commWeight)*parseFloat(dataArray[j].value))*Math.pow(10, 2))/Math.pow(10, 2);
         }
       }
@@ -135,9 +135,11 @@ export class orderConfirmPage {
         return obj;  
      }
 
-     if(this.datas[idx].price !=="" && this.datas[idx].price !==" " && this.datas[idx].price !== null && this.datas[idx].price > 0 && this.datas[idx].price < 999){
+     if(this.datas[idx].price !=="" && this.datas[idx].price !==" " && this.datas[idx].price !== null && this.datas[idx].price > 0 && this.datas[idx].price <= 999){
         // this.datas[idx].price = Math.round(this.datas[idx].price*Math.pow(10, 2))/Math.pow(10, 2);
         this.datas[idx].price = clearNoNum(this.datas[idx].price);
+     }else if(this.datas[idx].price > 999){
+        this.datas[idx].price = 999;
      }else{
         this.datas[idx].price = 0;
      }

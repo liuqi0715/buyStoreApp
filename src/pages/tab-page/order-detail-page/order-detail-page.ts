@@ -108,9 +108,10 @@ export class orderDetailPage {
        },
        "token":this.servicesInfo.token,
     };
-   console.log(data);
+   
     let self = this;
     this.urlService.postDatas(SELLORDERDETAIL_URL,data).then(function(resp){
+      console.log(resp);
       if(resp){
         if(resp.errorinfo == null){
 

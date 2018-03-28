@@ -3,11 +3,13 @@
     <ion-title>我的订单</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content>
+<ion-content class="ol_content">
 
   <div class="ol_list" *ngFor="let list of orderList" (click)="goDetail(list)"> 
-    <p><span>{{list.orderNo}}</span><span>{{list.amountRec}}</span></p>
-    <p><span>{{list.createTime}}</span><span>{{list.payStatus}}</span></p>
+    <p><span>{{list.orderNo}}</span></p>
+    <p>总金额：<span>{{list.amountRec}}</span></p>
+    <p><span>{{list.createTime}}</span></p>
+    <span class="ol_list_tag">{{list.payStatus}}</span>
   </div>
 
   <div class="inner-center noNet" *ngIf="noContent == true && firstOffline == true" (click)="reload()">

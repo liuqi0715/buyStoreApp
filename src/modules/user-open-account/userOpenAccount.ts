@@ -14,6 +14,7 @@ import { urlService } from "../../providers/urlService";
 import {TabMine} from "../../pages/tab-page/tab-mine-page/tab-mine-page";
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { addCardPage } from "../../pages/wallet/wallet-addCard-page/wallet-addCard-page";
+
 @Component({
     selector: 'page-UserOpenAccount',
     templateUrl: 'userOpenAccount.html',
@@ -37,9 +38,25 @@ export class UserOpenAccount {
     personName;    //姓名
     personPhone;    //手机号
     hasSuccess=false;  //模态框的显示
-    hasLinsceNum=false;    //输入框置为无效
+   
     hasNotLinsceNum=true;    //输入框显示
     offline:boolean=false;
+    /**
+     * 
+     * @param actions 
+     * 判断开户是否有相关信息
+     */
+    hasCompany=true;    //默认不能输入公司名称
+    hasOperName=true;   //默认不能输入法人名称
+    hasLinsceNum=true;    //默认存在社会信用代码
+/**
+ * 
+ * @param actions 
+ * 另外一种情况
+ */
+// hasCompany=false;    //默认不能输入公司名称
+// hasOperName=false;   //默认不能输入法人名称
+// hasLinsceNum=false;    //默认存在社会信用代码
     toast(actions){
     let toast = this.toastCtrl.create({
         message: actions,
@@ -49,7 +66,14 @@ export class UserOpenAccount {
     });
     toast.present();
     }
-
+    alertCtr(actions){
+        let alert = this.alertCtrl.create({
+            title: '开户说明',
+            subTitle: actions,
+            buttons: ['知道了']
+          });
+          alert.present();
+    }
     //将注册成功返回的识别信息（营业执照号码返回并赋值）
     checkNetwork(){
         let self = this;
@@ -68,16 +92,49 @@ export class UserOpenAccount {
         if(this.servicesInfo.creditCode!=null && this.servicesInfo.creditCode!=""){
             this.linsceNum = this.servicesInfo.creditCode;
             this.hasLinsceNum = true;
-            this.hasNotLinsceNum = false;
+
         }else{
             // this.linsceNum = this.servicesInfo.creditCode;
             this.hasLinsceNum = false;
-            this.hasNotLinsceNum = true;
         }
-        this.campanyName = this.servicesInfo.firmName;//公司名称
-        this.personName = this.servicesInfo.operName;//公司名称
-        console.log(this.personName,this.campanyName);
+        if(this.servicesInfo.firmName!=null&&this.servicesInfo.firmName!=""){
+            // this.hasOperName = false;
+            this.hasCompany = true;
+            this.campanyName = this.servicesInfo.firmName;//公司名称
+        }else{
+            this.hasCompany = false;
+        }
+       if(this.servicesInfo.operName!=null&&this.servicesInfo.operName!=""){
+            this.hasOperName = true;
+            this.personName = this.servicesInfo.operName;//法人姓名
+       }else{
+            this.hasOperName = false;
+       }
+    //    this.campanyName = this.servicesInfo.firmName;//公司名称
+    //    this.personName = this.servicesInfo.operName;//法人姓名
+    //    this.linsceNum = this.servicesInfo.creditCode;
+        console.log(this.personName,this.campanyName,this.linsceNum);
     }
+
+    /**
+     * 页面存在法人名称时提示信息
+     */
+    showInfo(){
+        this.alertCtr("为了保证信息真实性，开户信息必须与营业执照一致。")
+    }
+    /**
+     * 页面存在统一社会信用代码（注册号）提示信息
+     */
+    showLiInfo(){
+        this.alertCtr("企业名称。。。")
+    }
+    /**
+     * 页面存在法人名称时
+     */
+    showPerInfo(){
+        this.alertCtr("企业名称。。。")
+    }
+
     ionViewDidLoad(){
         this.checkNetwork()        
     }

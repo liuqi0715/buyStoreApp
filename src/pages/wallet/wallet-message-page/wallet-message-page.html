@@ -19,7 +19,8 @@
           <p>{{msg.msgIntro}}</p>
       </div>
 
-      <div class="msg_box_bottom" (click)="detail(msg)" *ngIf="msg.orderStatusNo == 1 || msg.orderStatusNo == 2 || msg.orderStatusNo == 3 || msg.msgType == 1">
+<!-- *ngIf="msg.orderStatusNo == 1 || msg.orderStatusNo == 2 || msg.orderStatusNo == 3 || msg.msgType == 1" -->
+      <div class="msg_box_bottom" (click)="detail(msg)">
         <span>查看详情</span>
         <span><ion-icon name="arrow-forward"></ion-icon></span>
       </div>
