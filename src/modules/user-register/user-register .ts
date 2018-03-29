@@ -348,7 +348,6 @@ uploadLicenseImg() {
         });
     }
 
-
     regsiter(){
         // this.navCtrl.push(UserOpenAccount);    //仅做测试用，正式环境需要注释
 
