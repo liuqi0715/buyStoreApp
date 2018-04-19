@@ -47,7 +47,7 @@
                         <p [ngClass]="{'text-success': a.contact == null}">{{a.type}}</p>
                         <P>{{a.contact}}</P>
                 </div>
-                <div class="listNum" [ngClass]="{'organe':true}">
+                <div class="listNum" [ngClass]="{'organe':a.amount>0}">
                    {{a.amount}}
                 </div>
             </li>
