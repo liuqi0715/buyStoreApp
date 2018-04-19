@@ -116,7 +116,7 @@ export class orderListPage {
               }
             }
         }else{
-          self.toast(resp.errorinfo);
+          self.toast(resp.errorinfo.errormessage);
              /*token失效的问题*/
              if(resp.errorinfo.errorcode=="10003"){
               self.app.getRootNav().setRoot(UserLogin);

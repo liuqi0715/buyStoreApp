@@ -111,7 +111,6 @@ export class orderDetailPage {
    
     let self = this;
     this.urlService.postDatas(SELLORDERDETAIL_URL,data).then(function(resp){
-      console.log(resp);
       if(resp){
         if(resp.errorinfo == null){
 

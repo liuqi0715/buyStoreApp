@@ -1,43 +1,43 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>我要报单</ion-title>
+    <ion-title>报价详情</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content class="oc_content">
-    <div *ngFor="let good of datas, let idx = index">
-      <section class="oc_box oc_box_nav" *ngIf="good.batteryTypeList.length > 0">
-        <img src="assets/img/orderDetail/biaodan1.png" alt="biaodan1"/>
-        <p>{{good.catName}}</p>
-        <div class="oc_optBox">
-            <ion-icon ios="ios-remove-circle" md="md-remove-circle" *ngIf="canEdit != true" (click)="minus(idx)"></ion-icon>
-            <span class="oc_optBox_word" [ngClass]="{oc_optBox_word1:canEdit == true}"><input type="tel" (keyup)="limitIn(idx)" [(ngModel)] = "good.price" *ngIf="canEdit != true "/><span *ngIf="canEdit == true ">{{good.price}}</span>元/kg</span>
-            <ion-icon ios="ios-add-circle" md="md-add-circle" *ngIf="canEdit != true " (click)="plus(idx)"></ion-icon>
-        </div>
-      </section>
-      <section class="od_table oc_table" *ngIf="good.batteryTypeList.length > 0">
-          <table>
-            <thead>
-              <td *ngFor="let title of goodListTitle">
-                {{title}}
-              </td>
-            </thead>
-            <tbody>
-              <tr *ngFor="let list of good.batteryTypeList">
-                <td>{{list.modelName}}</td>
-                <td>{{list.unitPricePre}}</td>
-                <td>{{list.value}}</td>
-                <td><span>{{list.total}}</span></td>
-              </tr>
-            </tbody>
-          </table>
-      </section>
+<ion-content>
+  <div class="bOrder_subbar">
+    <!-- <div class="bOrder_subbar_item" *ngFor="let title of navTitle, let idx = index" (click)="slcItem(idx)">{{title}}报价</div> -->
+      <div class="bOrder_subbar_item" (click)="slcItem(2)">干电报价</div>
+      <div class="bOrder_subbar_item" (click)="slcItem(3)">水电报价</div>
+      <div class="bOrder_subbar_item" (click)="slcItem(10)">锂电报价</div>
+    <div id="initSlideLine"></div>
+  </div>
+  <section class="bOrder_main">
+    <div class="bOrder_slcbox" *ngFor="let m of priceCatModel, let idx = index">
+      <div class="bOrder_slcbox_l">
+        型号<span>{{m.modelName}}</span>
+      </div>
+      <div class="bOrder_slcbox_r">
+       {{m.price}} <span>{{m.nuit}}</span>
+      </div>
+
+
+
+
     </div>
-</ion-content>
-<div class="bottomBar">
-  <div class="bottomBar_l">
+  </section>
+
+  <div class="inner-center noNet" *ngIf="noContent == true && firstOffline == true" (click)="reload()">
+    <img src="assets/img/noNet.png" alt="无网络">
+  </div>
+  <div class="inner-center noContent" *ngIf="noContent == true && firstOffline == false">
+    <img src="assets/img/noContent.png" alt="暂无内容">
+  </div>
+  <!-- <div class="bottomBar" id="bBottom">
+    <div class="bottomBar_l">
       <p>总金额：{{totalPrice}}元</p>
       <p>总重量：约{{totalWeight}}kg</p>
-  </div>
-  <div class="bottomBar_r" (click)="next()">发布订单</div>
-</div>
+    </div>
+    <div class="bottomBar_r" (click)="orderNext()">下一步</div>
+  </div> -->
 
+</ion-content>

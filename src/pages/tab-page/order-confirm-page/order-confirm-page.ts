@@ -1,279 +1,343 @@
 import { Component } from '@angular/core';
-import { Http,Response } from '@angular/http';
-import { NavController, NavParams, Tabs} from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-import { urlService } from "../../../providers/urlService";
-import { RELEASEORDER_URL, FILEUPLOAD_URL } from "../../../providers/Constants";
-import { ActionSheetController } from 'ionic-angular';//底部提示信息
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
-import { ToastController } from 'ionic-angular';
+import { Http, Response } from '@angular/http';
+import { NavController, NavParams } from 'ionic-angular';
+// import { orderConfirmPage } from "../order-confirm-page/order-confirm-page";
 import { TabSell } from "../tab-sell-page/tab-sell-page";
-import { servicesInfo } from"../../../providers/service-info";//公共信息
+import { urlService } from "../../../providers/urlService";
+import { ORDERBORN_URL, PRICELIST_URL} from "../../../providers/Constants";
+import { servicesInfo } from "../../../providers/service-info";
+import { ToastController, LoadingController } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { App } from 'ionic-angular';
-import {UserLogin} from "../../../modules/user-login/user-login";
-
-declare var BMap;
-declare let baidumap_location: any;
+import { UserLogin } from "../../../modules/user-login/user-login";
+declare var $;
 
 @Component({
   selector: 'order-confirm-page',
   templateUrl: 'order-confirm-page.html',
 })
 export class orderConfirmPage {
-
-  datas : any = [];
+  public orderlist = [];//用于存储提交的所有数据信息；
+  public models = [];
   public totalPrice = 0;
   public totalWeight = 0;
-  public orderNo = window.sessionStorage.getItem('newOrder');
-  public storage = window.sessionStorage;
-  public goodListTitle = ["型号","单价","数量","合计"];
-  private dataTemp1 = null;
-  public canEdit = false;
-  public lat = null;
-  public lon = null;
-  offline:boolean=false;
+  public navTitle = [];
+  datas: any = [];
+  offline: boolean = false;
+  firstOffline: boolean = true;
+  noContent: boolean = false;
+  dataTemp1: any[] = new Array();
+
+  priceListDatas:any = [];  //接收所有的price信息
+  priceCatModel:any = [];   //当前电池类型的pricelist
+  navTitleList:any = [];
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public http: Http,
-    private camera: Camera,
-    public urlService: urlService,
-    public actionSheetCtrl: ActionSheetController,
-    public toastCtrl: ToastController,
-    private transfer: FileTransfer,
-    private file: File,
-    public tabs: Tabs,
     private network: Network,
+    public urlService: urlService,
     public servicesInfo: servicesInfo,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController,
     private app: App,
-    ) {
+  ) {
+  }
+
+  ionViewDidLoad() {
+    // this.getInfoDatas();
+    console.info('this.navParams.data.recycleId:', this.navParams.data.recycleidT)
+    this.getPriceListInfo()
   }
 
   ionViewDidEnter() {
     this.checkNetwork();
-  	this.dataTemp1 = JSON.parse(this.navParams.data.orderData);
-
-    for(var i = 0;i < this.dataTemp1.length;i++){
-        var dataArray = this.dataTemp1[i].batteryTypeList;
-        var dataArrayLoop = dataArray.length;
-        for(var j = 0;j < dataArrayLoop;j++){
-           if(dataArray[j].value == 0){
-               this.dataTemp1[i].batteryTypeList.splice(j, 1);
-               j = j - 1;
-               dataArrayLoop = dataArrayLoop - 1;
-           };
-        }
-    }
-
-    this.datas = this.dataTemp1;
-    this.canEdit = this.dataTemp1[0].public;
-    console.log(this.dataTemp1[0]);
-    this.getPos();
-    this.countAll();
   }
 
-  checkNetwork(){
-    let self = this;
-
-    self.network.onDisconnect().subscribe(()=>{
-          self.offline=true; 
-          self.toast('无网络连接，请检查');
-    });
-    self.network.onConnect().subscribe(()=>{
-          self.offline=false; 
-    });
-
+  reload() {
+    // this.getInfoDatas();
+    this.getPriceListInfo();
   }
 
-  getPos(){
-    let self = this;
-
-    if('undefined' != typeof baidumap_location){
-      baidumap_location.getCurrentPosition(function(result){
-        self.lat = result.latitude;
-        self.lon = result.longitude;
-      });
-    }
+  goBack() {
+    this.navCtrl.pop();
   }
 
-  countAll(){
-      this.totalPrice = 0;
-      this.totalWeight = 0;
-      for(var i = 0;i < this.datas.length;i++){
-        var dataArray = this.datas[i].batteryTypeList;
-        for(var j = 0;j < dataArray.length;j++){
-           dataArray[j].unitPricePre = Math.round((parseFloat(this.datas[i].price)*parseFloat(dataArray[j].commWeight))*Math.pow(10, 2))/Math.pow(10, 2);
-           dataArray[j].total = Math.round(dataArray[j].unitPricePre*parseInt(dataArray[j].value)*Math.pow(10, 2))/Math.pow(10, 2);
-           this.totalPrice = Math.round((this.totalPrice+dataArray[j].total)*Math.pow(10, 2))/Math.pow(10, 2);
-           this.totalWeight = Math.round((this.totalWeight+parseFloat(dataArray[j].commWeight)*parseFloat(dataArray[j].value))*Math.pow(10, 2))/Math.pow(10, 2);
-        }
-      }
-  }
-
-  toast(actions){
+  toast(actions) {
     let toast = this.toastCtrl.create({
       message: actions,
       duration: 2000,
-      position:'middle'
+      position: 'middle'
     });
     toast.present();
   }
 
-   // 输入数量，获取相应输入值
-  limitIn(idx){
+  checkNetwork() {
+    let self = this;
 
-    function clearNoNum(obj){  
-        obj = obj.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符   
-        obj = obj.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的   
-        obj = obj.replace(".","$#$").replace(/\./g,"").replace("$#$",".");  
-        obj = obj.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');//只能输入两个小数   
-        if(obj.indexOf(".")< 0 && obj !=""){//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额  
-         obj= parseFloat(obj);  
-        }
-        return obj;  
-     }
+    self.network.onDisconnect().subscribe(() => {
+      self.offline = true;
+      if (self.models.length == 0) {
+        self.firstOffline = true;
+        self.noContent = true;
+      }
+      if (self.priceCatModel.length==0){
+        self.firstOffline = true;
+        self.noContent = true;
+      }
+      // self.toast('无网络连接，请检查');
+    });
+    self.network.onConnect().subscribe(() => {
+      self.offline = false;
+    });
 
-     if(this.datas[idx].price !=="" && this.datas[idx].price !==" " && this.datas[idx].price !== null && this.datas[idx].price > 0 && this.datas[idx].price <= 999){
-        // this.datas[idx].price = Math.round(this.datas[idx].price*Math.pow(10, 2))/Math.pow(10, 2);
-        this.datas[idx].price = clearNoNum(this.datas[idx].price);
-     }else if(this.datas[idx].price > 999){
-        this.datas[idx].price = 999;
-     }else{
-        this.datas[idx].price = 0;
-     }
-     this.countAll();
-  };
-   //递增
-  plus(idx){
-     if(this.datas[idx].price < 999){
-        this.datas[idx].price = Math.round((parseFloat(this.datas[idx].price) + 0.1)*Math.pow(10, 2))/Math.pow(10, 2);
-     }else{
-        this.datas[idx].price = 999;
-     }
-     this.countAll();
-  };
-   //递减
-  minus(idx){
-     if(this.datas[idx].price > 0){
-        this.datas[idx].price = Math.round((parseFloat(this.datas[idx].price) - 0.1)*Math.pow(10, 2))/Math.pow(10, 2);
-     }else{
-        this.datas[idx].price = 0;
-     }
-     this.countAll();
-  };
-
-  upload(fileUrl) {
-
-    // var data = {
-    //    "data":{
-    //      "key":this.orderNo,
-    //      "type":1
-    //    }
-    // };
-
-    var self = this;
-    var fileTransfer = this.transfer.create();
-    let options: FileUploadOptions = {
-       fileKey: 'file',
-       fileName: self.orderNo + '.jpg',
-       headers: {}
-    }
-    
-    var uploadUrl = FILEUPLOAD_URL + '?key='+this.orderNo+'&type='+1;
-    fileTransfer.upload(fileUrl, uploadUrl, options)
-     .then((data) => {
-       self.toast("报单成功");
-       // setTimeout(function(){
-       //   // self.navCtrl.setRoot(TabSell);
-       // },3000);
-       self.navCtrl.setRoot(TabSell);
-     }, (err) => {
-       self.toast(err);
-     });
   }
 
-  openCam(){
-      var self = this;
-      const options: CameraOptions = {
-        quality: 90,
-        destinationType: this.camera.DestinationType.FILE_URI,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE,
-        targetWidth: 500,
-        targetHeight: 500
-      } 
+  // getInfoDatas() {
+  //   let loading = this.loadingCtrl.create({
+  //     spinner: 'dots',
+  //     content: '数据加载中'
+  //   });
 
-      this.camera.getPicture(options).then((imageData) => {
+  //   loading.present();
+  //   let self = this;
 
-       self.upload(imageData);
+  //   let data = {
+  //     //  "token": "1234123548",
+  //     "userId": this.servicesInfo.userId,
+  //     "version": 1,
+  //     "data": {
+  //       "recycleId": this.navParams.data.recycleId,
+  //       "recyclePhone": this.navParams.data.recyclePhone
+  //     },
+  //     "token": this.servicesInfo.token
+  //   };
 
-      }, (err) => {
-       self.toast(err);
+  //   this.urlService.postDatas(ORDERBORN_URL, data).then(function (resp) {
+  //     if (resp) {
+  //       if (resp.errorinfo == null) {
+  //         loading.dismiss();
+  //         var dataTemp = resp.data.listArry;
+  //         if (dataTemp.length == 0) {
+  //           self.noContent = true;
+  //         } else {
+  //           self.noContent = false;
+  //           for (var i = 0; i < dataTemp.length; i++) {
+  //             var dataArray = dataTemp[i].batteryTypeList;
+  //             dataTemp[i].public = self.navParams.data.public;
+  //             for (var j = 0; j < dataArray.length; j++) {
+  //               dataArray[j].value = 0;
+  //               dataArray[j].total = 0;
+  //             }
+  //           }
+  //           self.datas = dataTemp;
+  //           self.navTitle = [];
+  //           if (self.datas.length > 0) {
+  //             for (var k = 0; k < self.datas.length; k++) {
+  //               self.navTitle.push(self.datas[k].catName);
+  //             }
+  //           }
+  //           self.slcItem(0);
+  //         }
+
+  //         setTimeout(function () {
+  //           self.initSlideLine();
+  //         }, 100);
+
+  //       } else {
+  //         /*token失效的问题*/
+  //         if (resp.errorinfo.errorcode == "10003") {
+  //           self.app.getRootNav().setRoot(UserLogin);
+  //         }
+  //       }
+  //     }
+  //     self.firstOffline = false;
+  //   }).catch(function (err) {
+  //     if (self.offline == false && self.datas.length != 0) {
+  //       self.firstOffline = false;
+  //     }
+  //     if (self.models.length == 0) {
+  //       self.noContent = true;
+  //     }
+
+  //     loading.dismiss();
+  //     self.toast("服务器异常，请重试");
+  //   });
+  // }
+
+  public slcItem(idx) {
+    // this.models = this.datas[idx].batteryTypeList;
+    if(idx==2){
+      for (var i = 0; i < this.priceListDatas.length; i++) {
+        if (this.priceListDatas[i].catId == 2) {
+          this.priceCatModel = this.priceListDatas[i].priceCatModel
+        }
+
+      }
+    }else if(idx==3){
+      for (var i = 0; i < this.priceListDatas.length; i++) {
+        if (this.priceListDatas[i].catId == 3) {
+          this.priceCatModel = this.priceListDatas[i].priceCatModel
+        }
+      }
+    }else if(idx==10){
+        for (var i = 0; i < this.priceListDatas.length; i++) {
+          if (this.priceListDatas[i].catId == 10) {
+            this.priceCatModel = this.priceListDatas[i].priceCatModel
+          }
+
+        }
+    }
+
+
+
+  }
+
+  initSlideLine() {
+    var itemLen = 3;
+    var itemWidth = $(".bOrder_subbar").width() / itemLen;
+    $(".bOrder_subbar_item").width(itemWidth);
+    if (itemLen == 1) {
+      $("#initSlideLine").hide();
+      return;
+    } else {
+      $("#initSlideLine").show();
+    }
+    var itemHeight = $(".bOrder_subbar_item").height();
+    var lineWidth = $("#initSlideLine").width();
+    var initSlideLine = document.getElementById("initSlideLine");
+    initSlideLine.style.transform = 'translate3d(' + (itemWidth - lineWidth) / 2 + 'px, ' + (itemHeight - 5) + 'px, ' + '0)';
+    initSlideLine.style.webkitTransform = 'translate3d(' + (itemWidth - lineWidth) / 2 + 'px, ' + (itemHeight - 5) + 'px, ' + '0)';
+    $(".bOrder_subbar_item").each(function (inx, val) {
+      var idx = inx;
+      $(this).click(function () {
+        initSlideLine.style.transition = 'transform 0.5s ease-out';
+        initSlideLine.style.webkitTransition = '-webkit-transform 0.5s ease-out';
+        initSlideLine.style.transform = 'translate3d(' + ((itemWidth - lineWidth) / 2 + itemWidth * idx) + 'px, ' + (itemHeight - 5) + 'px, ' + '0)';
+        initSlideLine.style.webkitTransform = 'translate3d(' + ((itemWidth - lineWidth) / 2 + itemWidth * idx) + 'px, ' + (itemHeight - 5) + 'px, ' + '0)';
       });
-   }
- 
-   next(){
+    });
+  }
 
-     if(this.offline == true){
-         this.toast('无网络连接，请检查');
-         return;
-     }
+  // countAll() {
+  //   this.totalPrice = 0;
+  //   this.totalWeight = 0;
+  //   for (var i = 0; i < this.datas.length; i++) {
+  //     var dataArray = this.datas[i].batteryTypeList;
+  //     for (var j = 0; j < dataArray.length; j++) {
+  //       this.totalPrice = Math.round((this.totalPrice + parseFloat(dataArray[j].unitPricePre) * parseFloat(dataArray[j].value)) * Math.pow(10, 2)) / Math.pow(10, 2);
+  //       this.totalWeight = Math.round((this.totalWeight + parseFloat(dataArray[j].commWeight) * parseFloat(dataArray[j].value)) * Math.pow(10, 2)) / Math.pow(10, 2);
+  //     }
+  //   }
+  // }
 
-     let self = this;
-     var count = 0;
-     var submitObj = [];
+  // 输入数量，获取相应输入值
+  // limitIn(idx) {
+  //   if (this.models[idx].value !== "" && this.models[idx].value !== " " && this.models[idx].value !== null && this.models[idx].value > 0 && this.models[idx].value <= 9999) {
+  //     this.models[idx].value = parseInt(this.models[idx].value);
+  //   } else if (this.models[idx].value > 9999) {
+  //     this.models[idx].value = 9999;
+  //   } else {
+  //     this.models[idx].value = 0;
+  //   }
+  //   this.countAll();
+  // };
+  //递增
+  // plus(idx) {
+  //   if (this.models[idx].value < 9999) {
+  //     this.models[idx].value = parseInt(this.models[idx].value) + 1;
+  //   } else {
+  //     this.models[idx].value = 9999;
+  //   }
+  //   this.countAll();
+  // };
+  // //递减
+  // minus(idx) {
+  //   if (this.models[idx].value > 0) {
+  //     this.models[idx].value = parseInt(this.models[idx].value) - 1;
+  //   } else {
+  //     this.models[idx].value = 0;
+  //   }
+  //   this.countAll();
+  // };
 
-     for(var i = 0;i< this.datas.length;i++){
-       if(this.datas[i].batteryTypeList.length > 0){
-          submitObj.push(this.datas[i]);
-       }
-     }
+  // orderNext() {
+  //   if (this.noContent == true) {
+  //     this.toast("不能提交空内容!");
+  //     return;
+  //   }
 
-     for(var i = 0;i< submitObj.length;i++){
-       submitObj[i].latitudePreOrder = this.lat;
-       submitObj[i].longitudePreOrder = this.lon;
-       if(submitObj[i].price == 0){
-          count++;
-       }
-     }
+  //   if (this.totalWeight == 0) {
+  //     this.toast("请填写数量!");
+  //     return;
+  //   }
 
-     if(count > 0){
-       self.toast("报价不能为0");
-       return;
-     }
+  //   this.dataTemp1 = this.datas;
+  //   this.navCtrl.push(orderConfirmPage, {
+  //     orderData: JSON.stringify(this.dataTemp1)
+  //   });
+  // }
 
-     let data = {
-         "userId": this.servicesInfo.userId,
-         "version": 1,
-         "data":{
-            "releaseRoderList":submitObj,
-         },
-         "token":this.servicesInfo.token,
-      };
+  /**
+   * 获取当前回收员相关报价信息
+   */
+  getPriceListInfo(){
+    let loading = this.loadingCtrl.create({
+      spinner: 'dots',
+      content: '数据加载中'
+    });
 
-      this.urlService.postDatas(RELEASEORDER_URL,data).then(function(resp){
-          if(resp){
-            if(resp.errorinfo == null){
-                self.orderNo = resp.data.orderNo;
-                self.openCam();
-               
-            }else{
-              self.toast(resp.errorinfo.errormessage);
-              // self.openCam();      //李子让暂时注释
-              /*token失效的问题*/
-              if(resp.errorinfo.errorcode=="10003"){
-                self.app.getRootNav().setRoot(UserLogin);
+    loading.present();
+    let self = this;
+    let data = {
+      "data": {
+        "recycleId": this.navParams.data.recycleidT,
+      },
+      "token": this.servicesInfo.token
+    }
+    this.urlService.postDatas(PRICELIST_URL, data).then(function (resp) {
+      if (resp) {
+        if (resp.errorinfo == null) {
+          loading.dismiss();
+          console.log(resp.data.batteryList)
+          // self.priceCatModel = resp.data.batteryList
+          let tempList = resp.data.batteryList    //总的数据
+          if (tempList.length==0){
+            self.noContent = true;        //如果数据为空，则显示没有数据
+          }else{
+            self.noContent = false;
+            self.priceListDatas = resp.data.batteryList
+            for (var i = 0; i < self.priceListDatas.length;i++){
+              if (self.priceListDatas[i].catId==2){
+                self.priceCatModel = self.priceListDatas[i].priceCatModel;
               }
             }
           }
-        });
-    
-      // self.navCtrl.push(TabSell, {});
 
-      
+          setTimeout(function () {
+            self.initSlideLine();
+          }, 100);
 
-   }
+
+        } else {
+          /*token失效的问题*/
+          if (resp.errorinfo.errorcode == "10003") {
+            self.app.getRootNav().setRoot(UserLogin);
+          }
+        }
+      }
+
+      self.firstOffline = false;
+    }).catch(function (err) {
+
+      self.noContent = true;
+      loading.dismiss();
+      self.toast("服务器异常，请重试");
+    });
+
+  }
+
+
 
 }

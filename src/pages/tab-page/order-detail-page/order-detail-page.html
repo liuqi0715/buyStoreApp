@@ -7,7 +7,7 @@
   <section class="oc_content">
   <section class="od_map">
       <div id="od_map_tip" *ngIf="orderInfoBean.orderStatusId == '1' ">超过24小时未接单，则订单自动取消</div>
-      <div id="od_map_tip" *ngIf="orderInfoBean.orderStatusId != '1' ">超过预计时间未回收，方可取消订单</div>
+      <div id="od_map_tip" *ngIf="orderInfoBean.orderStatusId != '1' ">超过预计时间未回收，则可取消订单</div>
       <div id="map" #map style="position:absolute;width:100%;height:100%;"></div>
       <div class="od_map_circle">
         <div class="od_map_circleInner">{{orderInfoBean.orderStatus}}</div>
@@ -29,7 +29,7 @@
         </div>
       </div>
   </section>
-  <section class="od_info" *ngIf="firstOffline == false && orderInfoBean.orderStatusId != '1' ">
+  <section class="od_info" *ngIf="firstOffline == false && orderInfoBean.orderStatusId == '2' ">
       <div class="od_map_img">
         <img src="{{recyclesInfoBean.recycleImage}}" onerror="javascript:this.src='assets/img/default.png';" width="100%" height="100%"/>
       </div>
