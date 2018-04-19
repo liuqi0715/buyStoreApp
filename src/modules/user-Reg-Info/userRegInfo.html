@@ -20,15 +20,15 @@
                 </li>
                 <li>
                   <img src="assets/img/login/phoneCode.png" alt="" class="regIcon">
-                  <input type="number" [(ngModel)]="userInfo.yzm" id="ion-input" placeholder="请输入验证码" clearInput class="plcolor">
+                  <input type="number" [(ngModel)]="userInfo.yzm" placeholder="请输入验证码" clearInput class="plcolor">
                 </li>
                 <li>
                   <img src="assets/img/login/password.png" alt="" class="regIcon">
-                  <input type="password" [(ngModel)]="userInfo.newPassWord" id="ion-input" placeholder="请输入密码" clearInput class="plcolor">
+                  <input type="password" [(ngModel)]="userInfo.newPassWord" placeholder="请输入密码" clearInput class="plcolor">
                 </li>
                 <li>
                   <img src="assets/img/login/password.png" alt="" class="regIcon">
-                  <input type="password" [(ngModel)]="userInfo.rePassWord" id="ion-input" placeholder="请再次输入密码" clearInput class="plcolor">
+                  <input type="password" [(ngModel)]="userInfo.rePassWord" placeholder="请再次输入密码" clearInput class="plcolor">
                 </li>
             </ul>
             <div id="getCode">
@@ -38,16 +38,14 @@
         </div>  
       
          
-          
-
-         
             <p class="errorTip" *ngIf="errorTip">{{errorTipMsg}}</p>
-            <p style="text-align:center;" class="agreeI"> <input type="checkbox" [(ngModel)]="agreeI" (click)="agree()"> <span (click)="showAlert()"> 阅读并同意 <a href="javascript:void(0);" style="text-decoration: none;" >《用户协议》</a> </span> </p>
+            <p style="text-align:center;" class="agreeI"> <input type="checkbox" [(ngModel)]="agreeI" (click)="agree()"> <span (click)="showAlert()"> 阅读并同意 <a href="javascript:void(0);" style="text-decoration: none;" >《用户协议1.0》</a> </span> </p>
             <button ion-button class="btn" (click)="next()" block>下一步</button>
     </div>
     <div class="motai" *ngIf="hasSuccess">
           <img src="assets/img/login/loading.gif" alt="" id="loading">
     </div>
+    <!-- <input type="file"> -->
 </ion-content>
 
 
