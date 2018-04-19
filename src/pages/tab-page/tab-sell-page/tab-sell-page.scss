@@ -196,7 +196,7 @@ page-tab-home-page {
 .home-display{
   position: relative;
   width: 96%;
-  margin:.6rem auto; 
+  margin:.6rem auto;
 }
 
 .home-btn{
@@ -237,7 +237,7 @@ page-tab-home-page {
   background: -webkit-linear-gradient(top, #b1d3a1, #f3d771); /* Safari 5.1 - 6.0 */
   background: -o-linear-gradient(top, #b1d3a1, #f3d771); /* Opera 11.1 - 12.0 */
   background: -moz-linear-gradient(top, #b1d3a1, #f3d771); /* Firefox 3.6 - 15 */
-  background: linear-gradient(top, #b1d3a1, #f3d771); 
+  background: linear-gradient(top, #b1d3a1, #f3d771);
 }
 
 .home-btn-pos2{
@@ -271,7 +271,7 @@ page-tab-home-page {
 // }
 
 .infoSlide{
-  width:100%; 
+  width:100%;
   -webkit-perspective: 1200px;
   -moz-perspective: 1200px;
   -ms-perspective: 1200px;
@@ -300,8 +300,8 @@ page-tab-home-page {
 }
 .home-display-card_t,.home-display-card_m,.home-display-card_b{
   width: 100%;
-  height: 36%; 
-  overflow: hidden;  
+  height: 36%;
+  overflow: hidden;
 }
 .home-display-card_t{
   height: 28%;
@@ -324,10 +324,10 @@ page-tab-home-page {
   line-height: .4rem;
 }
 .home-display-card_t{
-  padding: .2rem .2rem; 
+  padding: .2rem .2rem;
 }
 .home-display-card_m{
-  padding: .3rem .2rem 0; 
+  padding: .3rem .2rem 0;
 }
 .home-display-card_m ul li{
   float: left;
@@ -360,10 +360,10 @@ page-tab-home-page {
   display: block;
   position: absolute;
   top: .1rem;
-  left: .3rem;
+  left: .13rem;
   width: auto !important;
   min-width: .6rem;
-  max-width: 1.4rem;
+  max-width: 2.4rem;
   height: .4rem;
   text-align: center;
   border: .02rem solid #FFF;
@@ -371,6 +371,14 @@ page-tab-home-page {
   line-height: .4rem;
   padding: 0 .2rem;
   border-radius: .16rem;
+}
+
+@media screen and (max-width: 350px) {
+  .home-display-card_b ul li label{
+    padding: 0 .1rem;
+  }
+
+
 }
 .home-display-card_b ul li span{
   display: block;
@@ -422,23 +430,23 @@ page-tab-home-page {
   -moz-transform: translateY(-50%);
 }
 
-.tri-left{ 
-  width: 0; 
+.tri-left{
+  width: 0;
   height: 0;
-  right: 0; 
-  border-top: .2rem solid transparent; 
-  border-right: .12rem solid rgba(255,255,255,.9); 
-  border-bottom: .2rem solid transparent; 
-} 
+  right: 0;
+  border-top: .2rem solid transparent;
+  border-right: .12rem solid rgba(255,255,255,.9);
+  border-bottom: .2rem solid transparent;
+}
 
-.tri-right{ 
-  width: 0; 
-  height: 0; 
+.tri-right{
+  width: 0;
+  height: 0;
   left: 0;
-  border-top: .2rem solid transparent; 
-  border-left: .12rem solid rgba(255,255,255,.9); 
-  border-bottom: .2rem solid transparent; 
-} 
+  border-top: .2rem solid transparent;
+  border-left: .12rem solid rgba(255,255,255,.9);
+  border-bottom: .2rem solid transparent;
+}
 
 .noMarginTop{
   margin-top: 0;

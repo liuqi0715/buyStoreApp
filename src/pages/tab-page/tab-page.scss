@@ -24,23 +24,23 @@ page-learn-tab-page {
 		//for ios
 	    .ion-ios-tab-#{nth($tabImageName, $i)} {
 	        @extend .ion-tab-icon-base;
-	        content: url("../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_on.png");
+	        content: url("../assets/img/tabs/icon_#{nth($tabImageName, $i)}_on.png");
 	    }
 	    .ion-ios-tab-#{nth($tabImageName, $i)}-outline {
 	        @extend .ion-tab-icon-base;
-	        content: url("../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_off.png");
+	        content: url("../assets/img/tabs/icon_#{nth($tabImageName, $i)}_off.png");
 	    }
 	// for android
 		.tab-button[aria-selected=true] {
 			.ion-md-tab-#{nth($tabImageName, $i)} {
 				@extend .ion-tab-icon-base;
-				content: url("../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_on.png");
+				content: url("../assets/img/tabs/icon_#{nth($tabImageName, $i)}_on.png");
 			}
 		}
 		.tab-button[aria-selected=false] {
 			.ion-md-tab-#{nth($tabImageName, $i)} {
 				@extend .ion-tab-icon-base;
-				content: url("../assets/ui/tabs/icon_#{nth($tabImageName, $i)}_off.png");
+				content: url("../assets/img/tabs/icon_#{nth($tabImageName, $i)}_off.png");
 			}
 		}
 	

@@ -7,18 +7,23 @@ import { ToastController } from 'ionic-angular';
 import { interfaceUrls }from "../../providers/serviceUrls"
 import { Network } from '@ionic-native/network';
 import {Http,Headers} from '@angular/http';
+import { NativeStorage } from '@ionic-native/native-storage';
+import { App } from 'ionic-angular';
 // import { Device } from '@ionic-native/device';
 import {servicesInfo} from "../../providers/service-info";//将公共数据放在服务中
 
 // import { HomePage } from "../../pages/home/home";//登录成功以后将首页定位根页面
 import {TabPage} from "../../pages/tab-page/tab-page";
 import { UserPwdFind }from "../user-pwd-find/userPwdFind"
+import { UPDATEREGID_URL, PAGEJUMP_URL } from "../../providers/Constants";
+import { urlService } from "../../providers/urlService";  //post请求
 
 export interface UserInfo {
     userName: string;
     pwd: string;
 }
-
+declare var $: any;//引入jq
+declare var window;
 @Component({
     selector: 'user-login',
     templateUrl: 'user-login.html',
@@ -40,12 +45,14 @@ export class UserLogin {
     remberPwd = false;//记住密码
     public
     constructor(public navCtrl: NavController,
-
+                private nativeStorage: NativeStorage,
                 public actionSheetCtrl: ActionSheetController,
                 public toastCtrl: ToastController,
                 private network: Network,
                 private http: Http,
                 public servicesInfo: servicesInfo,
+                private app: App,
+                public urlService: urlService,
             ) {
                 // console.log('Device UUID is: ' + this.device.uuid);
     }
@@ -66,19 +73,46 @@ export class UserLogin {
     }
     checkNetwork(){
         let self = this;
-    
+
         self.network.onDisconnect().subscribe(()=>{
-              self.offline=true; 
+              self.offline=true;
               self.toast('无网络连接，请检查');
         });
         self.network.onConnect().subscribe(()=>{
-              self.offline=false; 
+              self.offline=false;
         });
-    
+
       }
-      ionViewDidLoad(){
-          this.checkNetwork();
+    ionViewDidLoad(){
+        this.checkNetwork();
+        if (this.servicesInfo.hasRegister==true){
+           this.userInfo.userName = this.servicesInfo.mobilePhone;
+           this.userInfo.pwd = this.servicesInfo.pwd;
+        }else{
+          console.info('没有注册成功因此不赋值login信息')
+        }
+
+
+    }
+    changepic(){
+      var a = $("#file")[0].files[0].size;
+      var b = $("#file");
+      console.log(a,b)
+      var img = new Image();
+      img.src = "assets/img/login/logo2.png"
+      var reads = new FileReader();
+      reads.readAsDataURL($("#file")[0].files[0]);
+      console.info( $("#file")[0].files[0])
+      console.log(new Image())
+      reads.onload = function (e) {
+        console.log(e)
       }
+
+    }
+    ionViewDidEnter(){
+      // this.userInfo.userName = localStorage.getItem("user");
+      // this.userInfo.pwd = localStorage.getItem("pwd");
+    }
     login() {
         // this.navCtrl.setRoot(TabPage);    //仅做测试用，正式版本需要注释
         if(this.offline == true){
@@ -107,10 +141,54 @@ export class UserLogin {
                     if(data.errorinfo==null){
                         self.servicesInfo.token = data.data.token;
                         localStorage.setItem("token",data.data.token);
+                        localStorage.setItem("user", self.userInfo.userName);
+                        localStorage.setItem("pwd", self.userInfo.pwd);
                         self.servicesInfo.userId = data.data.userId;
                         localStorage.setItem("VERSION",data.version);
                         self.toast("登录成功");
-                        self.navCtrl.setRoot(TabPage);
+                        // self.navCtrl.setRoot(TabPage);
+                        self.app.getRootNav().setRoot(TabPage);
+                        self.nativeStorage.setItem('token', data.data.token)
+                          .then(
+                          (data) => { console.log('Stored item!', data)},
+                          error => console.error('Error storing item', error)
+                          );
+
+
+                        /**
+                         * 获取极光ID
+                         */
+
+                        if (window.plugins && window.plugins.jPushPlugin){
+                          window.plugins.jPushPlugin.init();
+                            window.plugins.jPushPlugin.getRegistrationID(function (regId) {
+                              try {
+                                // alert("JPushPlugin:registrationID is " + regId);
+                                let data = {
+                                  "data": {
+                                    "regId": regId
+                                  },
+                                  "token": self.servicesInfo.token
+                                };
+
+                                self.urlService.postDatas(UPDATEREGID_URL, data).then(function (resp) {
+                                  if (resp) {
+                                    if (resp.errorinfo == null) {
+                                      console.log(resp.data);
+                                      // alert(self.datas);
+                                    }
+                                  }
+                                });
+
+                              } catch (exception) {
+                                console.log(exception);
+                              }
+                            });
+                        }
+
+
+
+
                     }else{
                         self.loginError = true;
                         self.toast(data.errorinfo.errormessage);

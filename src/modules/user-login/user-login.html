@@ -6,7 +6,7 @@
             <ion-label><img src="assets/img/login/myTEL.png" alt="" class="loginIcon"></ion-label>
             <ion-input type="text" [(ngModel)]="userInfo.userName" clearInput autocomplete="on" placeholder="请输入手机号" class="plcolor" ></ion-input>
         </ion-item> -->
-      
+
         <!-- <ion-item>
             <ion-label><img src="assets/img/login/pwd.png" alt="" class="loginIcon"></ion-label>
             <ion-input type="password" [(ngModel)]="userInfo.pwd" id="ion-input" placeholder="请输入密码" clearInput class="plcolor"></ion-input>
@@ -21,7 +21,7 @@
                 <img src="assets/img/login/myTEL.png" alt="" class="regIcon">
                 <input type="number" name="phone" [(ngModel)]="userInfo.userName" id="ion-input" placeholder="请输入手机号" clearInput class="plcolor">
               </li>
-    
+
               <li>
                 <img src="assets/img/login/pwd.png" alt="" class="regIcon">
                 <input type="password" [(ngModel)]="userInfo.pwd" id="ion-input" placeholder="请输入密码" clearInput class="plcolor">
@@ -32,5 +32,7 @@
     <button ion-button class="btn" (click)="login()" block>登录</button>
     <a href="javascript:void(0);" class="findMM" (click)="findPwd()">找回密码？</a>
     <a href="javascript:void(0);"  id="regsiter" (click)="regsiter()">注册</a>
+    <!-- <input type="file" id="file" accept = "image/*" (change)="changepic()" > -->
+    <!-- <img src="" alt="" id=""> -->
 <!--{{pp.data.a}}-->
 </ion-content>

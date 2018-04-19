@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 // import * as Swiper from 'swiper';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { orderBornPage } from "../order-born-page/order-born-page";
@@ -8,7 +8,7 @@ import { orderAgreePage } from "../order-agree-page/order-agree-page";
 import { orderCommentPage } from "../order-comment-page/order-comment-page";
 import { chartConfig } from "../../../providers/chartConfig";
 import { urlService } from "../../../providers/urlService";
-import { SELLINFO_URL, SELLORDER_URL, UPDATEREGID_URL, PAGEJUMP_URL } from "../../../providers/Constants";
+import { SELLINFO_URL, SELLORDER_URL, APPUPDATE_URL, APPCONFIG_URL, PAGEJUMP_URL } from "../../../providers/Constants";
 import { ToastController } from 'ionic-angular';
 import { servicesInfo } from"../../../providers/service-info";//公共信息
 import { Device } from '@ionic-native/device';
@@ -16,9 +16,16 @@ import { Network } from '@ionic-native/network';
 import { msgDetails } from "../../wallet/wallet-msgDetails-page/wallet-msgDetails-page";
 import { UserLogin } from "../../../modules/user-login/user-login";
 import { App } from 'ionic-angular';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+import { FileOpener } from '@ionic-native/file-opener';
+import { AppVersion } from '@ionic-native/app-version';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { orderConfirmPage} from '../order-confirm-page/order-confirm-page';
+
 import ECharts from 'echarts';
-declare var $; 
-declare var Swiper; 
+declare var $;
+declare var Swiper;
 declare var window;
 
 @Component({
@@ -62,7 +69,15 @@ export class TabSell {
               public toastCtrl: ToastController,
               public device: Device,
               private network: Network,
+              private alertCtrl: AlertController,
+              public loadingCtrl: LoadingController,
               private app: App,
+              private appVersion:AppVersion,
+              private transfer:FileTransfer,
+              private file: File,
+              private fileOpener:FileOpener,
+              private fileTransfer:FileTransferObject,
+              private androidPermissions: AndroidPermissions
       ) {
   }
 
@@ -70,6 +85,15 @@ export class TabSell {
     this.orderActive = true;    /****/
     this.checkNetwork();
     // this.initJPush();
+    this.checkUpdate();
+
+
+    let self = this;
+    $(".home-display-card_b").click(function () {
+      console.log("///")
+      self.navCtrl.push(orderConfirmPage);
+    })
+
   }
 
   ionViewWillLeave() {
@@ -95,24 +119,205 @@ export class TabSell {
         return;
     }
 
-    self.getInfoDatas(refresher); 
+    if(this.oSwiper1){
+      this.oSwiper1.stopAutoplay();
+    }
+    if(this.swiper1){
+      this.swiper1.stopAutoplay();
+    }
+
+    self.getInfoDatas(refresher);
   }
 
   checkNetwork(){
     let self = this;
     self.network.onDisconnect().subscribe(()=>{
-          self.offline=true; 
+          self.offline=true;
           self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
-          self.offline=false; 
+          self.offline=false;
     });
+  }
+
+  toast1(actions){
+    let toast = this.toastCtrl.create({
+      message: actions,
+      duration: 2000,
+      position:'middle'
+    });
+    toast.present();
+  }
+
+  //检查版本更新
+  checkUpdate() {
+    let self = this;
+    let data = {
+       "data":{
+
+       },
+       "token":this.servicesInfo.token
+    };
+　　//查询当前服务器的APP版本号与当前版本号进行对比
+    this.urlService.postDatas(APPCONFIG_URL,data).then((resp:any) => {
+      if(resp){
+        if(resp.errorinfo == null){
+          self.appVersion.getVersionNumber().then((version) => {
+            // alert(JSON.stringify(resp));
+            if (resp.version != version) {
+              // this.appUrl=data[0].APPURL;  //可以从服务端获取更新APP的路径
+              let updateAlert = self.alertCtrl.create({
+                title: '提示',
+                message: '发现新版本,是否立即更新?',
+                buttons: [{
+                  text: '取消'
+                }, {
+                  text: '确定',
+                  handler: () => {
+                    self.checkPermission();
+                  }
+                }
+                ]
+              });
+              updateAlert.present();
+            }
+          });
+        }
+      }
+    });
+
+  }
+
+  checkPermission(){
+     var self = this;
+     self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+        result => {
+          // alert('可读权限'+result.hasPermission);
+          if(result.hasPermission == false){
+            self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+            result => {
+              self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
+                result => {
+                  // alert('可写权限'+result.hasPermission);
+                  if(result.hasPermission == false){
+                     self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
+                        result => {
+                            self.upgradeApp();
+                        },
+                        err => {
+                            // alert(JSON.stringify(err));
+                            self.toast1("存储权限未打开,升级失败");
+                        }
+                     )
+                  }else{
+                    self.upgradeApp();
+                  }
+
+                }
+              );
+            })
+          }else{
+              self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
+                result => {
+                  // alert('可写权限'+result.hasPermission);
+                  if(result.hasPermission == false){
+                     self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
+                        result => {
+                            self.upgradeApp();
+                        },
+                        err => {
+                            // alert(JSON.stringify(err));
+                            self.toast1("存储权限未打开,升级失败");
+                        }
+                     )
+                  }else{
+                    self.upgradeApp();
+                  }
+
+                }
+                // err => self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
+                //   result => {
+                //       self.upgradeApp();
+                //   },
+                //   err => {
+                //       alert(JSON.stringify(err));
+                //   }
+                // )
+              );
+          }
+        },
+        err => {
+          self.toast1("存储权限未打开,升级失败");
+        }
+      );
+  }
+
+  upgradeApp() {
+
+    let self = this;
+
+    let uploading = this.loadingCtrl.create({
+      content: "安装包正在下载...",
+      dismissOnPageChange: false
+    });
+
+    // var options = {};
+    uploading.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    const apk = this.file.externalRootDirectory + 'xdll_shop.apk'; //apk保存的目录
+
+    // this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE, this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE]).then(
+    //   result => {
+
+    //   },
+    //   err => {
+    //       alert(JSON.stringify(err));
+    //   }
+    // );
+       fileTransfer.download(APPUPDATE_URL, apk).then(
+          (result) => {
+            uploading.dismiss();
+            self.fileOpener.open(apk, 'application/vnd.android.package-archive').then(
+              (result) => {
+                // alert("ok");
+              }
+            ).catch((error) => {
+                // alert(JSON.stringify(error));
+                let toast = self.toastCtrl.create({
+                  message: error.exception,
+                  duration: 2000,
+                  position:'middle'
+                });
+                toast.present();
+            });
+          },(error) => {
+            let toast = self.toastCtrl.create({
+              message: error.exception,
+              duration: 2000,
+              position:'middle'
+            });
+            toast.present();
+            uploading.dismiss();
+          }
+        );
+
+        fileTransfer.onProgress((event) => {
+          //进度，这里使用文字显示下载百分比
+            var downloadProgress = (event.loaded / event.total) * 100;
+            uploading.setContent("已经下载：" + Math.floor(downloadProgress) + "%");
+
+            if (downloadProgress > 99) {
+              uploading.dismiss();
+            }
+
+        });
+
   }
 
   toast(actions){
     let toast = this.toastCtrl.create({
       message: actions,
-      duration: 2000,
+      duration: 1500,
       position:'middle'
     });
     toast.present();
@@ -181,7 +386,7 @@ export class TabSell {
             refresher.complete();
           }
         }else{
-          self.orderActive = true;  
+          self.orderActive = true;
           if(refresher){
              refresher.cancel();
           }
@@ -200,16 +405,16 @@ export class TabSell {
   }
 
   initCharts(){
-    
+
     function addSwiper(con,i){
         return '<div class="swiper-slide"><span class="home-chart-title1">找铅网</span><span class="home-chart-title2">平台指导价: ' + con + '</span><div class="home-chart" id='+ 'chart' + i + '></div></div>';
-    }  
+    }
     var htmlContain = "";
 
     // this.oSwiper1.appendSlide(addSwiper(i+1));
     var chartDatas = (this.datas as any).refPriceList;
     if(chartDatas){
-      for(var i = 0;i < chartDatas.length;i++){      
+      for(var i = 0;i < chartDatas.length;i++){
           htmlContain = htmlContain + addSwiper(chartDatas[i].catName,i+1);
       }
       $(".headSlideBox").empty().html(htmlContain);
@@ -300,8 +505,8 @@ export class TabSell {
 
   }
 
-  goOrderDetail(orderCard){ 
-    let self = this; 
+  goOrderDetail(orderCard){
+    let self = this;
     if(self.firstClick == true){
         self.firstClick = false;
         if(this.offline == true){
@@ -356,7 +561,7 @@ export class TabSell {
     $("#noticeSlider .swiper-wrapper").empty();
     function addNotice(data){
         return '<div class="swiper-slide"><div class="swiper-slide">'+'<span>'+ data.createTime +'</span>'+'<span>'+ data.catName +'</span>'+'<span>'+ data.weightRec +'</span>'+'<span>'+ data.priceRec +'</span>'+'</div></div>';
-    }  
+    }
 
     var noticeDatas = (this.datas as any).latelyDealList;
     for(var i = 0;i < noticeDatas.length;i++){
@@ -417,19 +622,17 @@ private initInfoBox(infoDatas) {
     for(var k = 0; k < data.quotePriceList.length;k++){
       goodsDom = goodsDom + '<li><label>'+ data.quotePriceList[k].catName +'</label><span>'+ data.quotePriceList[k].catPrice +'<a>元/kg</a></span></li>';
     }
-    
+
     return '<div class="swiper-slide"><div class="home-display-card">'+'<div class="home-display-card_t"><div class="home-display-card_tag">'+ starsDom+'</p>'+
     '<p>综合评分'+data.commScore+'</p></div><div class="home-display-card_tag"><p>'+data.quoTime+'报价</p><p>'+data.distance+'</p></div></div><div class="home-display-card_m">'+
-    wordsDom+'</ul></div><div class="home-display-card_b">'+ goodsDom +'</ul></div></div></div>';
+      wordsDom +'</ul></div><div class="home-display-card_b" recycleId = '+data.recycleId+' >'+ goodsDom +'</ul></div></div></div>';
+
   }
+
 
   var datas = infoDatas;
 
   if(datas && datas.collectorList && datas.collectorList.length>0){
-      
-      if(datas.collectorList.length > 1){
-        $("#home-swiper-navR").hide();
-      }
 
       $(".infoSlide .swiper-wrapper").empty();
       for(var i = 0;i < datas.collectorList.length;i++){
@@ -437,11 +640,6 @@ private initInfoBox(infoDatas) {
       }
 
       this.swiper2 = new Swiper('.infoSlide', {
-        // roundLengths : false, 
-        initialSlide :0,
-        // speed:600,
-        // autoplay :false,
-        // followFinger : false,
         observer :true,
         observeParents :true,
         slidesPerView : 'auto',
@@ -473,31 +671,52 @@ private initInfoBox(infoDatas) {
             }else{
               $("#home-swiper-navR").hide();
             }
-            
+
             for (var i = 0; i < swiper.slides.length; i++) {
               var es = swiper.slides[i].style;
               es.webkitTransitionDuration = es.MsTransitionDuration = es.msTransitionDuration = es.MozTransitionDuration = es.OTransitionDuration = es.transitionDuration = speed + 'ms';
             }
         }
       });
-
       // self.swiper2.slides[1].style.transform='scale(0.95)';
-      $("#home-swiper-navL").show();
+      // $("#home-swiper-navL").show();
       // if(this.swiper2.on){
       //     this.swiper2.on('slideChangeEnd',function(swiper){
-      //       swiper.unlockSwipes();              
+      //       swiper.unlockSwipes();
       //     });
+      // }
+      // if(self.navParams.data.orderOk){
+      //     self.toast("报单成功");
+      //     setTimeout(function(){
+      //       self.navParams.data.orderOk = false;
+      //     },1600);
       // }
 
       self.publicOnly = false;
       self.recycleIdx = 0;
+
+      $(".home-display-card_b").click(function (e) {
+        // console.log($(".home-display-card_b").attr("recycleid"))
+        // console.log($(e.target).find(".home-display-card_b").arrt("recycleid"))
+        console.log($(this).attr("recycleid"))
+
+        var recycleidT =  $(this).attr("recycleid");
+        self.navCtrl.push(orderConfirmPage,{
+          recycleidT: $(this).attr("recycleid")
+        });
+      })
+
+
   }else{
       self.publicOnly = true;
       $("#home-swiper-navL").hide();
       $("#home-swiper-navR").hide();
-      $(".infoSlide .swiper-wrapper").empty().append('<div class="home-display-card"><span class="home-display-none">暂无报价</span></div>');
+      $(".infoSlide .swiper-wrapper").empty().append('<div class="home-display-card" style="margin:0 auto;"><span class="home-display-none">暂无报价</span></div>');
   }
 
 }
+  ngOnInit(){
+
+  }
 
 }

@@ -22,8 +22,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';//打开页面
 import { UserLogin } from "../../../modules/user-login/user-login";
 import { AppVersion } from '@ionic-native/app-version';
 import { addCardPage } from "../../wallet/wallet-addCard-page/wallet-addCard-page";
-
-declare var $; 
+import { NativeStorage } from '@ionic-native/native-storage';
+declare var $;
 @Component({
   selector: 'page-tab-more-page-page',
   templateUrl: 'tab-mine-page.html',
@@ -41,9 +41,10 @@ export class TabMine {
            private network: Network,
            private appVersion:AppVersion,
            public  platform: Platform,
+           private nativeStorage: NativeStorage
     ) {
       console.log(this.servicesInfo.token,"token")
-    
+
   }
 
   toast(actions){
@@ -59,7 +60,7 @@ export class TabMine {
   userName;    //登录名
   whetherAccount = false;  //是否显示开户
   loading = false;    //加载动画
-  
+
   canGo = false;
   isBindCard:any = null;  //钱包是否跳页
   success;
@@ -74,22 +75,19 @@ export class TabMine {
     let self = this;
 
     self.network.onDisconnect().subscribe(()=>{
-          self.offline=true; 
+          self.offline=true;
           self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
-          self.offline=false; 
+          self.offline=false;
     });
 
   }
   ionViewDidLoad() {
-      //test
- 
-
     this.checkNetwork();
     this.appVersion.getVersionNumber().then((version) => {
         this.version = version;
-    }); 
+    });
     let self = this;
     document.addEventListener("backbutton",function(){
         self.openHeadImg = false;
@@ -101,8 +99,8 @@ export class TabMine {
   ionViewDidEnter(){
     // this.hasSuccess = true;
     let params={
-      "data":{   
-        "platform":1,  
+      "data":{
+        "platform":1,
       },
       "token":this.servicesInfo.token
     }
@@ -139,7 +137,7 @@ export class TabMine {
    });
   }
 
- 
+
 // console.log($);
 //查询是否绑定卡--
   goMyWallet2(){
@@ -151,17 +149,17 @@ export class TabMine {
 
       let params= {
         "data":{
-           "platform":1,     
+           "platform":1,
         },
         "token":this.servicesInfo.token
       }
        let self = this;
         this.urlService.postDatas(interfaceUrls.openAccountQuery2,params)
-        .then(function(resp){  
+        .then(function(resp){
          if(resp){
-           
+
              if(resp.errorinfo==null){
-                 if(resp.data.susses=="Y"){                
+                 if(resp.data.susses=="Y"){
                     if(resp.data.isBindCard==1){
                       self.isBindCard=1;
                      }else if(resp.data.isBindCard==0){
@@ -179,7 +177,7 @@ export class TabMine {
                     self.servicesInfo.firmName = resp.data.firmName;    //公司名称
                     self.servicesInfo.operName = resp.data.operName;    //法人名称
                  }
-                  
+
              }else{
               self.toast(resp.errorinfo.errormessage);
                /*token失效的问题*/
@@ -192,8 +190,8 @@ export class TabMine {
        .catch(function(error){
         self.toast("服务器异常,请稍后再试。");
       });
-  
-   
+
+
   }
 
 
@@ -216,7 +214,7 @@ export class TabMine {
    }
     let params= {
          "data":{
-            "platform":1,        
+            "platform":1,
          },
          "token":this.servicesInfo.token
        }
@@ -237,7 +235,7 @@ export class TabMine {
                   }
             }else{
               // self.toast(resp.errorinfo.errormessage);
-              
+
               self.ERROR = resp.errorinfo.errormessage
               self.CHECK = "ER"
                /*token失效的问题*/
@@ -251,7 +249,7 @@ export class TabMine {
   goAccount(){
     if(this.CHECK==null){
       this.toast("正在校验开户信息,请稍后重试!");
-     
+
     }else{
       if(this.CHECK=="OK"){
         this.navCtrl.push(UserOpenAccount);
@@ -262,7 +260,7 @@ export class TabMine {
       }else if(this.CHECK=="ER"){
         this.toast(this.ERROR);
       }else{
-        this.toast("服务器异常，请稍后再试。");        
+        this.toast("服务器异常，请稍后再试。");
       }
     }
   }
@@ -296,7 +294,7 @@ export class TabMine {
   confirm(str: string = '您确定此操作吗？',  noStr: string = '取消',okStr: string = '确定',): Promise<any> {
     return new Promise((resolve, reject) => {
         return this.alertCtrl.create({
-            title: "提示", 
+            title: "提示",
             message: str,
              enableBackdropDismiss: false,
               buttons: [ {
@@ -304,7 +302,7 @@ export class TabMine {
                     reject('操作被取消')
                 }
             },{
-              text: okStr, 
+              text: okStr,
               handler: resolve
           },]
         }).present();
@@ -317,7 +315,7 @@ export class TabMine {
     .then(() => {
           let params={
             "data":{
-              "platform":1,        
+              "platform":1,
            },
            "token":this.servicesInfo.token
           }
@@ -328,7 +326,19 @@ export class TabMine {
               if(resp.errorinfo==null){
                 // console.log(self.app.getRootNav().setRoot())
                 localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                localStorage.removeItem("pwd");
                 self.app.getRootNav().setRoot(UserLogin);
+                self.nativeStorage.remove("token").then(
+                  ()=>{
+                    self.app.getRootNav().setRoot(UserLogin);
+                  },
+                  (error)=>{
+
+                  }
+                )
+
+
               }else{
                 self.toast(resp.errorinfo.errormessage);
               }
@@ -356,15 +366,15 @@ export class TabMine {
   showHeadImg(){
     this.openHeadImg = true;
     $(".tabbar").css({"display":"none"});
-   
+
     setTimeout(()=>{
       $("#addCladd img").addClass("anmiate");
     },100)
     // this.platform.registerBackButtonAction(()=>{
     //     this.openHeadImg = false;
     // })
-    
+
   }
- 
-    
+
+
 }
