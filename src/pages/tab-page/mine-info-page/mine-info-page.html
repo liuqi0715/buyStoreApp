@@ -5,7 +5,7 @@
 </ion-header>
 <ion-content>
   <div class="mi_list"> 
-    <span>门店头像</span><div (click)="changeImg()" id="stroeImg"><img  *ngIf="hasImg" onerror="javascript:this.src='assets/img/default.png';" [src]="user.storeImage"></div>
+    <span>门店头像</span><div (click)="checkPermission()" id="stroeImg"><img  *ngIf="hasImg" onerror="javascript:this.src='assets/img/default.png';" [src]="user.storeImage"></div>
   </div>
   <div class="mi_list"> 
     <span>姓名</span><span>{{user.userName}}</span>
