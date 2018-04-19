@@ -39,7 +39,7 @@ export class UserPwdFind {
 
     hasClick=false;
     hq = "获取验证码";
-    num = 120;
+    num = 60;
  
     offline:boolean=false;
 
@@ -137,7 +137,7 @@ export class UserPwdFind {
     }
 
     findPasswordCode(){
-        this.toast("请保证您的信箱能够接收短信")
+        // this.toast("请保证您的信箱能够接收短信")
         if(!this.userInfo.phone) {
             // this.errorTip = true;
             // this.errorTipMsg = "请输入手机号";
@@ -154,7 +154,7 @@ export class UserPwdFind {
             let self = this;
             this.urlService.postDatas(interfaceUrls.findPwdCode,params)
             .then(function(resp){
-                if(resp.data.errorinfo==null){
+                if(resp.errorinfo==null){
                     self.errorTip = false;
                     self.hasClick = true;
                     let timer = setInterval(() => {
@@ -162,15 +162,15 @@ export class UserPwdFind {
                             clearInterval(timer);
                             self.hasClick = false;
                             self.hq = "重新获取";
-                            self.num = 120;
+                            self.num = 60;
                             return;
                         }
                         self.num--;
                     }, 1000);
                 }else{
-                    // self.errorTip = true;
-                    self.toast(resp.data.errorinfo.errormessage)
-                    // self.errorTipMsg = data.errorinfo.errormessage;
+                    
+                    self.toast(resp.errorinfo.errormessage)
+                 
                 }
            });
 

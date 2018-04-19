@@ -19,7 +19,7 @@ page-UserOpenAccount{
         line-height: .8rem;
       }
       ul li div label{
-        width: 35%;
+        width: 30%;
       }
       ul li div{
           height: 100%;
@@ -41,7 +41,12 @@ page-UserOpenAccount{
         // text-indent: .26rem;
         border: none;
         border-radius: 2px;
+        // @include placeholder(#B0B0B0,0,.25rem);
+        $text-input-placeholder-color:(red);
       }
+      ::-webkit-input-placeholder { /* WebKit browsers */ 
+        font-size:.1rem;
+        } 
     .toolbar-background-md{
         background-color: #0EAF9D;
     }
@@ -100,32 +105,7 @@ page-UserOpenAccount{
           background-color: #D5D5D5;
           color: #6C6C6C;
       }
-    //   //验证阿曼
-    //   .yzm-btn {
-    //     width: 80%;
-    //     height: .6rem;
-    //     line-height: .65rem;
-    //     font-size: .25rem;
-    //     float: right;
-    //     margin: 0 !important;
-    //     background-color: #0ab0e4;
-    //     border-radius: 0;
-    //   }
-    //   #getCode{
-    //       position: absolute;
-    //       right: 5%;
-    //       top: 3.63rem;
-    //       z-index: 999;
-    //   }
-    //   .errorTip {
-    //     text-indent: .32rem;
-    //     color: #f00;
-    //   }
-    //   .agreeText{
-    //       text-indent: .32rem;
-    //       color: black;
-    //       font-size: 12px;
-    //   }
+ 
       .textInfo{
         font-size: .24rem;
       }
@@ -176,5 +156,8 @@ page-UserOpenAccount{
         border-radius: 2px;
         line-height: .8rem;
         // background: #D4D4D4;
+    }
+    .content-ios{
+      background-color: #0EAF9D;
     }
 }

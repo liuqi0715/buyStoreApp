@@ -24,56 +24,59 @@
           class='city_picker'>
           </city-picker>  -->
       <!-- </div> -->
-    
+
             <p id="chose" (click)="fiveAddress()">请选择地址   <img alt="" src="assets/img/login/gengduo.png" class="more"></p>
             <!-- <p class="cityPiker"> <input type="text" [(ngModel)]="addresInfo2" placeholder="请输入详细地址"></p> -->
             <p class="cityPiker">  <ion-input type="text" [(ngModel)]="addresInfo2"  autocomplete="on" placeholder="请输入详细地址" class="plcolor" ></ion-input></p>
           <!-- <p>您的参考地址：{{addresInfo2}}</p> -->
-     
-         
+
+
             <!-- <p id="chose" (click)="fiveAddress()">请选择地址》》</p> -->
             <button ion-button class="btn" (click)="next()" block>下一步</button>
     </div>
     <!-- 五级联动地址插件 -->
     <div id="addressFixed">
         <div class="toogle-address" *ngIf="newAddress" [ngClass]="{noMarginTop:newAddress}">
-            
+
             <div class="toogle-title">
                 请选择地址
                 <span class="icon-close" (click)="reLoad()">×</span>
             </div>
             <div id="address2">
-              
+
                 <div class="address-header">
-                    <span class="provice address-now" (click)="provice()">请选择</span>
-                    <span class="city" (click)="city()" *ngIf="hasCity">请选择</span>
-                    <span class="area" (click)="area()" *ngIf="hasArea">请选择</span>
-                    <span class="town" (click)="town()" *ngIf="hasTown">请选择</span>
-                    <span class="stree" (click)="atree()" *ngIf="hasStree">请选择</span>
+                    <span class="provice " (click)="provice()" [ngClass]="{'address-now': hasPro2 == true}">请选择</span>
+                    <span class="city" (click)="city()" *ngIf="hasCity" [ngClass]="{'address-now': hasCity2 == true}">请选择</span>
+                    <span class="area" (click)="area()" *ngIf="hasArea"  [ngClass]="{'address-now': hasArea2 == true}">请选择</span>
+                    <span class="town" (click)="town()" *ngIf="hasTown"  [ngClass]="{'address-now': hasTown2 == true}">请选择</span>
+                    <span class="stree" (click)="stree()" *ngIf="hasStree"  [ngClass]="{'address-now': hasStree2 == true}">请选择</span>
                 </div>
                 <!-- onclick="address(this)" -->
                 <div id="address-info" >
                     <ul id="provice" >
-                       <li *ngFor=" let pro of provinceList" (click)="selectPro(pro,$event)" [ngClass]="{red:true==false}">
-                            {{pro.provinceName}}
+                       <li *ngFor=" let pro of provinceList; let index = index" (click)="selectPro(pro,pro.provinceId)" >
+                           <span [ngClass]="active==pro.provinceId?'btn-default':'btn-primary'"> {{pro.provinceName}}</span>
                        </li>
                     </ul>
                     <ul id="city">
-                        <li *ngFor=" let city of cityList" (click)="selectCity(city,$event)">{{city.cityName}}</li>
+                        <li *ngFor=" let city of cityList" (click)="selectCity(city,city.cityId)">
+                            <span  [ngClass]="activeCity==city.cityId?'btn-default':'btn-primary'" > {{city.cityName}}</span>
+                        </li>
                     </ul>
                     <ul id="area">
-                       <li *ngFor="let area of areaList" (click)="selectArea(area,$event)">
-                            {{area.areaName}}
+                       <li *ngFor="let area of areaList" (click)="selectArea(area,area.areaId)">
+                         <span  [ngClass]="activeArea==area.areaId?'btn-default':'btn-primary'"> {{area.areaName}}</span>
                        </li>
                     </ul>
                     <ul id="town">
-                       <li *ngFor="let town of townList" (click)="selectTown(town,$event)">
-                        {{town.stName}}
+                       <li *ngFor="let town of townList" (click)="selectTown(town,town.stId)">
+
+                      <span [ngClass]="activeTown==town.stId?'btn-default':'btn-primary'">  {{town.stName}}</span>
                        </li>
                     </ul>
                     <ul id="stree">
-                       <li *ngFor="let stree of streeList" (click)="selectStree(stree,$event)">
-                            {{stree.countryName}}
+                       <li *ngFor="let stree of streeList" (click)="selectStree(stree,stree.countryId)">
+                          <span  [ngClass]="activeStree==stree.countryId?'btn-default':'btn-primary'"> {{stree.countryName}}</span>
                        </li>
                     </ul>
                 </div>

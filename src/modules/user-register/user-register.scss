@@ -1,5 +1,5 @@
 user-register {
-  
+
     .toolbar-background-md{
         background-color: #0DAF90;
     }
@@ -50,14 +50,14 @@ user-register {
             margin: .3rem auto;
             border-radius: 3px;
             padding-top: 0.5px;
-            background-color: white;  
-             
+            background-color: white;
+
         }
         #content  p input{
             border-radius: 3px;
             height: .8rem;
             line-height: .8rem;
-            border: 1px solid #D4D4D4;  
+            border: 1px solid #D4D4D4;
         }
         .ion-input{
             width: 90%;
@@ -80,10 +80,25 @@ user-register {
             margin-bottom: .55rem;
             border-radius: 2px;
             text-align: center;
-          
+
             border: 1px solid #AEAEAE;
+            position: relative;
         }
-        
+        .errorMt{
+          width: 100%;
+          height: 100%;
+          opacity: 0.8;
+          background-color: #8F8D8E;
+          position: absolute;
+          top: 0;
+          left: 0;
+          color: red;
+          text-align: center;
+          line-height: 100%;    
+          z-index:99;
+        }
+
+
         #license{
             width: 40%;
             float: left;
@@ -94,7 +109,23 @@ user-register {
             border-radius: 2px;
             text-align: center;
             border: 1px solid #AEAEAE;
+            position: relative;
         }
+
+         .errorMt2 {
+           width: 100%;
+           height: 100%;
+           opacity: 0.8;
+           background-color: #8F8D8E;
+           position: absolute;
+           top: 0;
+           left: 0;
+           color: red;
+           text-align: center;
+           line-height: 100%;
+            z-index:99;
+         }
+
         .camera{
             width: .8rem;
             display: block;
@@ -115,7 +146,7 @@ user-register {
 
         #select{
             width: 90%;
-            margin-left:5%; 
+            margin-left:5%;
             height: .8rem;
             text-indent: .3rem;
             -webkit-appearance: none;
@@ -134,7 +165,7 @@ user-register {
             border-radius: 2px;
             text-indent: .3rem;
             line-height: .6rem;
-            // background-image: url(../../assets/imgs/rightArrow.png); 
+            // background-image: url(../../assets/imgs/rightArrow.png);
             background-position: right center;
             // background-size: 30%;
             background-repeat: no-repeat;
@@ -155,11 +186,15 @@ user-register {
             width: 100%;
             height: 100%;
         }
+        #imgSize{
+            width: 100%;
+            height: 100%;
+        }
         #titlePrice{
             background-color: #0EAF9D;
             color: white;
         }
-      
+
         .logo{
             width: 25%;
             margin: 100px auto;
@@ -168,5 +203,5 @@ user-register {
             margin-left: 35%;
             margin-bottom: 50px;
           }
-      
+
 }

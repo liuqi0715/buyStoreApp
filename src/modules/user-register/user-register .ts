@@ -20,6 +20,10 @@ import { NavParams } from 'ionic-angular';
 import{servicesInfo} from "../../providers/service-info";
 import{ UserOpenAccount }from"../user-open-account/userOpenAccount";    //开户页面
 import { UserLogin } from "../user-login/user-login";
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { ImagePicker } from '@ionic-native/image-picker';
+
+declare var $: any;//引入jq
 
 @Component({
     selector: 'user-register',
@@ -39,6 +43,8 @@ export class UserRegister {
         public NavParams:NavParams,
         public servicesInfo:servicesInfo,
         private network: Network,
+        private androidPermissions: AndroidPermissions,
+        private imagePicker: ImagePicker
     )
 {
     console.log(this.servicesInfo.latitude,"latitude")
@@ -86,14 +92,22 @@ export class UserRegister {
 
     hasSuccess=false;    //显示模态框
     offline:boolean=false;
+
+    uploadImgFail = false;   //上传失败时显示失败摸态框
+    uploadLinFail = false;
+
+    uploadImgUrl = false;  //上传图片后的门店图片缩略图开关
+    uploadImgUrl2 = false; //上传图片后的营业执照缩略图开关
+
+    storeUrlScale = "assets/img/login/camera.png";         //保存门店缩略图
+    licenseUrlScale = "assets/img/login/camera.png";       //保存营业执照缩略图
+
     test(){
         var test = [];
         for(var i = 0;i<this.datas.length;i++){
             test.push(this.datas[i]);
         }
         test.splice(1,1);
-        console.log(test);
-        console.log(this.datas);
     }
 
     toast(actions){
@@ -144,49 +158,33 @@ export class UserRegister {
         console.log("11",this.StoreT);
     }
     address(){
-        console.log(">>")
         this.navCtrl.push(UserRegAddress)
             // this.navCtrl.push(UserReg2);
     }
 
 
     takePicture(){
-        console.log(this.servicesInfo.userPhone)
-        console.log("门店照片");
-        console.log(this.camera,"???")
-        const options: CameraOptions = {
-            quality: 100,
 
+        const options: CameraOptions = {
+            quality: 85,
             destinationType: this.camera.DestinationType.FILE_URI,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
-            targetWidth: 500,
-            targetHeight: 500
+            targetWidth: 600,
+            targetHeight: 600
           }
           this.camera.getPicture(options).then((imageData) => {
             this.hasnotImg=true;
             let base64Image = 'data:image/jpeg;base64,' + imageData;
             this.path = imageData;
-            if(this.imgType==1){
-                this.hasImg=false;
-                var box = document.getElementById("stroeImg");
-                box.innerHTML = "";
-                var img = document.createElement("img");
-                img.src = imageData;
-                this.storeImage = imageData;
-                img.setAttribute("class","imgSize")
-                box.appendChild(img);
-                this.uploadStoreImg();
 
+            if(this.imgType==1){
+                this.storeImage = imageData;
+                this.uploadStoreImg();
+                this.StoreUrl = null;
             }else if(this.imgType==2){
-                this.linseImg=false;
-                var box2 = document.getElementById("license");
-                box2.innerHTML = "";
-                var img2 = document.createElement("img");
-                img2.src = imageData;
                 this.storeLicenseImage = imageData;
-                img2.setAttribute("class","imgSize")
-                box2.appendChild(img2);
+                this.LicenseUrl = null;
                 this.uploadLicenseImg()
             }
 
@@ -194,48 +192,55 @@ export class UserRegister {
             this.toast("照片添加失败。")
           });
     }
-    //选择照片上传
-    shosePicture(){
 
-        console.log("营业执照");
-        var self0 = this;
-        this.fileChooser.open()
-        .then(
-                function(url){
-                    if(self0.imgType==1){
-                        var box = document.getElementById("stroeImg");
-                        box.innerHTML = "";
-                        var img = document.createElement("img");
-                        img.src = url;
-                        self0.storeImage = url;
-                        img.setAttribute("class","imgSize");
-                        box.appendChild(img);
-                        self0.uploadStoreImg();
-                    }else if(self0.imgType==2){
-                        var box2 = document.getElementById("license");
-                        box2.innerHTML = "";
-                        var img2 = document.createElement("img");
-                        img2.src = url;
-                        self0.storeLicenseImage = url;
-                        img2.setAttribute("class","imgSize")
-                        box2.appendChild(img2);
-                        self0.uploadLicenseImg()
-                    }
-                }
-            )
-        .catch(
-            function(e){
-                self0.toast("照片添加失败。")
-            }
-        );
+
+  chosePicture(){
+
+    let self0 = this;
+    const options = {
+      maximumImagesCount:1,
+      quality: 85,
+      width:600,
+      height:600
     }
+
+    this.imagePicker.getPictures(options).then((results) => {
+        if(results.length<=0){
+            self0.toast("图片未选择");
+        }else{
+           if (self0.imgType == 1) {
+              self0.storeImage = results.pop();
+              self0.StoreUrl = null;
+              self0.uploadStoreImg();
+            } else if (self0.imgType == 2) {
+              self0.storeLicenseImage = results.pop();
+              self0.LicenseUrl = null;
+              self0.uploadLicenseImg();
+            }
+        }
+
+
+
+    }, (err) => {
+
+     });
+  }
+
+
+
+
+
 
 //上传图片地址----
 uploadStoreImg() {
+
+
+    this.StoreUrl == null
+    this.uploadImgFail = true;
+    this.hasImg = false;
+    this.uploadImgUrl = false;
     var self = this;
-    console.log(self.servicesInfo.userPhone)
-    console.log(self.storeImage,"===self.storeImage")
-   const fileTransfer: FileTransferObject = this.FileTransfer.create();
+    const fileTransfer: FileTransferObject = this.FileTransfer.create();
     const apiPath = interfaceUrls.uploadImage+"?key="+self.servicesInfo.userPhone+"&type="+2;
     let options: FileUploadOptions = {
       fileKey: 'file',
@@ -245,20 +250,56 @@ uploadStoreImg() {
 
     fileTransfer.upload(self.storeImage, apiPath, options)
       .then((data ) => {
-        data.response = JSON.parse(data.response);
-          if((data as any).response.errorinfo==null){
-            this.StoreUrl =  (data as any).response.data.url;
-          }
-       console.log(data.response)
 
+          data.response = JSON.parse(data.response);
+          if((data as any).response.errorinfo==null){
+
+            self.StoreUrl =  (data as any).response.data.url;
+            self.storeUrlScale = (data as any).response.data.urlScale
+                  var box = document.getElementById("stroeImg");
+                  //box.innerHTML = "";
+                  self.hasImg = false;
+                  self.uploadImgUrl = true;
+                  self.uploadImgFail = false;
+
+          }else{
+            self.toast((data as any).response.errorinfo.errormessage);
+            self.uploadImgFail = false;
+            self.hasImg = true;
+          }
       }, (err) => {
-        // alert(err)
-        console.log(err,"??");
-        this.toast(err);
+          self.uploadImgFail = false;
+          self.hasImg = true;
+          self.storeImage = ""
+          self.uploadImgUrl = false;
+          switch(err.code)
+          {
+          case 1:
+            self.toast("未找到相关文件");
+            break;
+          case 2:
+            self.toast("服务器异常");
+            break;
+          case 3:
+            self.toast("网络异常");
+          break;
+          case 4:
+            self.toast("上传被中止");
+          break;
+          case 5:
+            self.toast("重复上传");
+          break;
+          default:
+            self.toast("服务器异常");
+          }
       });
   }
 uploadLicenseImg() {
-    // alert("11")
+
+    this.uploadImgUrl2 = false;
+    this.uploadLinFail = true;
+    this.linseImg = false;
+    this.LicenseUrl == null
     var self = this;
     console.log(self.servicesInfo.userPhone)
     const fileTransfer: FileTransferObject = this.FileTransfer.create();
@@ -274,67 +315,158 @@ uploadLicenseImg() {
       .then((data) => {
         data.response = JSON.parse(data.response);
         if((data as any).response.errorinfo==null){
-          this.LicenseUrl =  (data as any).response.data.url;
+          self.LicenseUrl =  (data as any).response.data.url;
+          self.licenseUrlScale = (data as any).response.data.urlScale
+
+
+          self.linseImg = false;
+         // box2.innerHTML = "";
+          self.uploadLinFail = false;
+          self.uploadImgUrl2 = true;
+
+        }else{
+          self.toast((data as any).response.errorinfo.errormessage);
+          self.uploadLinFail = false;
+          self.linseImg = true;
         }
-        console.log(data.response)
       }, (err) => {
-        // alert(err)
-        console.log(err,"??");
-        this.toast(err);
+          self.uploadLinFail = false;
+          self.linseImg = true;
+          self.storeLicenseImage = "";
+          self.uploadImgUrl2 = false;
+          switch(err.code)
+          {
+          case 1:
+            self.toast("未找到相关文件");
+            break;
+          case 2:
+            self.toast("服务器异常");
+            break;
+          case 3:
+            self.toast("网络异常");
+          break;
+          case 4:
+            self.toast("上传被中止");
+          break;
+          case 5:
+            self.toast("重复上传");
+          break;
+          default:
+            self.toast("服务器异常");
+          }
       });
   }
 
 
-  testImg(){
-    // alert("12")
-    this.uploadStoreImg();
-    this.uploadLicenseImg();
+
+
+checkPermission(){
+   var self = this;
+   self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.CAMERA).then(
+      result => {
+        // alert('可读权限'+result.hasPermission);
+        if(result.hasPermission == false){
+          self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.CAMERA).then(
+          result => {
+            self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+              result => {
+                // alert('可写权限'+result.hasPermission);
+                if(result.hasPermission == false){
+                   self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+                      result => {
+                          self.upLoad();
+                      },
+                      err => {
+                          // alert(JSON.stringify(err));
+                          self.toast("存储权限未打开,上传图片失败");
+                      }
+                   )
+                }else{
+                  self.upLoad();
+                }
+
+              }
+            );
+          })
+        }else{
+            self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+              result => {
+                // alert('可写权限'+result.hasPermission);
+                if(result.hasPermission == false){
+                   self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+                      result => {
+                          self.upLoad();
+                      },
+                      err => {
+                          // alert(JSON.stringify(err));
+                          self.toast("存储权限未打开,上传图片失败");
+                      }
+                   )
+                }else{
+                  self.upLoad();
+                }
+
+              }
+            );
+        }
+      },
+      err => {
+        self.toast("相机权限未打开,上传图片失败");
+      }
+    );
 }
 
+upLoad() {
+    let actionSheet = this.actionSheetCtrl.create({
+        title: '请合理选择图片来源，且您必须上传图片，这将影响您的注册审核进度。',
+        buttons: [
+          {
+            text: '拍照上传',
+            role: 'destructive',
+            handler: () => {
+              this.takePicture();
+            }
+          },{
+            text: '从相册中选择',
+            handler: () => {
+               this.chosePicture()
+            }
+          },{
+            text: '取消',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      actionSheet.present();
 
-    upLoad() {
-        let actionSheet = this.actionSheetCtrl.create({
-            title: '请合理选择图片来源，且您必须上传图片，这将影响您的注册审核进度。',
-            buttons: [
-              {
-                text: '拍照上传',
-                role: 'destructive',
-                handler: () => {
-                  this.takePicture();
-                }
-              },{
-                text: '从相册中选择',
-                handler: () => {
-                   this.shosePicture()
-                }
-              },{
-                text: '取消',
-                role: 'cancel',
-                handler: () => {
-                  console.log('Cancel clicked');
-                }
-              }
-            ]
-          });
-          actionSheet.present();
-
-      }
+  }
 
 //门店照片-----------为1
 
-    stroeImg(){
-        // alert("11")
-        this.upLoad();
-        this.imgType = 1;
+  stroeImg(){
+        if (this.uploadImgFail==true){
+            console.info('正在上传中。。')
+        }else{
+          this.checkPermission();
+          this.imgType = 1;
+        }
+
 
     }
-     /*--上传照片--*/
 //营业执照-----------为2
      license(){
-        this.upLoad();
-        this.imgType = 2;
+       if (this.uploadLinFail == true){
+          console.info("上传图片中。。")
+       }else{
+         this.checkPermission();
+         this.imgType = 2;
+       }
+
      }
-     confirm(str: string = '您确定此操作吗？', okStr: string = '确定', noStr: string = '取消'): Promise<any> {
+     confirm(str: string = '您确定此操作吗？',  noStr: string = '取消',okStr: string = '确定'): Promise<any> {
         return new Promise((resolve, reject) => {
             return this.alertCtrl.create({
                 title: "提示", message: str, enableBackdropDismiss: false, buttons: [{
@@ -347,6 +479,7 @@ uploadLicenseImg() {
             }).present();
         });
     }
+
 
     regsiter(){
         // this.navCtrl.push(UserOpenAccount);    //仅做测试用，正式环境需要注释
@@ -390,13 +523,22 @@ uploadLicenseImg() {
             this.toast("请输入详细地址");
             return;
         }else if(this.StoreUrl==null){
-             this.toast("门店图片上传失败")
-             return;
-        }else if(this.LicenseUrl==null){
-            this.toast("营业执照图片上传失败")
-            return;
-        } else {
+            if(this.uploadImgFail == true){
+              this.toast("图片上传中，请勿操作")
+            }else{
+              this.toast("门店图片上传失败,请重新选择")
+              return;
+            }
 
+        }else if(this.LicenseUrl==null){
+          if(this.uploadLinFail==true){
+            this.toast("图片上传中，请勿操作")
+          }else{
+              this.toast("营业执照图片上传失败，请重新选择")
+              return;
+          }
+
+        } else {
 
             this.confirm("请确定您的信息输入正确,这将影响您后续的操作。")
             .then(()=>{
@@ -439,6 +581,7 @@ uploadLicenseImg() {
                         }else if(data.data.state=="0"){
                             setTimeout(()=>{
                                 self.app.getRootNav().setRoot(UserLogin);
+                                self.servicesInfo.hasRegister = true;
                             },2000)
 
                         }
@@ -449,15 +592,20 @@ uploadLicenseImg() {
                         self.hasSuccess = false;
                     }
 
+                },err=>{
+                  self.hasSuccess = false;
+                  self.toast("注册失败，请检查网络后重试。");
+                  setTimeout(()=>{
+                    self.app.getRootNav().setRoot(UserLogin);
+                  },2000)
+                }
 
-                })
+              )
 
             })
             .catch(err => {
                     this.toast("操作取消。");
             })
-
-
 
         }
     }

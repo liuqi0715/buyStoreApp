@@ -1,5 +1,5 @@
 page-UserRegAddress{
-  
+
     .toolbar-background-md{
         background-color: #0EAF9D;
     }
@@ -23,7 +23,7 @@ page-UserRegAddress{
         border-radius: 3px;
         padding-top: 1px;
     }
-   
+
     .btn, .btn:hover {
         width: 90%;
         margin: .3rem auto;
@@ -39,7 +39,7 @@ page-UserRegAddress{
         overflow: hidden;
         margin:0;
         font-family:"微软雅黑";
-    
+
     }
     #cityPiker,#cityPiker2{
         width: 90%;
@@ -111,7 +111,7 @@ page-UserRegAddress{
     .toogle-address{
         height: 6rem;
         width: 100%;
-        
+
         background: white;
         position: fixed;
         z-index: 99;
@@ -168,7 +168,7 @@ page-UserRegAddress{
         width: 20%;
         height: 5rem;
         float: left;
-     
+
         padding: 13px;
         overflow-x: scroll;
 
@@ -199,10 +199,11 @@ page-UserRegAddress{
         z-index: 999;
     }
     .address-header{
-       
+
         height: .8rem;
         line-height: 1.2rem;
         padding-left: .1rem;
+        z-index: 99;
     }
     .address-header span{
         height: .8rem;
@@ -225,10 +226,19 @@ page-UserRegAddress{
     $text-input-placeholder-color:(#D4D4D4);
     ion-input{
         height: 100%;
-       
+
     }
     .text-input-ios{
         margin: 0;
         @include placeholder(#B0B0B0,.25rem);
     }
+    .btn-default{
+       color: red;
+    }
+    .btn-primary{
+
+       color: black;
+
+    }
+
 }

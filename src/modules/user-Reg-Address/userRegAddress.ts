@@ -57,10 +57,25 @@ export class UserRegAddress {
     realAddress;  //最终五级联系再一起----
     newAddress=true;    //关闭以后重置页面
     offline:boolean=false;
+
     hasCity=false;
     hasArea=false;
     hasTown=false;
     hasStree=false;
+    /**
+     * 对选中的样式进行控制
+     */
+    hasPro2=true;
+    hasCity2=false;
+    hasArea2=false;
+    hasTown2=false;
+    hasStree2=false;
+
+    active = -1;
+    activeCity = -1;//城市点击变色
+    activeArea = -1;//区域点击变色
+    activeTown = -1;//乡镇点击变色
+    activeStree = -1;//街道点击变色
     ngOnInit(){
         this.loadMap();
 
@@ -78,18 +93,18 @@ export class UserRegAddress {
 
     checkNetwork(){
       let self = this;
-  
+
       self.network.onDisconnect().subscribe(()=>{
-            self.offline=true; 
+            self.offline=true;
             self.toast('无网络连接，请检查');
       });
       self.network.onConnect().subscribe(()=>{
-            self.offline=false; 
+            self.offline=false;
       });
-  
+
     }
     ionViewDidLoad(){
-      this.checkNetwork()        
+      this.checkNetwork()
     }
 
     locateAddr(lontitude,latitude){
@@ -125,6 +140,41 @@ export class UserRegAddress {
       addresInfo2 = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
       //  self.addresInfo2 = addresInfo2;
       console.log(addresInfo2,"1");
+      self.fiveAddress();
+      setTimeout(function() {
+        for (var i = 0; i < self.provinceList.length;i++){
+          if (addComp.province == self.provinceList[i].provinceName) {
+            self.selectPro(self.provinceList[i], self.provinceList[i].provinceId);
+
+            console.info('tag', self.provinceList)
+
+            }
+        }
+      }, 100);
+
+      setTimeout(function() {
+        for (var i = 0; i < self.cityList.length; i++) {
+          if (addComp.city == self.cityList[i].cityName) {
+            self.selectCity(self.cityList[i], self.cityList[i].cityId);
+
+            console.info('tag', self.cityList)
+
+          }
+        }
+      }, 150);
+
+      setTimeout(function () {
+        for (var i = 0; i < self.areaList.length; i++) {
+          if (addComp.district == self.areaList[i].areaName) {
+            self.selectArea(self.areaList[i], self.areaList[i].areaId);
+
+            console.info('tag', self.areaList)
+
+          }
+        }
+      }, 200);
+
+
 
       return addresInfo2;
       });
@@ -158,10 +208,11 @@ export class UserRegAddress {
           });
         }else{
           // alert("1")
+          self.locateAddr(this.default.x, this.default.y);
           console.log(typeof baidumap_location)
         }
 
-        
+
 
         function showInfo(e){
           this.a = e.point.lng;
@@ -239,7 +290,7 @@ map.addEventListener('dragend', function(){
  var marker = new BMap.Marker(new_point,{icon:myIcon});  // 创建标注
  map.addOverlay(marker);              // 将标注添加到地图中
 
-}) 
+})
 
 
 
@@ -263,17 +314,24 @@ map.addEventListener('dragend', function(){
     }
 
    fiveAddress(){
-  
+
     this.newAddress = true;
-    this.hasCity=false;
-    this.hasArea=false;
-    this.hasTown=false;
-    this.hasStree=false;
-    $(".provice").addClass("address-now");
-    $(".provice").siblings().removeClass("address-now");
+    // this.hasCity=false;
+    // this.hasArea=false;
+    // this.hasTown=false;
+    // this.hasStree=false;
+    if (this.activeCity != -1 && this.servicesInfo.areaId == null){
+      this.hasTown = true;
+      this.hasPro2 = false;
+    } else if (this.servicesInfo.areaId != null){
+      this.hasPro2 = false;
+      // this.hasTown = true;
+    }
+
+
     $("#addressFixed").show();
     $(".toogle-address").animate({"bottom":"0px"},500);
-   
+
     // console.log(this.newAddress,"chulai");
     let params={
       "data":{}
@@ -285,14 +343,15 @@ map.addEventListener('dragend', function(){
           if(data.errorinfo==null){
             console.log(self,":this")
             self.provinceList =  data.data.provinceList
-
             self.loading = false;
-
-
           }else{
-
+            self.loading = false;
+            self.toast(data.errorinfo.errormessage);
           }
-      })
+        }, function (err) {
+          self.toast("服务器异常，请稍后再试")
+        }
+    )
 }
   provice(){
     $("#address-info").animate({"margin-left":"0%"},300);
@@ -323,36 +382,57 @@ map.addEventListener('dragend', function(){
 
   reLoad(){
     console.log("??")
-   
+
     $("#addressFixed").hide();
     $("#addressFixed").css({"display":"none"})
-    $(".toogle-address").css({"bottom":"-6rem"});
-
-    $(".provice").addClass("address-now");
-    $(".provice").siblings().removeClass("address-now");
-
-    console.log(this,"thisLoad");
-    this.newAddress = false;
+    // this.hasPro2 = true;
+    // $(".toogle-address").css({"bottom":"-6rem"});
+    // $("#address-info").animate({ "margin-left": "0%" }, 300);
+    // $(".provice").addClass("address-now");
+    // $(".provice").siblings().removeClass("address-now");
+    // this.newAddress = false;
   }
   //点击省份获取市区
-   selectPro(proId,$event){
-      console.log("身份Id是：",proId.provinceId);
-     $($event.target).css({"color":"red"});
-     $($event.target).siblings().css({"color":"black"})
-      // ($event.target).addClass("red")
-      // var pro = $(this).text()
-      this.hasCity=true;
-    
-      $(".provice").text(proId.provinceName);
-      $("#address-info").animate({"margin-left":"-100%"},300);
-      $(".city").addClass("address-now");
-      $(".city").siblings().removeClass("address-now");
+  selectPro(proId, provinceId){
+    this.hasPro2=false;
+    this.hasCity2=true;
+    this.hasArea2=false;
+    this.hasTown2=false;
+    this.hasStree2=false;
 
 
+    this.hasCity=true;
+    $(".city").addClass("address-now");
+    $(".city").siblings().removeClass("address-now");
+    console.log($(".city").text())
+      /**
+       * 如果用户重新选择重置掉地址。
+       */
+    this.hasArea = false;
+
+    this.hasTown = false;
+    this.hasStree = false;
+    $(".city").text("请选择");
+    $(".area").text("请选择");
+    $(".town").text("请选择");
+    $(".stree").text("请选择");
+
+
+    // $($event.target).css({"color":"red"});
+    // $($event.target).siblings().css({"color":"black"})
+    // i = proId.
+
+    this.active = provinceId;
+    $(".provice").text(proId.provinceName);
+    $("#address-info").animate({"margin-left":"-100%"},300);
+
+
+
+    console.log($(".city").text())
       this.loading = true;
       let params = {
         "data":{
-          "provinceId":""+proId.provinceId+""
+          "provinceId": "" + proId.provinceId+""
         }
       }
       if(this.offline == true){
@@ -365,29 +445,50 @@ map.addEventListener('dragend', function(){
       .map(res => res.json())
       .subscribe(function (data) {
           if(data.errorinfo==null){
-
             self.cityList =  data.data.cityList
             self.loading = false;
             console.log(self.cityList,":this")
           }else{
-
+            self.loading = false;
+            self.toast(data.errorinfo.errormessage);
           }
-      })
+        }, function (err) {
+          self.toast("服务器异常，请稍后再试")
+        }
+    )
    }
 //点击城市获取县区
-   selectCity(city,$event){
+  selectCity(city,cityId){
+    this.hasPro2=false;
+    this.hasCity2=false;
+    this.hasArea2=true;
+    this.hasTown2=false;
+    this.hasStree2=false;
+        /**
+         * 如果用户重新选择重置掉地址；
+         */
+        this.hasTown = false;
+        this.hasStree = false;
 
-        $($event.target).css({"color":"red"});
-        $($event.target).siblings().css({"color":"black"})
-       
-       
+        $(".area").text("请选择");
+        $(".town").text("请选择");
+        $(".stree").text("请选择");
+
+        this.activeCity = cityId;   //点击当前变色
+
+        // $($event.target).css({"color":"red"});
+        // $($event.target).siblings().css({"color":"black"})
+
+
         this.hasArea=true;
-       
+
         $(".city").text(city.cityName);
         $("#address-info").animate({"margin-left":"-200%"},300);
 
         $(".area").addClass("address-now");
         $(".area").siblings().removeClass("address-now");
+
+
       this.loading = true;
        if(this.offline == true){
               this.toast('无网络连接，请检查');
@@ -408,27 +509,45 @@ map.addEventListener('dragend', function(){
               self.loading = false;
               console.log(self.areaList,":this")
             }else{
-
+              self.loading = false;
+              self.toast(data.errorinfo.errormessage);
             }
-        })
+          }, function (err) {
+            self.toast("服务器异常，请稍后再试")
+          }
+      )
    }
 
 //点击县区获取乡镇
 
-   selectArea(area,$event){
+  selectArea(area, areaId){
+    this.hasPro2=false;
+    this.hasCity2=false;
+    this.hasArea2=false;
+    this.hasTown2=true;
+    this.hasStree2=false;
+      /**
+       * 如果用户重新选择县，重置掉地址
+       */
+      $(".town").text("请选择");
+      $(".stree").text("请选择");
+      this.hasStree = false;
 
-    $($event.target).css({"color":"red"});
-    $($event.target).siblings().css({"color":"black"})
-    $(".town").css({"display":"block"})
- 
-    this.hasTown=true;
-  
+      // $($event.target).css({"color":"red"});
+      // $($event.target).siblings().css({"color":"black"})
+      this.activeArea = areaId;
+      $(".town").css({"display":"block"})
+
+      this.hasTown=true;
+
      this.loading = true;
       $("#address-info").animate({"margin-left":"-300%"},300);
       $(".area").text(area.areaName);
 
       $(".town").addClass("address-now");
       $(".town").siblings().removeClass("address-now");
+
+
       if(this.offline == true){
         this.toast('无网络连接，请检查');
         return;
@@ -447,24 +566,38 @@ map.addEventListener('dragend', function(){
             self.townList =  data.data.streetList
             self.loading = false;
           }else{
-
+            self.loading = false;
+            self.toast(data.errorinfo.errormessage);
           }
-      })
+        }, function (err) {
+          self.toast("服务器异常，请稍后再试")
+        })
 
    }
 //点击乡镇获取村落
-   selectTown(town,$event){
-    $($event.target).css({"color":"red"});
-    $($event.target).siblings().css({"color":"black"})
-   
+  selectTown(town, stId){
+    this.hasPro2=false;
+    this.hasCity2=false;
+    this.hasArea2=false;
+    this.hasTown2=false;
+    this.hasStree2=true;
+
+
     this.hasStree=true;
-    
+    this.activeTown = stId;
+    // $($event.target).css({"color":"red"});
+    // $($event.target).siblings().css({"color":"black"})
+
+
+
      this.loading = true;
       $("#address-info").animate({"margin-left":"-400%"},300);
       $(".town").text(town.stName);
 
       $(".stree").addClass("address-now");
       $(".stree").siblings().removeClass("address-now");
+      $(".stree").text("请选择");
+
       if(this.offline == true){
         this.toast('无网络连接，请检查');
         return;
@@ -484,17 +617,21 @@ map.addEventListener('dragend', function(){
             self.streeList =  data.data.countryList
             self.loading = false;
           }else{
-
+            self.loading = false;
+            self.toast(data.errorinfo.errormessage);
           }
-      })
+        }, function (err) {
+          self.toast("服务器异常，请稍后再试")
+        })
 
    }
 
-   selectStree(stree,$event){
+  selectStree(stree, countryId){
+    this.hasPro2=true;
+    this.activeStree = countryId;
+    // $($event.target).css({"color":"red"});
+    // $($event.target).siblings().css({"color":"black"})
 
-    $($event.target).css({"color":"red"});
-    $($event.target).siblings().css({"color":"black"})
-  
      let self = this;
 
       console.log(stree.countryId,"最终需要的ID");
@@ -503,12 +640,13 @@ map.addEventListener('dragend', function(){
       $(".stree").text(stree.countryName);
       $("#addressFixed").hide();
       $(".toogle-address").css({"bottom":"-6rem"});
+      $("#addressFixed").css({ "display": "none" })
 
       self.realAddress = $(".provice").text()+$(".city").text()+$(".area").text()+$(".twon").text()+$(".stree").text();
       self.servicesInfo.pcar = self.realAddress
       console.log(self.realAddress);
       $("#chose").text(self.realAddress);
-      self.newAddress = false;
+      // self.newAddress = false;
    }
 
    //注册最后一步------
@@ -518,13 +656,10 @@ map.addEventListener('dragend', function(){
 
       if(this.servicesInfo.areaId==undefined){
         this.toast("您必须选择区域")
-        console.log("123")
       }else if(this.addresInfo2==""){
-        console.log("222");
         this.toast("您必须输入详细地址");
       }else if(this.addresInfo2!=""){
         this.servicesInfo.address = this.addresInfo2;
-
         console.log(this.servicesInfo.address,this.servicesInfo.longitude,this.servicesInfo.latitude,this.servicesInfo.pcar)
         this.navCtrl.pop();
       }
