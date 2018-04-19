@@ -35,16 +35,19 @@ import {servicesInfo} from "../providers/service-info";
 
 import { UserLogin } from '../modules/user-login/user-login';
 import { UserRegister } from "../modules/user-register/user-register ";
-import { UserRegInfo } from "../modules/user-Reg-Info/userRegInfo"
-import { UserRegAddress } from "../modules/user-Reg-Address/userRegAddress"
-import { UserAgreement } from "../modules/user-agreement/user-agreement"
+import { UserRegInfo } from "../modules/user-Reg-Info/userRegInfo";
+import { UserRegAddress } from "../modules/user-Reg-Address/userRegAddress";
+import { UserAgreement } from "../modules/user-agreement/user-agreement";
 import { UserPwdFind } from "../modules/user-pwd-find/userPwdFind";//找回密码
-import { UserOpenAccount } from "../modules/user-open-account/userOpenAccount"
+import { UserOpenAccount } from "../modules/user-open-account/userOpenAccount";
 import { DatePipe } from '@angular/common'; //日期
 import { Device } from '@ionic-native/device';
 import { Network } from '@ionic-native/network';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { NativeStorage } from '@ionic-native/native-storage';
 //我的钱包页面
 
 @NgModule({
@@ -66,6 +69,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp,{
+      swipeBackEnabled: 'true',
       tabsHideOnSubPages: 'true' ,       //隐藏全部子页面tabs
       iconMode: 'ios',
       mode: 'ios',
@@ -114,7 +118,11 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     FileOpener,
     AppVersion,
     FileTransferObject,
-    AndroidPermissions
+    AndroidPermissions,
+    ScreenOrientation,
+    ImagePicker,
+    NativeStorage
+
   ]
 })
 export class AppModule {

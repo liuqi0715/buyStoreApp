@@ -165,6 +165,10 @@ order-agree-page {
     border-radius: 0 0 .12rem .12rem;
     box-shadow: 0 0.04rem 0.08rem rgba(0, 0, 0, 0.1);
   }
+  .oa_table td{
+    width: 33.3%;
+    text-align: center;
+  }
   .oa_btn2{
     background: none;
     color: #EFADB4;

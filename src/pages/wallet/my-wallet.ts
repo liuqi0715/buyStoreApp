@@ -245,9 +245,4 @@ export class WalletPage {
     editBankNo(){
 
     }
-  //测试右划退出当前页
-  testS(){
-    console.log("???")
-  }
-
 }

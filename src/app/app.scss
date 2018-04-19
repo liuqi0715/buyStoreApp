@@ -522,15 +522,39 @@ text-align: initial;
 color: black !important;
 margin-top: .2rem;
 }
-
+ @media only screen and (max-width: 1280px) and (max-device-height:800px) {
+ html,body {
+     font-size:100px !important;
+ }
+}
+ @media only screen and (max-width: 800px) and (max-device-height:1280px) {
+ html,body {
+     font-size:96px !important;
+ }
+}
+ @media only screen and (max-width: 600px) and (max-device-height:1280px) {
+ html,body {
+     font-size:72px !important;
+ }
+}
+ @media only screen and (max-width: 480px) and (max-device-height:854px) {
+ html,body {
+     font-size:62px !important;
+ }
+}
  @media only screen and (max-width: 424px) and (max-device-height:850px) {
  html,body {
-     font-size:75px !important;
+     font-size:64px !important;
  }
 }
  @media only screen and (max-width: 414px) and (max-device-height:736px) {
  html,body {
      font-size:55px !important;
+ }
+}
+ @media only screen and (max-width: 400px) and (max-device-height:700px) {
+ html,body {
+     font-size:50px !important;
  }
 }
  @media only screen and (max-width: 375px) and (max-device-height:667px) {
@@ -540,7 +564,7 @@ margin-top: .2rem;
 }
  @media only screen and (max-width: 360px) and (max-device-height:780px) {
  html,body {
-     font-size:64px !important;
+     font-size:55px !important;
  }
 }
  @media only screen and (max-width: 360px) and (max-device-height:640px) {
@@ -560,10 +584,9 @@ margin-top: .2rem;
 }
  @media only screen and (max-width: 320px) and (max-device-height:600px) {
  html,body {
-     font-size:42px !important;
+     font-size:40px !important;
  }
 }
-
 // .chooseList_dot{
 // 	display: inline-block;
 // 	width: .4rem;

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, ToastController, LoadingController, AlertController } from 'ionic-angular';
+import { Platform, Nav, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabPage } from "../pages/tab-page/tab-page";
@@ -16,13 +16,8 @@ import { Http,Headers } from '@angular/http';
 import { interfaceUrls }from "../providers/serviceUrls";//接口地址所有的
 import { servicesInfo } from "../providers/service-info";
 import { urlService } from "../providers/urlService";
-import { APPUPDATE_URL, APPCONFIG_URL, UPDATEREGID_URL, PAGEJUMP_URL } from "../providers/Constants";
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
-import { FileOpener } from '@ionic-native/file-opener';
-import { AppVersion } from '@ionic-native/app-version';
-import { AndroidPermissions } from '@ionic-native/android-permissions';
-
+import { UPDATEREGID_URL, PAGEJUMP_URL } from "../providers/Constants";
+import { NativeStorage } from '@ionic-native/native-storage';
 declare var window;
 
 @Component({
@@ -40,19 +35,12 @@ export class MyApp {
   constructor(
     platform: Platform,
     statusBar: StatusBar,
-    splashScreen: SplashScreen,
     toast: ToastController,
     private http: Http,
-    private alertCtrl: AlertController,
-    public loadingCtrl: LoadingController,
+    public splashScreen: SplashScreen,
     public urlService: urlService,
     public servicesInfo:servicesInfo,
-    private appVersion:AppVersion,
-    private transfer:FileTransfer,
-    private file: File,
-    private fileOpener:FileOpener,
-    private fileTransfer:FileTransferObject,
-    private androidPermissions: AndroidPermissions
+    private nativeStorage: NativeStorage
   ) {
     this.platform = platform;
     this.toast = toast;
@@ -62,8 +50,6 @@ export class MyApp {
       // statusBar.styleDefault();
       // splashScreen.hide();
       statusBar.overlaysWebView(true);
-      setTimeout(function () { splashScreen.hide(); }, 1000);
-      this.checkUpdate();
       this.initJPush();
       this.autoLogin();
       this.initializeApp();
@@ -72,6 +58,10 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+
+      if(window.MobileAccessibility){
+         window.MobileAccessibility.usePreferredTextZoom(false);
+      }
       //注册返回按键事件
       this.platform.registerBackButtonAction((): any => {
         let activeVC = this.nav.getActive();
@@ -228,7 +218,7 @@ export class MyApp {
       //   // if (this.devicePlatform == 'Android') {
       //   //   message = evt.message;
       //   //   alert(message);
-      //   // } else { 
+      //   // } else {
       //   //   message = evt.content;
       //   // }
       //    if(self.firstTime2 == true){
@@ -304,186 +294,29 @@ export class MyApp {
 
   //进入app首先登录
   autoLogin() {
-
-    if(localStorage.getItem("token")){
-      this.nav.setRoot(TabPage);
-    }else{
-      this.nav.setRoot(UserLogin);
-    }
-
-  }
-
-  //检查版本更新
-  checkUpdate() {
-    let self = this;
-    let data = {
-       "data":{
-
-       },
-       "token":this.servicesInfo.token
-    };
-　　//查询当前服务器的APP版本号与当前版本号进行对比
-    this.urlService.postDatas(APPCONFIG_URL,data).then((resp:any) => {
-      if(resp){
-        if(resp.errorinfo == null){
-          self.appVersion.getVersionNumber().then((version) => {
-            // alert(JSON.stringify(resp));
-            if (resp.version != version) {
-              // this.appUrl=data[0].APPURL;  //可以从服务端获取更新APP的路径
-              let updateAlert = self.alertCtrl.create({
-                title: '提示',
-                message: '发现新版本,是否立即更新?',
-                buttons: [{
-                  text: '取消'
-                }, {
-                  text: '确定',
-                  handler: () => {
-                    self.checkPermission();
-                  }
-                }
-                ]
-              });
-              updateAlert.present();
+    this.splashScreen.hide();
+    // if(localStorage.getItem("token")){
+    //   this.splashScreen.hide();
+    //   this.nav.setRoot(TabPage);
+    // }else{
+    //   this.nav.setRoot(UserLogin);
+    // }
+    this.nativeStorage.getItem('token')
+      .then(
+      data => {
+        console.log(data)
+            if(data){
+              this.nav.setRoot(TabPage);
+            }else{
+              this.nav.setRoot(UserLogin);
             }
-          });
-        }
+      },
+      error => {
+        console.error(error);
+        this.nav.setRoot(UserLogin);
       }
-    });
-      
-  }
-
-  toast1(actions){
-    let toast = this.toast.create({
-      message: actions,
-      duration: 2000,
-      position:'middle'
-    });
-    toast.present();
-  }
-
-  checkPermission(){
-     var self = this;
-     self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
-        result => {
-          // alert('可读权限'+result.hasPermission);
-          if(result.hasPermission == false){
-            self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
-            result => {
-              self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-                result => {
-                  // alert('可写权限'+result.hasPermission);
-                  if(result.hasPermission == false){
-                     self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-                        result => {
-                            self.upgradeApp();
-                        },
-                        err => {
-                            // alert(JSON.stringify(err));
-                            self.toast1("存储权限未打开,升级失败");
-                        }
-                     )
-                  }else{
-                    self.upgradeApp();
-                  }
-                  
-                }
-              );
-            })
-          }else{
-              self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-                result => {
-                  // alert('可写权限'+result.hasPermission);
-                  if(result.hasPermission == false){
-                     self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-                        result => {
-                            self.upgradeApp();
-                        },
-                        err => {
-                            // alert(JSON.stringify(err));
-                            self.toast1("存储权限未打开,升级失败");
-                        }
-                     )
-                  }else{
-                    self.upgradeApp();
-                  }
-                  
-                }
-                // err => self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-                //   result => {
-                //       self.upgradeApp();
-                //   },
-                //   err => {
-                //       alert(JSON.stringify(err));
-                //   }
-                // )
-              );
-          }
-        },
-        err => {
-          self.toast1("存储权限未打开,升级失败");
-        }
       );
-  }
 
-  upgradeApp() {
-
-    let self = this;
-
-    let uploading = this.loadingCtrl.create({
-      content: "安装包正在下载...",
-      dismissOnPageChange: false
-    });
-
-    // var options = {};
-    uploading.present();
-    const fileTransfer: FileTransferObject = this.transfer.create();
-    const apk = this.file.externalRootDirectory + 'xdll_shop.apk'; //apk保存的目录
-
-    // this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE, this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE]).then(
-    //   result => {
-
-    //   },
-    //   err => {
-    //       alert(JSON.stringify(err));
-    //   }
-    // );
-       fileTransfer.download(APPUPDATE_URL, apk).then(
-          (result) => {
-            uploading.dismiss();
-            self.fileOpener.open(apk, 'application/vnd.android.package-archive').then(
-              (result) => {
-                // alert("ok");
-              }
-            ).catch((error) => {
-                // alert(JSON.stringify(error));
-                let toast = self.toast.create({
-                  message: error.exception,
-                  duration: 2000,
-                  position:'middle'
-                });
-                toast.present();
-            });
-          },(error) => {
-            let toast = self.toast.create({
-              message: error.exception,
-              duration: 2000,
-              position:'middle'
-            });
-            toast.present();
-            uploading.dismiss();
-          }
-        );
-
-        fileTransfer.onProgress((event) => {
-          //进度，这里使用文字显示下载百分比
-            var downloadProgress = (event.loaded / event.total) * 100;
-            uploading.setContent("已经下载：" + Math.floor(downloadProgress) + "%");
-
-            if (downloadProgress > 99) {
-              uploading.dismiss();
-            }
-
-        });
 
   }
 
