@@ -45,16 +45,16 @@ export class UserRegInfo {
 
     checkNetwork(){
         let self = this;
-    
+
         self.network.onDisconnect().subscribe(()=>{
-              self.offline=true; 
+              self.offline=true;
               self.toast('无网络连接，请检查');
         });
         self.network.onConnect().subscribe(()=>{
-              self.offline=false; 
+              self.offline=false;
         });
-    
-      }    
+
+      }
     toast(actions){
         let toast = this.toastCtrl.create({
           message: actions,
@@ -82,11 +82,15 @@ export class UserRegInfo {
         }
     }
     ionViewDidLoad(){
-          this.checkNetwork()        
+          this.checkNetwork()
+
+          var img = new Image()
+          img.src = "assets/img/login/logo2.png";
+          console.info('fileSize', img.sizes)
     }
 
     next(){
-        
+
         var pwdTest = /^(?![\d]+$)(?![a-zA-Z]+$)(?![-!@#$%^&*()_+.{}`=|\/\[\]\\\'?;\':,<>]+$)[\da-zA-Z-!@#$%^&*()_+.{}`=|\/\[\]\\\'?;\':,<>]{6,32}$/;
         if(!this.userInfo.phone){
 
@@ -147,6 +151,9 @@ export class UserRegInfo {
                     console.log(">>")
                     self.navCtrl.push(UserRegister)
                     self.hasSuccess = false;
+                    self.servicesInfo.mobilePhone = this.userInfo.phone;
+                    self.servicesInfo.pwd = this.userInfo.newPassWord;
+
                 }else{
                     self.hasSuccess = false;
                     self.toast(data.errorinfo.errormessage);
@@ -156,12 +163,12 @@ export class UserRegInfo {
             })
 
         }
-
-         // this.navCtrl.push(UserRegister)        //仅做测试用，正式环境需要注释
+        // this.servicesInfo.userPhone  = "13056895623"
+        this.navCtrl.push(UserRegister)        //仅做测试用，正式环境需要注释
 
     }
     findPasswordCode(){
-       
+
         if(!this.userInfo.phone) {
             // this.errorTip = true;
             // this.errorTipMsg = "请输入手机号";
@@ -179,7 +186,7 @@ export class UserRegInfo {
                 return;
            }
             let self = this;
-            this.toast("请保证您的信箱能够接收短信。");
+            // this.toast("请保证您的信箱能够接收短信。");
             this.http.post(interfaceUrls.getCode,params)
             .map(res => res.json())
             .subscribe(function (data) {
@@ -197,16 +204,18 @@ export class UserRegInfo {
                         self.num--;
                     }, 1000);
                 }else{
-                    // self.errorTip = true;
                     self.toast(data.errorinfo.errormessage)
-                    // self.errorTipMsg = data.errorinfo.errormessage;
+
                 }
 
 
-            })
+            },(err)=>{
+              self.toast("服务器异常，请稍后再试")
+            }
+          )
 
         }
-       
+
     }
 
 }
