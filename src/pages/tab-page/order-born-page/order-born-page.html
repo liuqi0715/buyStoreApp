@@ -4,29 +4,42 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-    <div class="bOrder_subbar">
+    <div class="bOrder_subbar" [style.background-color]="models.length>0 ? '#FFF': '#F3F3F3'">
         <div class="bOrder_subbar_item" *ngFor="let title of navTitle, let idx = index" (click)="slcItem(idx)">{{title}}</div>
         <div id="initSlideLine"></div>
     </div>
     <section class="bOrder_main">
-      <div class="bOrder_slcbox" *ngFor="let m of models, let idx = index">
+
+      <div class="bOrder_nums" *ngIf="models.length>0">
+        <div class="bOrder_nums_title">请选择大致出售量</div>
+        <ul>
+          <li *ngFor="let num of numsArray, let idx = index" (click)="getSellNum(num,idx)" [ngClass]="{bOrder_nums_check:num.check}"><span *ngIf="idx != numsArray.length-1">{{num.labelName}}</span><input type="text" *ngIf="idx == numsArray.length-1" [(ngModel)] = "num.labelName" (blur)="customBlur()" (focus)="customFocus()" (keyup)="limitNum()" [style.background-color]="customFocused ? 'white': 'transparent'" [style.color]="customFocused ? '#1FA695': (num.check?'#FFF':'#AAA9A9')"></li>
+        </ul>
+      </div>
+
+      <div class="bOrder_nums_title" *ngIf="models.length>0"><span>请选择型号及报价</span><span style="float:right;margin-right:.4rem;">{{models[0].rateUnit}}</span></div>
+      <section class="bOrder_slcbox" *ngFor="let m of models, let idx = index;" [style.display]="m.isShow ? 'block': 'none' ">
            <div class="bOrder_slcbox_l">
-             <div>{{m.modelName}}</div>
+             <div class="bOrder_slcbox_check" (click)="checkItem(idx)"><div class="bOrder_slcbox_checkDot" *ngIf="m.check"></div></div>
+             <span>{{m.rateModelName}}</span>
            </div>
            <div class="bOrder_slcbox_r">
              <div class="bOrder_slb_num">
-               <div class="bOrder_slb_btn bbtn1" (click)="minus(idx)">
+               <div class="bOrder_slb_btn bbtn1" (click)="minus(idx)" *ngIf="datas[0].public">
                    <ion-icon ios="ios-remove" md="md-remove"></ion-icon>
                </div>
                <div class="bOrder_slb_in">
-                   <input type="text" class="bdInput" (keyup)="limitIn(idx)" [(ngModel)] = "m.value"/>
+                   <input type="text" class="bdInput" (keyup)="limitIn(idx)" [(ngModel)] = "m.ratePrice" [disabled] = "!m.check" *ngIf="datas[0].public"/>
+                   <span style="float:right;margin-right:.2rem;line-height:.55rem;" *ngIf="!datas[0].public">{{m.ratePrice}}{{m.rateUnit}}</span>
                </div>
-               <div class="bOrder_slb_btn bbtn2" (click)="plus(idx)">
+               <div class="bOrder_slb_btn bbtn2" (click)="plus(idx)" *ngIf="datas[0].public">
                    <ion-icon ios="ios-add" md="md-add"></ion-icon>
                </div>
              </div> 
            </div>
-      </div>
+      </section>
+      <div class="bOrder_slcbox" *ngIf="!showAll && noContent == false && firstOffline == false" (click)="showMore()"><label style="float:left;margin-left:.4rem;">查看更多</label></div>
+
     </section>
 
     <div class="inner-center noNet" *ngIf="noContent == true && firstOffline == true" (click)="reload()">
@@ -35,12 +48,15 @@
     <div class="inner-center noContent" *ngIf="noContent == true && firstOffline == false">
         <img src="assets/img/noContent.png" alt="暂无内容">
     </div>
-    <div class="bottomBar" id="bBottom">
-      <div class="bottomBar_l">
-          <p>总金额：{{totalPrice}}元</p>
-          <p>总重量：约{{totalWeight}}kg</p>
+    <div class="bottomBar">
+      <div class="bottomBar_l bOrder_bottomBar_l">
+        <ul>
+          <li *ngIf="total1"><p>干电</p><span>{{total1}}</span><label>{{unit1}}</label></li>
+          <li *ngIf="total2"><p>水电</p><span>{{total2}}</span><label>{{unit2}}</label></li>   
+          <li *ngIf="total3"><p>锂电</p><span>{{total3}}</span><label>{{unit3}}</label></li>   
+        </ul>
       </div>
-      <div class="bottomBar_r" (click)="orderNext()">下一步</div>
+      <div class="bottomBar_r bOrder_bottomBar_r" (click)="orderNext()">一键下单</div>
     </div>
 
 </ion-content>

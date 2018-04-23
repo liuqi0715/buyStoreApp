@@ -6,9 +6,53 @@ order-born-page {
     margin: .18rem;
     line-height: .32rem;
   }
+  .bOrder_nums{
+    width: 100%;
+    min-height: 1.8rem;
+    background: #FFF;
+  }
+  .bOrder_nums_title{
+    width: 100%;
+    height: .78rem;
+    color: #7c7c7d;
+    background: #FFF;
+    font-size: .28rem;
+    text-indent: .4rem;
+    line-height: .78rem;
+    margin-top: .3rem;
+    border-bottom: .02rem solid #F3F3F2;
+  }
+  .bOrder_nums ul{
+    padding: .2rem .6rem;
+  }
+  .bOrder_nums ul{
+    padding: .2rem .5rem;
+  }
+  .bOrder_nums ul li{
+    width: 29.9%;
+    overflow: hidden;
+    display: inline-block;
+    margin-right: 5%;
+    background: #EEEEED;
+    border-radius: .06rem;
+    color: #AAA9A9;
+    text-align: center;
+    margin-bottom: .2rem;
+    padding: .1rem 0;
+  }
+  .bOrder_nums ul li:nth-child(3n+0){
+    margin-right: 0;
+  }
+  .bOrder_nums ul li input{
+    display: inline;
+    width: 90%;
+    text-align: center;
+    border: none;
+    margin: 0;
+  }
   .bOrder_main{
     position: absolute !important;
-    top: .88rem;
+    top: .8rem;
     bottom: 1rem;
     left: 0;
     width: 100%;
@@ -21,7 +65,6 @@ order-born-page {
   .bOrder_main .fixed-content, .bOrder_main .scroll-content{
     margin-top: 0 !important;
   }
-
   .bOrder_items{
     width: 100%;
     position: absolute;
@@ -59,7 +102,6 @@ order-born-page {
     text-align: center;
     line-height: .8rem;
   }
-
   #initSlideLine{
     display: none;
     position: absolute;
@@ -68,7 +110,6 @@ order-born-page {
     background: #1CA696;
     border-radius: .05rem;
   }
-
   .bOrder_slcbox{
     width: 100%;
     height: 1.2rem;
@@ -78,15 +119,14 @@ order-born-page {
   .bOrder_slcbox:nth-child(1){
     margin-top: .2rem;
   }
-
   .bOrder_slcbox_l{
    width: 40%;
    height: 1.2rem;
    float: left;
    line-height: 1.2rem;
-   text-indent: .5rem; 
-   color: #7E817C;
+   color: #AAA9A9;
    font-size: .26rem;
+   text-indent: .14rem;
    border-bottom: 0.02rem solid #F5F5F4;
   }
   .bOrder_slcbox_r{
@@ -97,6 +137,29 @@ order-born-page {
     padding-left:.2rem;
     font-size: .26rem;
     border-bottom: 0.02rem solid #F5F5F4;
+  }
+  .bOrder_slcbox_check{
+    position: relative;
+    display: inline-block;
+    width: .34rem;
+    height: .34rem;
+    top: .1rem;
+    border-radius: 50%;
+    margin-right: .2rem;
+    border: .04rem solid #1FA695;
+  }
+  .bOrder_slcbox_checkDot{
+    position: absolute;
+    width: .18rem;
+    height: .18rem;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    background: #1FA695;
+    transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
   }
   .bOrder_slcbox label{
     float: right;
@@ -111,11 +174,12 @@ order-born-page {
   .bOrder_slb_btn{
     width: .6rem;
     height: .55rem;
-    background: #E8EAEA;
+    background: #FFF;
     color: #67706F;
     text-align: center;
     line-height: .6rem;
     border-radius: .1rem;
+    border: .02rem solid #E8EAEA;
   }
   .bbtn1{
     float: left;
@@ -133,16 +197,43 @@ order-born-page {
    .bOrder_slb_in input{
     height: .55rem;
     border: none;
-    background: #E8EAEA;
+    background: #FFF;
     color: #32AB9C;
     border-radius: .1rem;
     font-size: .28rem;
+    border: .02rem solid #E8EAEA;
    }
   .bdInput{
     background: transparent;
     width: 100%;
     text-align:center;
   }
-
+  .bOrder_bottomBar_l{
+    width: 76%;
+  }
+  .bOrder_bottomBar_l li{
+    height: 100%;
+    float: left;
+    margin-right: .4rem;
+  }
+  .bOrder_bottomBar_l p{
+    margin: .02rem 0 .1rem .2rem;
+  }
+  .bOrder_bottomBar_l span{
+    margin-left: .2rem;
+    font-size: .36rem;
+    color: #f0862a;
+  }
+  .bOrder_bottomBar_l label{
+    font-size: .22rem;
+    color: #f0862a;
+  }
+  .bOrder_bottomBar_r{
+    width: 24%;
+  }
+  .bOrder_nums_check{
+    color: #FFF !important;
+    background: #1FA695 !important;
+  }
 
 }
