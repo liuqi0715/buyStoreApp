@@ -36,7 +36,7 @@ export class orderAgreePage {
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
     public servicesInfo: servicesInfo,
-    private app: App,
+    private app: App
     ) {
   }
 
