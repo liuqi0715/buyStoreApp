@@ -28,8 +28,10 @@
         <div class="home-orderShow-tag">
           {{orderCard.orderStatus}}
         </div>
-        <h3>总货值：{{orderCard.amountPre}}元</h3>
-        <h3>总重量：{{orderCard.weightPre}}kg</h3>
+        <h3></h3>
+        <h3></h3>
+<!--         <h3>总货值：{{orderCard.amountPre}}元</h3>
+        <h3>总重量：{{orderCard.weightPre}}kg</h3> -->
         <h6>{{orderCard.orderType}}</h6>
         <h6>{{orderCard.createTime}}</h6>
       </div>
@@ -43,6 +45,7 @@
 
     <section class="home-display" [ngClass]="{noMarginTop:!orderActive}">
         <div class="home-btn home-btn-pos1" (click)="goOrderBorn(datas.collectorList)" *ngIf="orderActive"><div class="home-btn-inner"><p><span *ngIf="!publicOnly">向他报单</span><span *ngIf="publicOnly">公开报单</span></p></div></div>
+
         <div id="home-swiper-navL">
           <span class="tri-right"></span>
         </div>
@@ -51,8 +54,10 @@
         </div>
         <div class="swiper-container infoSlide">
           <div class="swiper-wrapper">
+
             <div class="home-display-card">
               <span class="home-display-none">暂无报价</span>
+
             </div>
           </div>
         </div>

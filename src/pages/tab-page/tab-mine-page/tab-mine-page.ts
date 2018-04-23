@@ -41,7 +41,7 @@ export class TabMine {
            private network: Network,
            private appVersion:AppVersion,
            public  platform: Platform,
-           private nativeStorage: NativeStorage
+           private nativeStorage: NativeStorage,
     ) {
       console.log(this.servicesInfo.token,"token")
 
@@ -328,17 +328,12 @@ export class TabMine {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 localStorage.removeItem("pwd");
-                self.app.getRootNav().setRoot(UserLogin);
                 self.nativeStorage.remove("token").then(
-                  ()=>{
-                    self.app.getRootNav().setRoot(UserLogin);
-                  },
-                  (error)=>{
-
-                  }
+                    data=>{
+                      console.log("datatuichu:",data)
+                    }
                 )
-
-
+                self.app.getRootNav().setRoot(UserLogin);
               }else{
                 self.toast(resp.errorinfo.errormessage);
               }
