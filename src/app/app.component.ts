@@ -10,25 +10,30 @@ import { msgDetails } from "../pages/wallet/wallet-msgDetails-page/wallet-msgDet
 import { messagePage } from "../pages/wallet/wallet-message-page/wallet-message-page";
 import { adsPage } from "../pages/ads/ads-page";
 // import {Splash} from "../pages/splash/splash";
-
+import { App } from 'ionic-angular';
 import { UserLogin } from "../modules/user-login/user-login";
 import { Http,Headers } from '@angular/http';
 import { interfaceUrls }from "../providers/serviceUrls";//接口地址所有的
 import { servicesInfo } from "../providers/service-info";
 import { urlService } from "../providers/urlService";
-import { UPDATEREGID_URL, PAGEJUMP_URL } from "../providers/Constants";
+import { UPDATEREGID_URL, PAGEJUMP_URL, SIGNINFO_URL } from "../providers/Constants";
 import { NativeStorage } from '@ionic-native/native-storage';
+import { Device } from '@ionic-native/device';
+
 declare var window;
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = UserLogin;
+  rootPage: any = localStorage.getItem("token") ? TabPage : UserLogin;
   platform: any = Platform;
   toast: any = ToastController;
   backButtonPressed: boolean = false;  //用于判断返回键是否触发
   firstTime1:any = true;
+
+  dataToken = "1";    //保存用户的token
+
   @ViewChild(Nav) nav: Nav;
 
 
@@ -40,7 +45,9 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public urlService: urlService,
     public servicesInfo:servicesInfo,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    private app: App,
+    private device: Device
   ) {
     this.platform = platform;
     this.toast = toast;
@@ -51,10 +58,18 @@ export class MyApp {
       // splashScreen.hide();
       statusBar.overlaysWebView(true);
       this.initJPush();
-      this.autoLogin();
       this.initializeApp();
+
     });
+    let self = this;
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+      console.log(device.cordova,"devirce is ready----");
+      self.autoLogin();
+    }
   }
+
+
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -294,31 +309,60 @@ export class MyApp {
 
   //进入app首先登录
   autoLogin() {
-    this.splashScreen.hide();
+    let self = this;
     // if(localStorage.getItem("token")){
     //   this.splashScreen.hide();
     //   this.nav.setRoot(TabPage);
     // }else{
     //   this.nav.setRoot(UserLogin);
     // }
-    this.nativeStorage.getItem('token')
-      .then(
-      data => {
-        console.log(data)
-            if(data){
-              this.nav.setRoot(TabPage);
-            }else{
-              this.nav.setRoot(UserLogin);
-            }
-      },
-      error => {
-        console.error(error);
-        this.nav.setRoot(UserLogin);
-      }
-      );
+
+
+
+      self.nativeStorage.getItem('token')
+        .then(
+        data => {
+          console.log(data, "platform===");
+          if (data.token) {
+            self.dataToken = data.token;
+            self.app.getRootNav().setRoot(TabPage);
+            self.servicesInfo.token = self.dataToken;
+            console.info('token已存进入tab页面', self.dataToken)
+            console.log(self.servicesInfo.token, "====服务中的token")
+            self.checkLogin();
+          } else {
+            self.app.getRootNav().setRoot(UserLogin);
+            console.info('UserLogin页面')
+            self.checkLogin();
+          }
+          self.splashScreen.hide();
+
+        },
+        error => {
+          self.splashScreen.hide();
+          self.app.getRootNav().setRoot(UserLogin);
+          console.error(error, "ready出错了");
+          self.checkLogin();
+        });
 
 
   }
 
+  /**
+   * 检测用户登录
+   */
+    checkLogin(){
+      let Token =  localStorage.getItem("token")
+      let data = {
+        "token": Token
+      };
+      this.urlService.postDatas(SIGNINFO_URL, data).then(function (resp) {
+        if (resp) {
+          console.info(">>>>>>>")
+        }
+      }).catch(function (err) {
+        // self.toast(err);
+      });
+    }
 }
 
