@@ -167,35 +167,13 @@ export class orderConfirmPage {
   // }
 
   public slcItem(idx) {
-    // this.models = this.datas[idx].batteryTypeList;
-    if(idx==2){
-      for (var i = 0; i < this.priceListDatas.length; i++) {
-        if (this.priceListDatas[i].catId == 2) {
-          this.priceCatModel = this.priceListDatas[i].priceCatModel
-        }
 
-      }
-    }else if(idx==3){
-      for (var i = 0; i < this.priceListDatas.length; i++) {
-        if (this.priceListDatas[i].catId == 3) {
-          this.priceCatModel = this.priceListDatas[i].priceCatModel
-        }
-      }
-    }else if(idx==10){
-        for (var i = 0; i < this.priceListDatas.length; i++) {
-          if (this.priceListDatas[i].catId == 10) {
-            this.priceCatModel = this.priceListDatas[i].priceCatModel
-          }
-
-        }
-    }
-
-
+    this.models = this.priceListDatas[idx].priceCatModel;
 
   }
 
   initSlideLine() {
-    var itemLen = 3;
+    var itemLen = this.navTitle.length;
     var itemWidth = $(".bOrder_subbar").width() / itemLen;
     $(".bOrder_subbar_item").width(itemWidth);
     if (itemLen == 1) {
@@ -308,11 +286,13 @@ export class orderConfirmPage {
           }else{
             self.noContent = false;
             self.priceListDatas = resp.data.batteryList
-            for (var i = 0; i < self.priceListDatas.length;i++){
-              if (self.priceListDatas[i].catId==2){
-                self.priceCatModel = self.priceListDatas[i].priceCatModel;
+            self.models = self.priceListDatas[0].priceCatModel
+            self.navTitle = [];
+
+              for (var k = 0; k < tempList.length; k++) {
+                self.navTitle.push(tempList[k].catName);
               }
-            }
+
           }
 
           setTimeout(function () {

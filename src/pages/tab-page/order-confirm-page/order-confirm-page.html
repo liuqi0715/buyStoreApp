@@ -5,14 +5,14 @@
 </ion-header>
 <ion-content>
   <div class="bOrder_subbar">
-    <!-- <div class="bOrder_subbar_item" *ngFor="let title of navTitle, let idx = index" (click)="slcItem(idx)">{{title}}报价</div> -->
-      <div class="bOrder_subbar_item" (click)="slcItem(2)">干电报价</div>
+    <div class="bOrder_subbar_item" *ngFor="let title of navTitle, let idx = index" (click)="slcItem(idx)">{{title}}</div>
+      <!-- <div class="bOrder_subbar_item" (click)="slcItem(2)">干电报价</div>
       <div class="bOrder_subbar_item" (click)="slcItem(3)">水电报价</div>
-      <div class="bOrder_subbar_item" (click)="slcItem(10)">锂电报价</div>
+      <div class="bOrder_subbar_item" (click)="slcItem(10)">锂电报价</div> -->
     <div id="initSlideLine"></div>
   </div>
   <section class="bOrder_main">
-    <div class="bOrder_slcbox" *ngFor="let m of priceCatModel, let idx = index">
+    <div class="bOrder_slcbox" *ngFor="let m of models, let idx = index">
       <div class="bOrder_slcbox_l">
         型号<span>{{m.modelName}}</span>
       </div>
