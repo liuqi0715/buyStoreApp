@@ -42,7 +42,7 @@ export class orderDetailPage {
               public servicesInfo: servicesInfo,
               public alertCtrl: AlertController,
               public toastCtrl: ToastController,
-              private app: App,
+              private app: App
       ) {
   }
 
@@ -113,8 +113,8 @@ export class orderDetailPage {
     this.urlService.postDatas(SELLORDERDETAIL_URL,data).then(function(resp){
       if(resp){
         if(resp.errorinfo == null){
-
             self.datas = resp.data;
+            console.log(self.datas);
             self.orderInfoBean = resp.data.orderInfoBean;
             self.orderStateWater = resp.data.orderStateWater;
             self.recyclesInfoBean = resp.data.recyclesInfoBean;
@@ -270,6 +270,6 @@ export class orderDetailPage {
       confirm.present();
     }
 
-  public goodListTitle = ["型号","数量","单价(元)"];
+  public goodListTitle = ["品类","数量"];
 
 }

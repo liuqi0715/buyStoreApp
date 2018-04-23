@@ -52,9 +52,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let good of datas.orderGoodsList">
-            <td>{{good.modelName}}</td>
+            <td>{{good.catName}}</td>
             <td>{{good.quantityPre}}</td>
-            <td>{{good.unitPricePre}}</td>
           </tr>
         </tbody>
 
@@ -67,10 +66,10 @@
     <img src="assets/img/noNet.png" alt="无网络">
   </div>
   <div class="bottomBar">
-    <div class="bottomBar_l">
+<!--     <div class="bottomBar_l">
         <p>总金额：{{orderInfoBean.amountPre}}元</p>
         <p>总重量：约{{orderInfoBean.weightPre}}kg</p>
-    </div>
+    </div> -->
     <div class="bottomBar_r" (click)="orderNext()" *ngIf = "orderInfoBean.cancleState == 'Y' ">撤销订单</div>
   </div>
 </ion-content>

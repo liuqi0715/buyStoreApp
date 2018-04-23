@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-
+import { NativeStorage } from '@ionic-native/native-storage';
 @Injectable()
 export class servicesInfo {
     token: any = null;
@@ -23,8 +23,28 @@ export class servicesInfo {
     mobilePhone:any = "";
     pwd:any = "";
     hasRegister = false;
-    constructor() {
+    constructor(
+      private nativeStorage: NativeStorage,
+    ) {
       //  this.token =  localStorage.getItem("token")
+      if (!localStorage.getItem("token")) {
+        let self = this;
+        this.nativeStorage.getItem('token')
+          .then(
+          data => {
+            if (data.token) {
+              self.token = data.token;
+              console.log(self.token, "服务中的token");
+            } else {
+              console.info('UserLogin页面')
+            }
+          },
+          error => {
+          }
+          );
+      }else{
+        this.token = localStorage.getItem("token")
+      }
     }
 
 }
