@@ -68,6 +68,7 @@ export class orderBornPage {
 
   ionViewDidEnter() {
     this.checkNetwork();
+    this.getPos();
   }
 
   reload(){
@@ -274,6 +275,7 @@ export class orderBornPage {
        this.numsArray[this.numsArray.length - 1].labelName = this.numsArray[this.numsArray.length - 1].labelName+unit;
     }
     this.customFocused = false;
+    this.numsArray[this.numsArray.length - 1].check = true;
     this.countAll();
   }
 
@@ -344,33 +346,45 @@ export class orderBornPage {
         this.models[idx].ratePrice = 0;
      }
 
+     this.models[idx].check = true;
+
      this.countAll();
 
    };
    //递增
    plus(idx){
 
-     if(this.models[idx].check == false){
-       return;
-     }
+     // if(this.models[idx].check == false){
+     //   return;
+     // }
      console.log(this.models[idx].check);
      if(this.models[idx].ratePrice < 9999){
-        this.models[idx].ratePrice = Math.round((parseFloat(this.models[idx].ratePrice) + 0.1)*Math.pow(10, 2))/Math.pow(10, 2);
+        this.models[idx].ratePrice = Math.round((parseFloat(this.models[idx].ratePrice) + 1)*Math.pow(10, 2))/Math.pow(10, 2);
      }else{
         this.models[idx].ratePrice = 9999;
      }
+
+     this.models[idx].check = true;
+
      this.countAll();
    };
    //递减
    minus(idx){
-     if(this.models[idx].check == false){
-       return;
-     }
+     // if(this.models[idx].check == false){
+     //   return;
+     // }
      if(this.models[idx].ratePrice > 0){
-        this.models[idx].ratePrice = Math.round((parseFloat(this.models[idx].ratePrice) - 0.1)*Math.pow(10, 2))/Math.pow(10, 2);
+        if(parseFloat(this.models[idx].ratePrice) - 1 > 0){
+          this.models[idx].ratePrice = Math.round((parseFloat(this.models[idx].ratePrice) - 1)*Math.pow(10, 2))/Math.pow(10, 2);
+        }else{
+          this.models[idx].ratePrice = 0;
+        }
      }else{
         this.models[idx].ratePrice = 0;
      }
+
+     this.models[idx].check = true;
+     
      this.countAll();
    };
 
@@ -581,9 +595,19 @@ export class orderBornPage {
 
      if(self.navParams.data.public){
         for(var i = 0;i < this.datas.length; i++){
+
+         this.datas[i].latitudePreOrder = this.lat;
+         this.datas[i].longitudePreOrder = this.lon;
+
          if(this.datas[i].numSelected == null){
            this.datas[i].modelSelected = [];
          }else{
+
+           if(this.datas[i].numSelected.labelName == '自定义'){
+             this.toast('请填写自定义出售量');
+             return;
+           }
+
            if(this.datas[i].modelSelected.length == 0){
              count1++;
            }
@@ -595,6 +619,11 @@ export class orderBornPage {
               count++;
            }
          }
+       }
+     }else{
+       for(var i = 0;i < this.datas.length; i++){
+         this.datas[i].latitudePreOrder = this.lat;
+         this.datas[i].longitudePreOrder = this.lon;
        }
      }
 
