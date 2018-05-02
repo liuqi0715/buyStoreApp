@@ -49,7 +49,7 @@ order-detail-page {
     background: -webkit-linear-gradient(top, #e9c629, #f0862b); /* Safari 5.1 - 6.0 */
     background: -o-linear-gradient(top, #e9c629, #f0862b); /* Opera 11.1 - 12.0 */
     background: -moz-linear-gradient(top, #e9c629, #f0862b); /* Firefox 3.6 - 15 */
-    background: linear-gradient(top, #e9c629, #f0862b); 
+    background: linear-gradient(top, #e9c629, #f0862b);
   }
   .od_map_circleInner{
     position: absolute;
@@ -200,7 +200,10 @@ order-detail-page {
     display: block;
   }
   .od_table{
-    margin-bottom: .6rem;
+    margin-bottom: .1rem;
+  }
+  .od_table table td{
+    width: 50%;
   }
 
 }

@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <section class="oc_content">
+  <section class="oc_content" [ngClass]="{oa_content_noBottom:orderInfoBean.cancleState != 'Y'}">
   <section class="od_map">
       <div id="od_map_tip" *ngIf="orderInfoBean.orderStatusId == '1' ">超过24小时未接单，则订单自动取消</div>
       <div id="od_map_tip" *ngIf="orderInfoBean.orderStatusId != '1' ">超过预计时间未回收，则可取消订单</div>
@@ -60,17 +60,34 @@
       </table>
   </section>
 
+  <section class="od_table" *ngIf="firstOffline == false">
+    <table>
+      <thead>
+        <td *ngFor="let title of priceListTitle">
+          {{title}}
+        </td>
+      </thead>
+      <tbody>
+        <tr *ngFor="let good of datas.priceList">
+          <td>{{good.modelName}}</td>
+          <td>{{good.unitPricePre}}</td>
+        </tr>
+      </tbody>
+
+    </table>
+  </section>
+
   </section>
 
   <div class="noNet" style="width:1.48rem;margin: .8rem auto 0;" *ngIf="firstfirstOffline == true" (click)="reload()">
     <img src="assets/img/noNet.png" alt="无网络">
   </div>
-  <div class="bottomBar">
+  <div class="bottomBar" *ngIf = "orderInfoBean.cancleState == 'Y' ">
 <!--     <div class="bottomBar_l">
         <p>总金额：{{orderInfoBean.amountPre}}元</p>
         <p>总重量：约{{orderInfoBean.weightPre}}kg</p>
     </div> -->
-    <div class="bottomBar_r" (click)="orderNext()" *ngIf = "orderInfoBean.cancleState == 'Y' ">撤销订单</div>
+    <div class="bottomBar_r" (click)="orderNext()">撤销订单</div>
   </div>
 </ion-content>
 

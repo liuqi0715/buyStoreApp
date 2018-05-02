@@ -1,20 +1,10 @@
-var ua = navigator.userAgent.toLowerCase();	
+var ua = navigator.userAgent.toLowerCase();
     var dpr = window.devicePixelRatio;
 	if (/iphone|ipad|ipod/.test(ua)) {
-		var fontRate = dpr>2?1.1:1;	
+		var fontRate = dpr>2?1.1:1;
 	}else{
 		var fontRate = 1;
 	}
-  // window.requestAnimFrame = (function(callback){  
-  //     return window.requestAnimationFrame ||  
-  //     window.webkitRequestAnimationFrame ||  
-  //     window.mozRequestAnimationFrame ||  
-  //     window.oRequestAnimationFrame ||  
-  //     window.msRequestAnimationFrame ||  
-  //     function(callback){  
-  //         window.setTimeout(callback, 1000 / 60);  
-  //     };  
-  // })(); 
 
  var lastTime = 0;
  var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -22,17 +12,17 @@ var ua = navigator.userAgent.toLowerCase();
   window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
   window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
  }
- 
+
  if (!window.requestAnimationFrame)
   window.requestAnimationFrame = function(callback, element) {
    var currTime = new Date().getTime();
    var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-   var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+   var id = window.setTimeout(function() { callback(currTime + timeToCall); },
     timeToCall);
    lastTime = currTime + timeToCall;
    return id;
   };
- 
+
  if (!window.cancelAnimationFrame)
   window.cancelAnimationFrame = function(id) {
    clearTimeout(id);
@@ -41,142 +31,141 @@ var ua = navigator.userAgent.toLowerCase();
   function SrollUp(){
       this.self = null,
       this.el = null,
-      this.ctx = null,
       this.width = null,
       this.height = null,
-      this.fontSize = dpr*14,
+      this.fontSize = 14,
       this.bgColor = '#FFF',
       this.textColor = '#333',
       this.textPos = [],
       this.content = [],
+      this.items = [],
+      this.itemWidth = null,
       this.drawing = false,
       this.setInterval = true,
-      this.intervalTime = 1500,
+      this.intervalTime = 1600,
       this.intervalEnd = true,
       this.scrollRate = 0.8,
+      this.wordSpace = 10,
       this.standOutIdx = null,
-      this.frame = null
+      this.frame = null,
+      this.scrollCount = null
   }
 
   SrollUp.prototype = {
       init: function (data) {
           var _this = this;
           if(data.fontSize){
-            _this.fontSize = dpr*data.fontSize * fontRate;
+            _this.fontSize = data.fontSize;
           }
+
           _this.bgColor = data.bgColor;
           _this.textColor = data.textColor;
           _this.content = data.datas;
-          _this.el = document.createElement("canvas");
-          _this.el.width = _this.width = dpr*_this.self.width();
-          _this.el.height = _this.height = dpr*_this.self.height();
+          _this.el = document.createElement("ul");
 
+          _this.width = this.self.width();
+          _this.height = this.self.height();
+
+          $(_this.el).width(_this.width).css({'position':'relative','overflow':'hidden','background':'rgba(255,255,255,.1)'});
+          $(_this.el).height(_this.height);
+
+          if(data.itemWidth){
+            _this.itemWidth = data.itemWidth;
+          }else{
+            _this.itemWidth = _this.width;
+          }
+          // _this.self.append(_this.el);
           _this.self.append(_this.el);
-          _this.ctx = _this.el.getContext('2d');
-          _this.ctx.fillStyle = _this.bgColor;
-          _this.ctx.fillRect(0,0,dpr*_this.width,dpr*_this.height);
           _this.scrollRate = _this.setInterval?dpr*2:dpr*0.8;
           _this.draw();
           _this.drawStep();
-      },       
+      },
       draw: function(){
-          this.ctx.font = this.fontSize + "px bold Microsoft YaHei";
-          this.ctx.textAlign = "center";
-          this.ctx.textBaseline = "hanging";
-          this.ctx.fillStyle = this.textColor;
 
-          if((this.fontSize+10)*(this.content.length) > this.height){
-            if(this.setInterval == true){
-              for(var i = 0;i<this.content.length;i++){
-                  this.textPos.push((this.fontSize+10)*i);
-                  this.ctx.fillText(this.content[i], this.width/2, (this.fontSize+10)*i);
+          var self = this;
+
+          for(var i = 0;i<self.content.length;i++){
+              var li = document.createElement("li");
+              var item = {};
+              item.text = self.content[i];
+              item.width = self.itemWidth;
+              item.height = self.fontSize+self.wordSpace;
+              item.x = 0;
+              item.y = i*(self.fontSize+self.wordSpace);
+              if((self.fontSize+self.wordSpace)*(self.content.length) > self.height){
+                item.y = i*(self.fontSize+self.wordSpace);
+              }else{
+                var offsetTop = (self.height - self.content.length*(self.fontSize+self.wordSpace))/2
+                item.y = i*(self.fontSize+self.wordSpace)+offsetTop;
               }
-            }else{
-              for(var i = 0;i<this.content.length;i++){
-                  this.textPos.push((this.fontSize+10)*i + this.height);
-                  this.ctx.fillText(this.content[i], this.width/2, (this.fontSize+10)*i + this.height);
-              }
-            }
-          }else{
-            for(var i = 0;i<this.content.length;i++){
-                this.textPos.push((this.fontSize+10)*i + this.height);
-                this.ctx.fillText(this.content[i], this.width/2, (this.fontSize+10)*i + 10);
-            }
+              $(li).html(self.content[i]).css({'position':'absolute','font-size':self.fontSize,'text-align':'center','color':self.textColor,'width':self.itemWidth,'height':self.fontSize+self.wordSpace,'line-height':self.fontSize+self.wordSpace+'px'});
+              // self.items.push(item);
+              $(li).data(item);
+
+              li.style.transform = 'translate3d('+ item.x +'px,'+ item.y +'px, 0)';
+
+              li.style.webkitTransform = 'translate3d('+ item.x +'px,'+ item.y +'px, 0)';
+
+              self.el.appendChild(li);
           }
       },
       drawStep:function(){
-          if((this.fontSize+10)*(this.content.length) <= this.height){
+
+          var self = this;
+
+          if((self.fontSize+self.wordSpace)*(self.content.length) <= self.height){
             return;
           }
 
-          var self = this;
-          for(var i = 0;i<this.content.length;i++){
-              this.textPos[i] = this.textPos[i] - this.scrollRate;
-              if(self.setInterval == true && i == this.standOutIdx){
-                 self.ctx.fillStyle = '#f5fa31';
-                 self.ctx.font = dpr*18 + "px bold Microsoft YaHei";
-              }else{
-                 this.ctx.font = this.fontSize + "px bold Microsoft YaHei";
-                 this.ctx.fillStyle = this.textColor;
+          var items = self.el.getElementsByTagName('li');
+
+          for(var i = 0; i<items.length;i++){
+            var li = items[i];
+            var offsetX = $(li).data('x');
+            var offsetY = $(li).data('y');
+            var liHeight = $(li).data('height');
+            $(li).css({'font-size':self.fontSize,'color':self.textColor});
+
+            li.style.transition = 'transform 0.5s ease-out';
+
+            li.style.webkitTransition = '-webkit-transform 0.5s ease-out';
+
+            li.style.transform = 'translate3d(' + offsetX + 'px,' + (offsetY - liHeight) + 'px, 0)';
+
+            li.style.webkitTransform = 'translate3d(' + offsetX + 'px,' + (offsetY - liHeight) + 'px, 0)';
+
+            $(li).data('y',(offsetY - liHeight));
+          }
+
+
+          setTimeout(function(){
+            for(var i = 0; i<items.length;i++){
+              var li = items[i];
+              var offsetX = $(li).data('x');
+              var offsetY = $(li).data('y');
+              var liHeight = $(li).data('height');
+              if(Math.abs(offsetY + liHeight/2 - self.height/2) < 10){
+                $(li).css({'font-size':self.fontSize+2,'color':'#f5fa31'});
               }
-              this.ctx.fillText(this.content[i], this.width/2, this.textPos[i]);
+              if(offsetY < 0){
+                var setOffset = (items.length - 1)*liHeight;
+                $(li).data('y',setOffset);
 
-              // if(dpr%2 == 0){
-              //   $(this.el).css("transform","scale("+ 1/dpr +") translate(-"+ this.width/dpr +"px,-"+ this.height/dpr+"px" +")");
-              // }else{
-              //   $(this.el).css("transform","scale("+ 1/dpr +") translate(-"+ this.width +"px,-"+ this.height+"px" +")");
-              // }
-              // $(this.el).css("transform","scale("+ 1/dpr +")");
-              var offsetX = (dpr-1)*this.width/2, offsetY = (dpr-1)*this.height/2;
-              $(this.el).css("transform","scale("+ 1/dpr +") translate(-"+ offsetX +"px,-"+ offsetY+"px" +")");
+                li.style.transition = 'transform 0s ease-out';
 
+                li.style.webkitTransition = '-webkit-transform 0s ease-out';
 
-              if(this.textPos[i] - this.scrollRate <= -(this.fontSize+10)){
-                this.standOutIdx = (i+2)<this.content.length?i+2:1;
-                if(self.setInterval == true && self.drawing == true){ 
-                    self.drawing = false;
-                    self.intervalEnd = false;
-                    self.textPos[i] = (self.fontSize+10)*(self.content.length-1);
-                    self.ctx.save();          
-                    self.cancelStep();
-                    setTimeout(function(){
-                      self.intervalEnd = true;
-                      self.ctx.restore();
-                      self.drawStep();
-                    },self.intervalTime);
-                }else{
-                  if((this.fontSize+10)*(this.content.length) > this.height){
-                    this.textPos[i] = (this.fontSize+10)*(this.content.length - 1) + 10;
-                  }else{
-                    this.textPos[i] = (this.fontSize+10)+this.height;
-                  }
-                }
-             }
-          }
-          
-          if(self.setInterval == true){
-             if(self.intervalEnd){
-                 self.frame = requestAnimationFrame(function(){  
-                    self.drawing = true;
-                    self.ctx.clearRect(0,0,self.width,self.height);
-                    self.ctx.fillStyle = self.bgColor;
-                    self.ctx.fillRect(0,0,self.width,self.height);
-                    self.drawStep();
-                 }); 
-             }
-          }else{
-            self.frame = requestAnimationFrame(function(){  
-                self.drawing = true;
-                self.ctx.clearRect(0,0,self.width,self.height);
-                self.ctx.fillStyle = self.bgColor;
-                self.ctx.fillRect(0,0,self.width,self.height);
-                self.drawStep();
-            }); 
-          }
+                li.style.transform = 'translate3d('+ offsetX +'px,'+ setOffset +'px, 0)';
 
+                li.style.webkitTransform = 'translate3d('+ offsetX +'px,'+ setOffset +'px, 0)';
+              }
+            }
+          },500);
 
+          setTimeout(function(){
+            self.drawStep();
+          },self.intervalTime);
 
-          
       },
       cancelStep:function(){
           cancelAnimationFrame(this.frame);

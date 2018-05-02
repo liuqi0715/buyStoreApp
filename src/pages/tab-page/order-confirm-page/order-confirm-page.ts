@@ -46,8 +46,6 @@ export class orderConfirmPage {
   }
 
   ionViewDidLoad() {
-    // this.getInfoDatas();
-    console.info('this.navParams.data.recycleId:', this.navParams.data.recycleidT)
     this.getPriceListInfo()
   }
 
@@ -278,8 +276,6 @@ export class orderConfirmPage {
       if (resp) {
         if (resp.errorinfo == null) {
           loading.dismiss();
-          console.log(resp.data.batteryList)
-          // self.priceCatModel = resp.data.batteryList
           let tempList = resp.data.batteryList    //总的数据
           if (tempList.length==0){
             self.noContent = true;        //如果数据为空，则显示没有数据

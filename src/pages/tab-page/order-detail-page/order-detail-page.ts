@@ -10,7 +10,7 @@ import { Network } from '@ionic-native/network';
 import { App } from 'ionic-angular';
 import { UserLogin } from "../../../modules/user-login/user-login";
 // declare let cordova:any;
-declare var $; 
+declare var $;
 declare var BMap;
 declare let baidumap_location: any;
 @Component({
@@ -34,7 +34,7 @@ export class orderDetailPage {
 
   @ViewChild('map') mapElement: ElementRef;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public http: Http,
               private network: Network,
@@ -60,14 +60,14 @@ export class orderDetailPage {
     let self = this;
 
     self.network.onDisconnect().subscribe(()=>{
-        self.offline = true; 
+        self.offline = true;
         if(self.datas.length == 0){
           self.firstOffline = true;
         }
         self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
-        self.offline=false; 
+        self.offline=false;
     });
   }
 
@@ -100,15 +100,15 @@ export class orderDetailPage {
   }
 
   getInfoDatas(){
-    
+
     let data = {
        "data":{
          "orderNo":this.navParams.data.orderNo,
-       
+
        },
        "token":this.servicesInfo.token,
     };
-   
+
     let self = this;
     this.urlService.postDatas(SELLORDERDETAIL_URL,data).then(function(resp){
       if(resp){
@@ -119,7 +119,7 @@ export class orderDetailPage {
             self.orderStateWater = resp.data.orderStateWater;
             self.recyclesInfoBean = resp.data.recyclesInfoBean;
             self.firstOffline = false;
-           
+
         }else{
            /*token失效的问题*/
            if(resp.errorinfo.errorcode=="10003"){
@@ -178,7 +178,7 @@ export class orderDetailPage {
           var marker2 = new BMap.Marker(point2);  // 创建标注
           marker2.setIcon(icon2);
           this.map.addOverlay(marker2);               // 将标注添加到地图中
-          this.map.addOverlay(marker2);  
+          this.map.addOverlay(marker2);
           if(parseInt(this.map.getDistance(point1,point2).toFixed(2)).toString().length<2000){
             var level = 16;
           }else{
@@ -190,16 +190,16 @@ export class orderDetailPage {
           }
           this.map.centerAndZoom(point2, level);
       }
-      this.map.addEventListener('touchstart',function(){ 
+      this.map.addEventListener('touchstart',function(){
         $("#od_map_tip").hide();
         self.touchTime = Math.floor(new Date().getTime());
       });
       this.map.addEventListener('touchend',function(){
         $("#od_map_tip").show();
-        (self.duration as any) = Math.floor(new Date().getTime() - self.touchTime); 
+        (self.duration as any) = Math.floor(new Date().getTime() - self.touchTime);
         if(self.duration < 100){
           self.mapDetail();
-        } 
+        }
       });
       //把地址在地图上标出来
       // var geoc = new BMap.Geocoder();
@@ -212,11 +212,11 @@ export class orderDetailPage {
       //     width : 200,     // 信息窗口宽度
       //     height: 50,     // 信息窗口高度
       //   }
-      //   var infoWindow = new BMap.InfoWindow("地址:"+addrmsg, opts);  //创建信息窗口对象 
+      //   var infoWindow = new BMap.InfoWindow("地址:"+addrmsg, opts);  //创建信息窗口对象
       //   this.map.openInfoWindow(infoWindow,point); //开启信息窗口
 
 
-      // }); 
+      // });
 
 
 
@@ -271,5 +271,5 @@ export class orderDetailPage {
     }
 
   public goodListTitle = ["品类","数量"];
-
+  public priceListTitle = ["型号", "价格"];
 }
