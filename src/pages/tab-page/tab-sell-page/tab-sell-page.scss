@@ -17,10 +17,23 @@ page-tab-home-page {
     top: 0;
     left: 0;
   }
+  .swiper-pagination{
+    bottom: 5px !important;
+  }
 }
 
 #home{
   background: #EEEDED;
+}
+
+#home-pDisplay,#home-pDisplay1{
+  position: relative;
+  width: 84%;
+  height: 2.86rem;
+  margin: -.1rem auto 0;
+  padding: .12rem;
+  overflow: hidden !important;
+  border: .04rem solid #73D0CA;
 }
 
 .swiper-pagination-bullet-active{
@@ -71,7 +84,7 @@ page-tab-home-page {
 }
 
 #home .home-notice #noticeSlider {
-  width: 72%;
+  width: calc(100% - 1.84rem);
   float: left;
   margin-top: -2px;
   align-items:center;
@@ -97,6 +110,8 @@ page-tab-home-page {
   color: #FFF;
   margin: .2rem auto;
   background: #FFF;
+  // background: url('../assets/img/sell/card_bg1.png') no-repeat;
+  // background-size: 100% 100%;
   border-radius: .08rem;
 }
 
@@ -155,13 +170,13 @@ page-tab-home-page {
 .home-chart-title1{
   position: absolute;
   left: .4rem;
-  bottom: .2rem;
+  bottom: .1rem;
   font-size: .3rem;
 }
 .home-chart-title2{
   position: absolute;
   right: .4rem;
-  bottom: .2rem;
+  bottom: .1rem;
   font-size: .3rem;
 }
 
@@ -327,6 +342,7 @@ page-tab-home-page {
   padding: .2rem .2rem;
 }
 .home-display-card_m{
+  height: 30%;
   padding: .3rem .2rem 0;
 }
 .home-display-card_m ul li{
@@ -344,6 +360,15 @@ page-tab-home-page {
 }
 .home-display-card_m ul li:nth-child(4),.home-display-card_m ul li:nth-child(8){
   margin-right: 0;
+}
+.home-display-warn{
+  width: 100%;
+  height: .2rem;
+  font-size: .24rem;
+  color: #FFF;
+  text-align: center;
+  line-height: .2rem;
+  margin-bottom: .1rem;
 }
 .home-display-card_b{
   border-top: .02rem solid #FFF;
@@ -384,7 +409,7 @@ page-tab-home-page {
   display: block;
   position: absolute;
   top: .36rem;
-  left: .32rem;
+  left: .1rem;
   font-size: .4rem;
 }
 .home-display-card_b ul li a{
@@ -412,6 +437,7 @@ page-tab-home-page {
   height: 90%;
   background: #ABCDA1;
   border: .1rem;
+  display: none;
 }
 #home-swiper-navL{
   left: 0;

@@ -1,8 +1,8 @@
 
 
-// const urls = "http://120.79.117.124/storeApp";
+const urls = "http://120.79.117.124/storeApp";
 
-const urls = "http://192.168.0.156/storeApp";    //李子
+// const urls = "http://192.168.0.156/storeApp";    //李子
 
 
 export const interfaceUrls = {

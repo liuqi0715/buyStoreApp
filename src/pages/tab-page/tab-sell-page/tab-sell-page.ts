@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { Platform, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 // import * as Swiper from 'swiper';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+// import { Camera, CameraOptions } from '@ionic-native/camera';
 import { orderBornPage } from "../order-born-page/order-born-page";
 import { orderDetailPage } from "../order-detail-page/order-detail-page";
 import { orderAgreePage } from "../order-agree-page/order-agree-page";
@@ -22,7 +22,6 @@ import { FileOpener } from '@ionic-native/file-opener';
 import { AppVersion } from '@ionic-native/app-version';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { orderConfirmPage} from '../order-confirm-page/order-confirm-page';
-
 import ECharts from 'echarts';
 declare var $;
 declare var Swiper;
@@ -60,9 +59,10 @@ export class TabSell {
   // firstTime2:any = true;
   devicePlatform:any = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public platform: Platform,
               public el: ElementRef,
-              private camera: Camera,
               public chartConfig: chartConfig,
               public urlService: urlService,
               public servicesInfo: servicesInfo,
@@ -86,14 +86,6 @@ export class TabSell {
     this.checkNetwork();
     // this.initJPush();
     this.checkUpdate();
-
-
-    let self = this;
-    $(".home-display-card_b").click(function () {
-      console.log("///")
-      self.navCtrl.push(orderConfirmPage);
-    })
-
   }
 
   ionViewWillLeave() {
@@ -106,7 +98,9 @@ export class TabSell {
   }
 
   ionViewDidEnter() {
-    this.getInfoDatas(null);
+    if(this.servicesInfo.token){
+      this.getInfoDatas(null);
+    }
   }
 
   doRefresh(refresher) {
@@ -164,13 +158,16 @@ export class TabSell {
         if(resp.errorinfo == null){
           self.appVersion.getVersionNumber().then((version) => {
             // alert(JSON.stringify(resp));
-            if (resp.version != version) {
+            if (resp.version != version && resp.version) {
               // this.appUrl=data[0].APPURL;  //可以从服务端获取更新APP的路径
               let updateAlert = self.alertCtrl.create({
                 title: '提示',
                 message: '发现新版本,是否立即更新?',
                 buttons: [{
-                  text: '取消'
+                  text: '取消',
+                  handler: () => {
+                    self.platform.exitApp();
+                  }
                 }, {
                   text: '确定',
                   handler: () => {
@@ -202,11 +199,21 @@ export class TabSell {
                   if(result.hasPermission == false){
                      self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
                         result => {
-                            self.upgradeApp();
+                            if(result.hasPermission == false){
+                              self.toast1("相应权限未打开,升级失败");
+                              setTimeout(function(){
+                                self.platform.exitApp();
+                              },2000);
+                            }else{
+                               self.upgradeApp();
+                            }
                         },
                         err => {
-                            // alert(JSON.stringify(err));
-                            self.toast1("存储权限未打开,升级失败");
+
+                            self.toast1("相应权限未打开,升级失败");
+                            setTimeout(function(){
+                              self.platform.exitApp();
+                            },2000);
                         }
                      )
                   }else{
@@ -223,11 +230,22 @@ export class TabSell {
                   if(result.hasPermission == false){
                      self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
                         result => {
-                            self.upgradeApp();
+                            if(result.hasPermission == false){
+                              self.toast1("相应权限未打开,升级失败");
+                              setTimeout(function(){
+                                self.platform.exitApp();
+                              },2000);
+                            }else{
+                               self.upgradeApp();
+                            }
                         },
                         err => {
-                            // alert(JSON.stringify(err));
-                            self.toast1("存储权限未打开,升级失败");
+
+                            self.toast1("相应权限未打开,升级失败");
+                            setTimeout(function(){
+                              self.platform.exitApp();
+                            },2000);
+
                         }
                      )
                   }else{
@@ -235,19 +253,15 @@ export class TabSell {
                   }
 
                 }
-                // err => self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-                //   result => {
-                //       self.upgradeApp();
-                //   },
-                //   err => {
-                //       alert(JSON.stringify(err));
-                //   }
-                // )
               );
           }
         },
         err => {
           self.toast1("存储权限未打开,升级失败");
+          setTimeout(function(){
+            self.platform.exitApp();
+          },2000);
+
         }
       );
   }
@@ -359,6 +373,9 @@ export class TabSell {
            if(refresher){
              refresher.cancel();
            }
+           $("#home-swiper-navL").hide();
+           $("#home-swiper-navR").hide();
+           $(".infoSlide .swiper-wrapper").empty().append('<div class="home-display-card" style="margin:0 auto;"><span class="home-display-none">暂无报价</span></div>');
            /*token失效的问题*/
            if(resp.errorinfo.errorcode=="10003"){
             self.app.getRootNav().setRoot(UserLogin);
@@ -376,6 +393,9 @@ export class TabSell {
             self.swiper1.startAutoplay();
          }
          self.toast("服务器异常，请重试");
+         $("#home-swiper-navL").hide();
+         $("#home-swiper-navR").hide();
+         $(".infoSlide .swiper-wrapper").empty().append('<div class="home-display-card" style="margin:0 auto;"><span class="home-display-none">暂无报价</span></div>');
     });
     this.urlService.postDatas(SELLORDER_URL,data).then(function(resp){
       if(resp){
@@ -407,20 +427,35 @@ export class TabSell {
   initCharts(){
 
     function addSwiper(con,i){
-        return '<div class="swiper-slide"><span class="home-chart-title1">找铅网</span><span class="home-chart-title2">平台指导价: ' + con + '</span><div class="home-chart" id='+ 'chart' + i + '></div></div>';
+        return '<div class="swiper-slide"><span class="home-chart-title1">找铅网</span><span class="home-chart-title2">指导价: ' + con + '</span><div class="home-chart" id='+ 'chart' + i + '></div></div>';
     }
-    var htmlContain = "";
-
-    // this.oSwiper1.appendSlide(addSwiper(i+1));
+    
     var chartDatas = (this.datas as any).refPriceList;
+    
+    let textArray = [];
+    let textArray1 = [];
+    let htmlContain = '<div class="swiper-slide"><span class="home-chart-title1">找铅网</span><span class="home-chart-title2">指导价:'+ chartDatas[0].typeView +'</span><div id="home-pDisplay"></div></div>';
+
     if(chartDatas){
+
       for(var i = 0;i < chartDatas.length;i++){
-          htmlContain = htmlContain + addSwiper(chartDatas[i].catName,i+1);
+          if(i == 0){
+            for(var a=0;a<chartDatas[i].scolleView.length;a++){
+              let priceDatas = chartDatas[i].scolleView[a];
+              let str = priceDatas.brand_name+" "+priceDatas.model_name+" "+priceDatas.unit;
+              textArray.push(str);
+              textArray1.push(str);
+            }
+          }else{
+            htmlContain = htmlContain + addSwiper(chartDatas[i].catName,i+1);
+          } 
       }
+
+      
       $(".headSlideBox").empty().html(htmlContain);
       var self = this,option_l,option_r;
       setTimeout(function(){
-          for(var i = 0;i < chartDatas.length;i++){
+          for(var i = 1;i < chartDatas.length;i++){
               var option = (self.chartConfig as any).getConfig();
               option.xAxis.data = [];
               option.series[0].data = [];
@@ -430,7 +465,7 @@ export class TabSell {
                 price:""
               }
               chartData.unshift(obj);
-              for(var j = chartData.length - 1;j>=0;j--){
+              for(var j = chartData.length - 1;j>=1;j--){
                   option.xAxis.data.push(chartData[j].date);
                   option.series[0].data.push(chartData[j].price);
               }
@@ -451,7 +486,7 @@ export class TabSell {
             // slidesPerView: 0,
             paginationClickable: true,
             // centeredSlides: true,
-            autoplay: 5000,
+            autoplay: 1000000,
             autoplayDisableOnInteraction: false,
             loop: true,
             // 如果需要分页器
@@ -461,8 +496,8 @@ export class TabSell {
             observeParents:true
           });
 
-          var chartHtml_l = '<span class="home-chart-title1">找铅网</span><span class="home-chart-title2">平台指导价: ' + chartDatas[0].catName +'</span>'+'<div class="home-chart" id="chart_l"></div>';
-          var chartHtml_r = '<span class="home-chart-title1">找铅网</span><span class="home-chart-title2">平台指导价: ' + chartDatas[chartDatas.length - 1].catName + '</span>'+'<div class="home-chart" id="chart_r"></div>';
+          var chartHtml_l = '<span class="home-chart-title1">找铅网</span>'+'<span class="home-chart-title2">指导价:'+ chartDatas[0].typeView +'</span><div id="home-pDisplay1"></div>';
+          var chartHtml_r = '<span class="home-chart-title1">找铅网</span><span class="home-chart-title2">指导价: ' + chartDatas[chartDatas.length - 1].catName + '</span>'+'<div class="home-chart" id="chart_r"></div>';
           var copies = $('.headSlide').find('.swiper-slide-duplicate');
 
           copies.each(function(idx,val) {
@@ -473,15 +508,29 @@ export class TabSell {
             }
           });
 
-          var chart_l = ECharts.init(document.getElementById('chart_l') as HTMLDivElement);
+          // var chart_l = ECharts.init(document.getElementById('chart_l') as HTMLDivElement);
           var chart_r = ECharts.init(document.getElementById('chart_r') as HTMLDivElement);
-          chart_l.setOption(option_l);
+          // chart_l.setOption(option_l);
           chart_r.setOption(option_r);
+
+          var config = {
+              textColor : '#FFF',
+              datas : textArray
+          }
+
+          var config1 = {
+              textColor : '#FFF',
+              datas : textArray1
+          }
+
+          $("#home-pDisplay").srollUp(config);
+          $("#home-pDisplay1").srollUp(config1);
+
 
         },100);
     }
 
-   }
+  }
 
   goOrderBorn(data) {
 
@@ -490,16 +539,16 @@ export class TabSell {
           this.navCtrl.push(orderBornPage, {
              "recycleId":data[this.recycleIdx].recycleId,
              "recyclePhone":data[this.recycleIdx].recyclePhone,
-             "public":true
+             "public":false
           });
         }else{
           this.navCtrl.push(orderBornPage, {
-             "public":false
+             "public":true
           });
         }
     }else{
         this.navCtrl.push(orderBornPage, {
-           "public":false
+           "public":true
         });
     }
 
@@ -620,12 +669,12 @@ private initInfoBox(infoDatas) {
     }
 
     for(var k = 0; k < data.quotePriceList.length;k++){
-      goodsDom = goodsDom + '<li><label>'+ data.quotePriceList[k].catName +'</label><span>'+ data.quotePriceList[k].catPrice +'<a>元/kg</a></span></li>';
+      goodsDom = goodsDom + '<li><label>'+ data.quotePriceList[k].catName +'</label><span>'+ data.quotePriceList[k].catPrice +'<a>'+data.quotePriceList[k].catUnit+'</a></span></li>';
     }
 
     return '<div class="swiper-slide"><div class="home-display-card">'+'<div class="home-display-card_t"><div class="home-display-card_tag">'+ starsDom+'</p>'+
     '<p>综合评分'+data.commScore+'</p></div><div class="home-display-card_tag"><p>'+data.quoTime+'报价</p><p>'+data.distance+'</p></div></div><div class="home-display-card_m">'+
-      wordsDom +'</ul></div><div class="home-display-card_b" recycleId = '+data.recycleId+' >'+ goodsDom +'</ul></div></div></div>';
+      wordsDom +'</ul></div><div class="home-display-warn">点击下方价格查看更多报价</div><div class="home-display-card_b" recycleid = '+data.recycleId+' >'+ goodsDom +'</ul></div></div></div>';
 
   }
 
@@ -696,10 +745,6 @@ private initInfoBox(infoDatas) {
       self.recycleIdx = 0;
 
       $(".home-display-card_b").click(function (e) {
-        // console.log($(".home-display-card_b").attr("recycleid"))
-        // console.log($(e.target).find(".home-display-card_b").arrt("recycleid"))
-        console.log($(this).attr("recycleid"))
-
         var recycleidT =  $(this).attr("recycleid");
         self.navCtrl.push(orderConfirmPage,{
           recycleidT: $(this).attr("recycleid")
@@ -715,8 +760,6 @@ private initInfoBox(infoDatas) {
   }
 
 }
-  ngOnInit(){
 
-  }
 
 }
