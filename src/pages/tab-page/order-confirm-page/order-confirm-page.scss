@@ -8,7 +8,7 @@ order-confirm-page {
   }
   .bOrder_main {
     position: absolute !important;
-    top: .88rem;
+    top: .8rem;
     // bottom: 1rem;
     left: 0;
     width: 100%;
@@ -77,21 +77,20 @@ order-confirm-page {
     margin-top: .2rem;
   }
   .bOrder_slcbox_l {
-    width: 40%;
+    width: 55%;
     height: 1.2rem;
     float: left;
     line-height: 1.2rem;
-    text-indent: .5rem;
     color: #7E817C;
     font-size: .32rem;
     border-bottom: 0.02rem solid #F5F5F4;
   }
  .bOrder_slcbox_l span{
-    margin-left: 5%
+    display: inline-block;
+    margin-left: .3rem;
   }
-
   .bOrder_slcbox_r {
-    width: 59%;
+    width: 40%;
     height: 1.2rem;
     float: left;
     line-height: 1.2rem;
