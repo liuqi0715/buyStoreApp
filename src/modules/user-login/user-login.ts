@@ -61,7 +61,7 @@ export class UserLogin {
         let toast = this.toastCtrl.create({
           message: actions,
           duration: 1000,
-          position:'middle'
+          position:'bottom'
 
         });
         toast.present();
@@ -89,7 +89,8 @@ export class UserLogin {
            this.userInfo.userName = this.servicesInfo.mobilePhone;
            this.userInfo.pwd = this.servicesInfo.pwd;
         }else{
-          console.info('没有注册成功因此不赋值login信息')
+          // console.info('没有注册成功因此不赋值login信息')
+
         }
 
 
@@ -97,15 +98,15 @@ export class UserLogin {
     changepic(){
       var a = $("#file")[0].files[0].size;
       var b = $("#file");
-      console.log(a,b)
+      // console.log(a,b)
       var img = new Image();
       img.src = "assets/img/login/logo2.png"
       var reads = new FileReader();
       reads.readAsDataURL($("#file")[0].files[0]);
-      console.info( $("#file")[0].files[0])
-      console.log(new Image())
+      // console.info( $("#file")[0].files[0])
+      // console.log(new Image())
       reads.onload = function (e) {
-        console.log(e)
+        // console.log(e)
       }
 
     }
@@ -119,7 +120,7 @@ export class UserLogin {
             this.toast('无网络连接，请检查');
             return;
        }
-        console.log("123")
+        // console.log("123")
         let self = this;
         if (this.userInfo.userName == '' || this.userInfo.pwd == '') {
             // this.loginError = true;
@@ -130,7 +131,7 @@ export class UserLogin {
                 "mobile": this.userInfo.userName,
                 "password": this.userInfo.pwd
             }};
-            console.log("123",params)
+            // console.log("123",params)
              this.http.post(interfaceUrls.login, params)
              .map(res => res.json())
              .subscribe(function (data) {
@@ -148,7 +149,8 @@ export class UserLogin {
                         self.toast("登录成功");
                         // self.navCtrl.setRoot(TabPage);
                         self.app.getRootNav().setRoot(TabPage);
-                        self.nativeStorage.setItem('token', data.data.token)
+
+                        self.nativeStorage.setItem('token', { "token": data.data.token })
                           .then(
                           (data) => { console.log('Stored item!', data)},
                           error => console.error('Error storing item', error)
@@ -174,14 +176,14 @@ export class UserLogin {
                                 self.urlService.postDatas(UPDATEREGID_URL, data).then(function (resp) {
                                   if (resp) {
                                     if (resp.errorinfo == null) {
-                                      console.log(resp.data);
+                                      // console.log(resp.data);
                                       // alert(self.datas);
                                     }
                                   }
                                 });
 
                               } catch (exception) {
-                                console.log(exception);
+                                // console.log(exception);
                               }
                             });
                         }

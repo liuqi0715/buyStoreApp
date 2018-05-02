@@ -11,6 +11,7 @@ import { AlertController } from 'ionic-angular';    //注册协议
 import {UserAgreement} from "../user-agreement/user-agreement"
 import{servicesInfo} from"../../providers/service-info";
 import { urlService } from "../../providers/urlService";
+declare var $: any;//引入jq
 @Component({
     selector: 'page-userPwdFind',
     templateUrl: 'userPwdFind.html',
@@ -40,9 +41,14 @@ export class UserPwdFind {
     hasClick=false;
     hq = "获取验证码";
     num = 60;
- 
+    timer;
     offline:boolean=false;
 
+    verifyCode: any = {
+      verifyCodeTips: "获取验证码",
+      countdown: 60,//总共时间
+      disable: true
+    }
     toast(actions){
         let toast = this.toastCtrl.create({
           message: actions,
@@ -55,21 +61,27 @@ export class UserPwdFind {
 
       checkNetwork(){
         let self = this;
-    
+
         self.network.onDisconnect().subscribe(()=>{
-              self.offline=true; 
+              self.offline=true;
               self.toast('无网络连接，请检查');
         });
         self.network.onConnect().subscribe(()=>{
-              self.offline=false; 
+              self.offline=false;
         });
-    
+
       }
 
     ionViewDidLoad(){
-        this.checkNetwork()        
+        this.checkNetwork()
     }
+    ionViewDidLeave() {
+      this.verifyCode.disable = true;
+      clearInterval(this.timer);
+      $("#Rcode").text("获取验证码");
+      console.log(this.verifyCode.disable, "les")
 
+    }
     next(){
         var pwdTest = /^(?![\d]+$)(?![a-zA-Z]+$)(?![-!@#$%^&*()_+.{}`=|\/\[\]\\\'?;\':,<>]+$)[\da-zA-Z-!@#$%^&*()_+.{}`=|\/\[\]\\\'?;\':,<>]{6,32}$/;
         if(!this.userInfo.phone){
@@ -127,7 +139,7 @@ export class UserPwdFind {
                         // self.errorTipMsg = data.errorinfo.errormessage;
                     }
                 }
-               
+
             });
 
         }
@@ -137,47 +149,52 @@ export class UserPwdFind {
     }
 
     findPasswordCode(){
-        // this.toast("请保证您的信箱能够接收短信")
-        if(!this.userInfo.phone) {
-            // this.errorTip = true;
-            // this.errorTipMsg = "请输入手机号";
-            this.toast("请输入手机号");
-        }else if (!(/^1[34578]\d{9}$/.test(this.userInfo.phone))) {
-            // this.errorTip = true;
-            // this.errorTipMsg = "请输入正确的手机号";
-            this.toast("请输入正确的手机号")
-        }else{
-            let params = { "data":{
-                "mobile": this.userInfo.phone,
-            }};
+      if (this.verifyCode.disable == true){
+        this.verifyCode.disable = false;
+        if (!this.userInfo.phone) {
+          this.toast("请输入手机号");
+        } else if (!(/^1[34578]\d{9}$/.test(this.userInfo.phone))) {
+          this.toast("请输入正确的手机号")
+        } else {
+          let params = {
+            "data": {
+              "mobile": this.userInfo.phone,
+            }
+          };
+          let self = this;
+          this.urlService.postDatas(interfaceUrls.findPwdCode, params)
+            .then(function (resp) {
+              if (resp.errorinfo == null) {
+                self.timer = setInterval(() => {
+                  if (self.num == 0) {
+                    clearInterval(self.timer);
+                    self.num = 60;
+                    $("#Rcode").text("重新获取")
+                    $(".yzm-btn").css({ "opacity": "1" })
+                    self.verifyCode.disable = true;
+                    return;
+                  } else {
 
-            let self = this;
-            this.urlService.postDatas(interfaceUrls.findPwdCode,params)
-            .then(function(resp){
-                if(resp.errorinfo==null){
-                    self.errorTip = false;
-                    self.hasClick = true;
-                    let timer = setInterval(() => {
-                        if (self.num == 0) {
-                            clearInterval(timer);
-                            self.hasClick = false;
-                            self.hq = "重新获取";
-                            self.num = 60;
-                            return;
-                        }
-                        self.num--;
-                    }, 1000);
-                }else{
-                    
-                    self.toast(resp.errorinfo.errormessage)
-                 
-                }
-           });
+                    $("#Rcode").text(self.num-- + "s")
+                    console.log(self.num)
 
+                  }
 
+                }, 1000);
+                $("#Rcode").text(self.num-- + "s")
+                $(".yzm-btn").css({ "opacity": "0.5" })
+              } else {
 
+                self.toast(resp.errorinfo.errormessage)
 
+              }
+            });
         }
+
+      }else{
+
+      }
+
 
     }
 

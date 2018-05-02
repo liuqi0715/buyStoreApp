@@ -47,7 +47,7 @@ export class UserRegister {
         private imagePicker: ImagePicker
     )
 {
-    console.log(this.servicesInfo.latitude,"latitude")
+    // console.log(this.servicesInfo.latitude,"latitude")
 };
 
     stroe={
@@ -114,7 +114,7 @@ export class UserRegister {
         let toast = this.toastCtrl.create({
           message: actions,
           duration: 2000,
-          position:'middle'
+          position:'bottom'
 
         });
         toast.present();
@@ -155,7 +155,7 @@ export class UserRegister {
     }
     getType(){
         // console.log(t.configValue);
-        console.log("11",this.StoreT);
+        // console.log("11",this.StoreT);
     }
     address(){
         this.navCtrl.push(UserRegAddress)
@@ -166,12 +166,13 @@ export class UserRegister {
     takePicture(){
 
         const options: CameraOptions = {
-            quality: 85,
+            quality: 70,
             destinationType: this.camera.DestinationType.FILE_URI,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
-            targetWidth: 600,
-            targetHeight: 600
+            targetWidth: 500,
+            targetHeight: 500,
+            saveToPhotoAlbum:true
           }
           this.camera.getPicture(options).then((imageData) => {
             this.hasnotImg=true;
@@ -301,7 +302,7 @@ uploadLicenseImg() {
     this.linseImg = false;
     this.LicenseUrl == null
     var self = this;
-    console.log(self.servicesInfo.userPhone)
+    // console.log(self.servicesInfo.userPhone)
     const fileTransfer: FileTransferObject = this.FileTransfer.create();
     const apiPath = interfaceUrls.uploadImage+"?key="+self.servicesInfo.userPhone+"&type="+3;
     // alert(apiPath);
@@ -542,7 +543,7 @@ upLoad() {
 
             this.confirm("请确定您的信息输入正确,这将影响您后续的操作。")
             .then(()=>{
-                console.log("===");
+                // console.log("===");
                 this.hasSuccess = true;
                 this.servicesInfo.stroePerson = this.stroe.stroePerson;
                 let self = this;

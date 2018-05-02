@@ -1,5 +1,5 @@
 page-UserOpenAccount{
-  
+
       ul li{
           list-style: none;
           font-size: .25rem;
@@ -36,17 +36,40 @@ page-UserOpenAccount{
           height: 5rem;
       }
       ul li input{
-        width: 72%;
-        height: 99%;
+        width: 69%;
+        height: 96%;
         // text-indent: .26rem;
         border: none;
         border-radius: 2px;
         // @include placeholder(#B0B0B0,0,.25rem);
         $text-input-placeholder-color:(red);
       }
-      ::-webkit-input-placeholder { /* WebKit browsers */ 
-        font-size:.1rem;
-        } 
+      input::-webkit-input-placeholder {
+        /* WebKit browsers */
+        font-size: .25rem;
+      }
+
+      input:-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
+        font-size: .25rem;
+
+      }
+
+      input::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
+        font-size: .25rem;
+
+      }
+
+      input :-ms-input-placeholder {
+        /* Internet Explorer 10+ */
+        font-size: .25rem;
+
+      }
+
+      // ::-webkit-input-placeholder { /* WebKit browsers */
+      //   font-size:.1rem;
+      //   }
     .toolbar-background-md{
         background-color: #0EAF9D;
     }
@@ -85,7 +108,7 @@ page-UserOpenAccount{
     }
     .regIcon{
         width: .6rem;
-        
+
         float: left;
         position: relative;
         top: .7rem;
@@ -105,7 +128,7 @@ page-UserOpenAccount{
           background-color: #D5D5D5;
           color: #6C6C6C;
       }
- 
+
       .textInfo{
         font-size: .24rem;
       }
