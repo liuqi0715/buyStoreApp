@@ -18,8 +18,8 @@ declare var $: any;//引入jq
 })
 
 export class WalletMoney {
- 
-  
+
+
   constructor(public navCtrl: NavController,
               private http: Http,
               public servicesInfo: servicesInfo,
@@ -57,35 +57,35 @@ export class WalletMoney {
     let self = this;
 
     self.network.onDisconnect().subscribe(()=>{
-          self.offline=true; 
+          self.offline=true;
           self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
-          self.offline=false; 
+          self.offline=false;
     });
 
   }
   ionViewDidLoad(){
-    this.checkNetwork()        
+    this.checkNetwork()
 }
     back(){
       this.navCtrl.pop()
     }
     getDate(){
-         
+
     }
     cancle(){
 
     }
     affirm(){
-      
+
     }
     //根据日期变化重新渲染交易情况
     cityChange(){
       this.hasSuccess = true;
       this.noData = false;
       this.pageNum = 1;
-      console.log(this.timeStarts,"??");
+      // console.log(this.timeStarts,"??");
       let param2 = {
         "data":{
           "platform":1,
@@ -104,16 +104,16 @@ export class WalletMoney {
              if(resp.data.total == 0){
               self2.noData = true;
              }else{
-           
-              console.log(resp.data);
+
+              // console.log(resp.data);
               self2.BillList =  resp.data.rows;
               self2.count = Math.ceil((resp.data.total)/self2.pageSize);
              }
-          
-            
+
+
            }else{
              self2.toast(resp.errorinfo.errormessage);
-             
+
                  if(resp.errorinfo.errorcode=="10003"){
                   self2.app.getRootNav().setRoot(UserLogin);
                 }
@@ -136,12 +136,12 @@ export class WalletMoney {
         .subscribe(data => {
           this.hasSuccess = false;
           if(data.errorinfo==null){
-            console.log(data);
+            // console.log(data);
             this.cashAmount = data.data.cashAmount;
             this.freezeCashAmount = data.data.freezeCashAmount;
             this.freezeUncashAmount = data.data.freezeUncashAmount;
           }
-           
+
       })
       //查询交易流水
 
@@ -161,26 +161,25 @@ export class WalletMoney {
              if(resp.data.total == 0){
               self2.noData = true;
              }else{
-           
-              console.log(resp.data);
+
+              // console.log(resp.data);
               self2.BillList =  resp.data.rows;
               self2.count = Math.ceil((resp.data.total)/self2.pageSize);
-             }   
+             }
            }else{
              self2.toast(resp.errorinfo.errormessage);
            }
        }
       });
-         
+
   }
   doInfinite2(infiniteScroll){
-    console.log("??");
   }
-  
+
   doInfinite(infiniteScroll) {
     //上拉加载..
-    console.log("11");
-   console.log(this.count,this.pageNum,">>>>");
+  //   console.log("11");
+  //  console.log(this.count,this.pageNum,">>>>");
    if(this.offline == true){
     this.toast('无网络连接，请检查');
     return;
@@ -213,7 +212,7 @@ export class WalletMoney {
         infiniteScroll.complete();	//加载完成
     }
 
-  
+
 
 }
 

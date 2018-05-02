@@ -18,6 +18,7 @@ import { FileChooser } from '@ionic-native/file-chooser';//选择图片上传
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { AlertController } from 'ionic-angular';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 // declare let cordova:any;
 declare var BMap;
 declare let baidumap_location: any;
@@ -32,15 +33,15 @@ export class addCardPage {
     // phone:"",
     bankNo:null,
     // personNo:null
-   
+
   };
   reqNo;
   bankName="";//银行卡名称
   bankType;  //银行卡信息
   bankCode;    //银行卡code
-        
+
   a:number;
-  
+
   bankCodeInfo;    //请选择银行卡名称，这里接收选择后的银行卡信息
   hasSuccess=false; //默认不显示
   offline:boolean=false;
@@ -53,7 +54,7 @@ export class addCardPage {
   }
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
-      public http: Http, 
+      public http: Http,
       public urlService: urlService,
       public toastCtrl: ToastController,
       public servicesInfo: servicesInfo,
@@ -64,7 +65,8 @@ export class addCardPage {
       private fileChooser: FileChooser,
       private camera: Camera,
       private FileTransfer: FileTransfer,
-      public alertCtrl: AlertController
+      public alertCtrl: AlertController,
+      private androidPermissions: AndroidPermissions
     ) {
   }
 
@@ -81,11 +83,11 @@ export class addCardPage {
     let self = this;
 
     self.network.onDisconnect().subscribe(()=>{
-          self.offline=true; 
+          self.offline=true;
           self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
-          self.offline=false; 
+          self.offline=false;
     });
 
   }
@@ -114,7 +116,7 @@ export class addCardPage {
 
   //将银行卡号四位分割一次
   changeNo(){
-    // this.subObj.bankNo = ((this.subObj.bankNo)).replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");   
+    // this.subObj.bankNo = ((this.subObj.bankNo)).replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
 
       // if(((this.subObj.bankNo).replace(/[\s]/g, '').length)%4==0 && ((this.subObj.bankNo).replace(/[\s]/g, '').length)>0){
       //   console.log("??")
@@ -142,7 +144,7 @@ export class addCardPage {
       // }
       // this.subObj.bankNo = temp;
 
-      this.subObj.bankNo = (this.subObj.bankNo).replace(/[^\d]/g,"").replace(/(\d{4})(?=\d)/g, "$1 "); 
+      this.subObj.bankNo = (this.subObj.bankNo).replace(/[^\d]/g,"").replace(/(\d{4})(?=\d)/g, "$1 ");
       if((this.subObj.bankNo).replace(/[^\d]/g,"").length == 22){
         this.maxBankNo = this.subObj.bankNo;
       }else if((this.subObj.bankNo).replace(/[^\d]/g,"").length > 22){
@@ -150,19 +152,19 @@ export class addCardPage {
       }
       if((this.subObj.bankNo).replace(/[^\d]/g,"").length == 6){
         this.checkBankInfo();
-      } 
-   
+      }
+
   }
   //将身份证号四位分割一次
- 
+
   //根据输入的银行卡号查询银行卡名称
   checkBankInfo(){
       let reg = /^([1-9]{1})(\d{14}|\d{14,22})$/;
       if((this.subObj.bankNo)!=null){
       this.bankNo = ((this.subObj.bankNo).replace(/[^\d]/g,""));//将银行卡重新赋值给一个变量；
 
-          console.log(reg.test(this.subObj.bankNo))
-          console.log(((this.subObj.bankNo).toString()).length)
+          // console.log(reg.test(this.subObj.bankNo))
+          // console.log(((this.subObj.bankNo).toString()).length)
             let param={
                 "data": {
                   "cardNo":(this.subObj.bankNo).replace(/[^\d]/g,"")
@@ -179,7 +181,7 @@ export class addCardPage {
                 self.hasSuccess = false;
                 if(resp.errorinfo==null){
                     if(resp.data.bankFullName!=""){
-                      console.log(resp,"??");
+                      // console.log(resp,"??");
                       // self.bankCodeInfo = resp.data.bankclsname2;
                       self.bankCodeInfo = resp.data.bankFullName;
                       self.servicesInfo.bankInfo = resp.data;
@@ -190,8 +192,8 @@ export class addCardPage {
                     }
                 }else{
                   // self.toast(resp.errorinfo.errormessage);
-                  console.log(resp.errorinfo.errormessage);
-                  
+                  // console.log(resp.errorinfo.errormessage);
+
                      if(resp.errorinfo.errorcode=="10003"){
                       self.app.getRootNav().setRoot(UserLogin);
                     }
@@ -199,7 +201,6 @@ export class addCardPage {
               }
             })
             .catch(function(error){
-              console.log(error)
               // self.toast("服务器异常,请稍后再试。")
               self.hasSuccess = false;
             });
@@ -211,8 +212,8 @@ checkBankInfo2(){
   if((this.subObj.bankNo)!=null){
     this.bankNo = ((this.subObj.bankNo).replace(/[^\d]/g,""));//将银行卡重新赋值给一个变量；
 
-          console.log(reg.test(this.subObj.bankNo))
-          console.log(((this.subObj.bankNo).toString()).length)
+          // console.log(reg.test(this.subObj.bankNo))
+          // console.log(((this.subObj.bankNo).toString()).length)
           if(((this.subObj.bankNo).toString()).length>=6){
             let param={
                 "data": {
@@ -230,7 +231,7 @@ checkBankInfo2(){
                 self.hasSuccess = false;
                 if(resp.errorinfo==null){
                     if(resp.data.bankFullName!=""){
-                      console.log(resp,"??");
+                      // console.log(resp,"??");
                       // self.bankCodeInfo = resp.data.bankclsname2;
                       self.bankCodeInfo = resp.data.bankFullName;
                       self.servicesInfo.bankInfo = resp.data;
@@ -241,8 +242,8 @@ checkBankInfo2(){
                     }
                 }else{
                   // self.toast(resp.errorinfo.errormessage);
-                  console.log(resp.errorinfo.errormessage);
-                  
+                  // console.log(resp.errorinfo.errormessage);
+
                      if(resp.errorinfo.errorcode=="10003"){
                       self.app.getRootNav().setRoot(UserLogin);
                     }
@@ -250,7 +251,7 @@ checkBankInfo2(){
               }
             })
             .catch(function(error){
-              console.log(error)
+              // console.log(error)
               // self.toast("服务器异常,请稍后再试。")
               self.hasSuccess = false;
             })
@@ -261,18 +262,18 @@ checkBankInfo2(){
 
   submit(){
     let reg2 = /^([1-9]{1})(\d{14}|\d{14,18})$/;              //银行卡卡号
-    console.log(this.subObj);
+    // console.log(this.subObj);
     var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; //身份证号码
     if(this.subObj.userName.length==0){
           this.toast("请输入用户名")
     }else  if(reg2.test((this.subObj.bankNo).replace(/\s/g,""))==false){
-      console.log((this.subObj.bankNo).replace(/\s/g,""))
+      // console.log((this.subObj.bankNo).replace(/\s/g,""))
         this.toast("银行账号输入有误");
     }else{     /*****/
       this.hasSuccess = true;
       let param2 = {
         "data":{
-          "platform":1,        
+          "platform":1,
           "deviceType":"MOBILE",
           "bankCardNo":(this.subObj.bankNo).replace(/[^\d]/g,""),
           "bankCardName":this.subObj.userName,
@@ -292,7 +293,7 @@ checkBankInfo2(){
            if(resp){     /***/
             self.hasSuccess = false;
                if(resp.errorinfo==null){
-                console.log(resp,"??")
+                // console.log(resp,"??")
                 self.reqNo = resp.data.reqNo;
                 const browser = self.iab.create(resp.data.url,"_self","location=no");
                 browser.on("exit").subscribe(
@@ -303,7 +304,7 @@ checkBankInfo2(){
                    },
                    (error) => {
                     // Handle error here
-                    console.log(error);
+                    // console.log(error);
                    }
                    );
                }else{
@@ -329,7 +330,7 @@ checkCard(){
       "platform":1,
       "reqNo":this.reqNo,
     },
-    "token":this.servicesInfo.token,         
+    "token":this.servicesInfo.token,
   }
   let self = this;
   this.urlService.postDatas(interfaceUrls.checkAddCard,param).then(function(resp){
@@ -346,6 +347,62 @@ checkCard(){
         }
       }
   })
+}
+
+checkPermission(){
+   var self = this;
+   self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.CAMERA).then(
+      result => {
+        // alert('可读权限'+result.hasPermission);
+        if(result.hasPermission == false){
+          self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.CAMERA).then(
+          result => {
+            self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+              result => {
+                // alert('可写权限'+result.hasPermission);
+                if(result.hasPermission == false){
+                   self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+                      result => {
+                          self.checkBImg();
+                      },
+                      err => {
+                          // alert(JSON.stringify(err));
+                          self.toast("存储权限未打开,上传图片失败");
+                      }
+                   )
+                }else{
+                  self.checkBImg();
+                }
+
+              }
+            );
+          })
+        }else{
+            self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+              result => {
+                // alert('可写权限'+result.hasPermission);
+                if(result.hasPermission == false){
+                   self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+                      result => {
+                          self.checkBImg();
+                      },
+                      err => {
+                          // alert(JSON.stringify(err));
+                          self.toast("存储权限未打开,上传图片失败");
+                      }
+                   )
+                }else{
+                  self.checkBImg();
+                }
+
+              }
+            );
+        }
+      },
+      err => {
+        self.toast("相机权限未打开,上传图片失败");
+      }
+    );
 }
 
 /*---------------------------------拍照识别银行卡号--------------------------------------*/
@@ -388,7 +445,7 @@ takePicture(){
       targetWidth: 500,
       targetHeight: 500
     }
-    this.camera.getPicture(options).then((imageData) => {      
+    this.camera.getPicture(options).then((imageData) => {
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
       self.storeImage = imageData;
@@ -410,7 +467,7 @@ chosePicture(){
         }
       )
   .catch(
-      function(e){         
+      function(e){
         self0.toast("上传银行卡失败。")
       }
   );
@@ -431,16 +488,16 @@ let options: FileUploadOptions = {
 fileTransfer.upload(self.storeImage, apiPath, options)
   .then((data ) => {
       self.hasSuccess  = false;
-      console.log(self.storeImage);
+      // console.log(self.storeImage);
       data.response = JSON.parse(data.response);
       if((data as any).response.errorinfo==null){
-        console.log(data.response)
+        // console.log(data.response)
         self.checkBinfo =  (data as any).response.data;  //查询到的银行卡信息
 
         self.subObj.bankNo = (self.checkBinfo.bcNo).replace(/[^\d]/g,"").replace(/(\d{4})(?=\d)/g, "$1 ");       //银行卡号
-      
+
         self.checkBankInfo2();      //重新查询银行名称
-      
+
         // this.toast("上传成功")
       }else{
         if((data as any).response.errorinfo.errorcode=="10003"){
@@ -448,10 +505,9 @@ fileTransfer.upload(self.storeImage, apiPath, options)
         }
       }
    console.log(data.response)
-   
+
   }, (err) => {
     // alert(err)
-    self.hasSuccess  = false;
     console.log(err,"??");
     // self.toast(err);
   });

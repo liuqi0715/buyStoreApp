@@ -8,7 +8,7 @@ import{servicesInfo} from"../../../providers/service-info";//公共信息
 import { App } from 'ionic-angular';
 import { UserLogin } from "../../../modules/user-login/user-login";
 // declare let cordova:any;
-declare var $; 
+declare var $;
 @Component({
   selector: 'wallet-msgDetails-page',
   templateUrl: 'wallet-msgDetails-page.html',
@@ -37,11 +37,11 @@ export class msgDetails {
        },
        "token":this.servicesInfo.token
     };
-    console.log(data);
+    // console.log(data);
     let self = this;
     this.urlService.postDatas(MSGDETAILS_URL,data).then(function(resp){
       if(resp){
-        console.log(resp);
+        // console.log(resp);
         if(resp.errorinfo == null){
           // alert(resp.data.details);
           $("#msgDetails").html(resp.data.details);
