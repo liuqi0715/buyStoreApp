@@ -329,14 +329,12 @@ export class MyApp {
             self.servicesInfo.token = self.dataToken;
             console.info('token已存进入tab页面', self.dataToken)
             console.log(self.servicesInfo.token, "====服务中的token")
-            self.checkLogin();
           } else {
             self.app.getRootNav().setRoot(UserLogin);
             console.info('UserLogin页面')
-            self.checkLogin();
           }
           self.splashScreen.hide();
-
+          self.checkLogin();
         },
         error => {
           self.splashScreen.hide();
