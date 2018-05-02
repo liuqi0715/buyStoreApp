@@ -25,7 +25,7 @@
           </city-picker>  -->
       <!-- </div> -->
 
-            <p id="chose" (click)="fiveAddress()">请选择地址   <img alt="" src="assets/img/login/gengduo.png" class="more"></p>
+            <p id="chose" (click)="getFiveAddress()">请选择地址   <img alt="" src="assets/img/login/gengduo.png" class="more"></p>
             <!-- <p class="cityPiker"> <input type="text" [(ngModel)]="addresInfo2" placeholder="请输入详细地址"></p> -->
             <p class="cityPiker">  <ion-input type="text" [(ngModel)]="addresInfo2"  autocomplete="on" placeholder="请输入详细地址" class="plcolor" ></ion-input></p>
           <!-- <p>您的参考地址：{{addresInfo2}}</p> -->
@@ -35,7 +35,11 @@
             <button ion-button class="btn" (click)="next()" block>下一步</button>
     </div>
     <!-- 五级联动地址插件 -->
+
     <div id="addressFixed">
+        <p class="addTips" *ngIf = "addTips">
+         正在为您智能匹配地址...
+        </p>
         <div class="toogle-address" *ngIf="newAddress" [ngClass]="{noMarginTop:newAddress}">
 
             <div class="toogle-title">
