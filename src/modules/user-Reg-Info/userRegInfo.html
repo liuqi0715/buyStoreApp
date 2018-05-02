@@ -32,14 +32,19 @@
                 </li>
             </ul>
             <div id="getCode">
-                <button ion-button class="yzm-btn" (click)="findPasswordCode()" *ngIf="!hasClick">{{hq}}</button>
-                <button ion-button class="yzm-btn" disabled *ngIf="hasClick">{{num}}s</button>
+                <!-- <span  class="yzm-btn" (click)="findPasswordCode()" *ngIf="!hasClick">{{hq}}</span>
+                <span  class="yzm-btn" disabled *ngIf="hasClick">{{num}}s</span>  {{verifyCode.verifyCodeTips}} -->
+                <button class="yzm-btn" (click)="findPasswordCode()" > <span id="Rcode">获取验证码</span> </button>
+
+            <!-- <button class="yzm-btn" (click)="findPasswordCode()" [disabled]="!verifyCode.disable">
+              <span id="Rcode">获取验证码</span>
+            </button> -->
         </div>
-        </div>  
-      
-         
+        </div>
+
+
             <p class="errorTip" *ngIf="errorTip">{{errorTipMsg}}</p>
-            <p style="text-align:center;" class="agreeI"> <input type="checkbox" [(ngModel)]="agreeI" (click)="agree()"> <span (click)="showAlert()"> 阅读并同意 <a href="javascript:void(0);" style="text-decoration: none;" >《用户协议1.0》</a> </span> </p>
+            <p style="text-align:center;" class="agreeI"> <input type="checkbox" [(ngModel)]="agreeI" (click)="agree()"> <span (click)="showAlert()"> 阅读并同意 <a href="javascript:void(0);" style="text-decoration: none;" >《用户协议》</a> </span> </p>
             <button ion-button class="btn" (click)="next()" block>下一步</button>
     </div>
     <div class="motai" *ngIf="hasSuccess">

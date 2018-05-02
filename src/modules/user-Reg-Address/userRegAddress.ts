@@ -34,7 +34,7 @@ export class UserRegAddress {
 
 
 
-        console.log($,":$")
+        // console.log($,":$")
         //  alert(baidumap_location)
         };
 
@@ -76,9 +76,17 @@ export class UserRegAddress {
     activeArea = -1;//区域点击变色
     activeTown = -1;//乡镇点击变色
     activeStree = -1;//街道点击变色
+
+
+
+    timer1; //    三个定时器
+    timer2;
+    timer3;
+
+    addTips = true;
     ngOnInit(){
         this.loadMap();
-
+        this.fiveAddress()
     }
     toast(actions){
       let toast = this.toastCtrl.create({
@@ -112,7 +120,7 @@ export class UserRegAddress {
       this.servicesInfo.longitude = lontitude;
       this.servicesInfo.latitude = latitude;
 
-      console.log(this.map,"?????")
+      // console.log(this.map,"?????")
       this.map.clearOverlays();
       // 百度地图API功能
       var point = new BMap.Point(lontitude,latitude);
@@ -135,45 +143,55 @@ export class UserRegAddress {
 
       var addrmsg=rs.address;
       var addComp = rs.addressComponents;  //详细的分省市县街道的信息
-      console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+      // console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
 
       addresInfo2 = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
       //  self.addresInfo2 = addresInfo2;
-      console.log(addresInfo2,"1");
-      self.fiveAddress();
-      setTimeout(function() {
-        for (var i = 0; i < self.provinceList.length;i++){
-          if (addComp.province == self.provinceList[i].provinceName) {
-            self.selectPro(self.provinceList[i], self.provinceList[i].provinceId);
+      // console.log(addresInfo2,"1");
+      if (addComp.province!="" && addComp.city!="" && addComp.district!=""){
 
-            console.info('tag', self.provinceList)
-
+          self.fiveAddress();
+     self.timer1 = setTimeout(function () {
+            if (self.provinceList.length){
+              for (var i = 0; i < self.provinceList.length; i++) {
+                if (addComp.province == self.provinceList[i].provinceName) {
+                  self.selectPro(self.provinceList[i], self.provinceList[i].provinceId);
+                  // console.info('tag', self.provinceList)
+                }
+              }
+            }else{
+              self.addTips = false;
             }
-        }
-      }, 100);
 
-      setTimeout(function() {
-        for (var i = 0; i < self.cityList.length; i++) {
-          if (addComp.city == self.cityList[i].cityName) {
-            self.selectCity(self.cityList[i], self.cityList[i].cityId);
+          }, 1000);
 
-            console.info('tag', self.cityList)
+      self.timer2 = setTimeout(function () {
+            if (self.cityList.length){
+              for (var i = 0; i < self.cityList.length; i++) {
+                if (addComp.city == self.cityList[i].cityName) {
+                  self.selectCity(self.cityList[i], self.cityList[i].cityId);
 
-          }
-        }
-      }, 150);
+                  // console.info('tag', self.cityList)
 
-      setTimeout(function () {
-        for (var i = 0; i < self.areaList.length; i++) {
-          if (addComp.district == self.areaList[i].areaName) {
-            self.selectArea(self.areaList[i], self.areaList[i].areaId);
+                }
+              }
+            }else{
+              self.addTips = false;
+            }
 
-            console.info('tag', self.areaList)
+          }, 2000);
 
-          }
-        }
-      }, 200);
-
+      self.timer3 = setTimeout(function () {
+            if (self.areaList.length){
+              for (var i = 0; i < self.areaList.length; i++) {
+                if (addComp.district == self.areaList[i].areaName) {
+                  self.selectArea(self.areaList[i], self.areaList[i].areaId);
+                }
+              }
+            }
+            self.addTips = false;
+          }, 3000);
+      }
 
 
       return addresInfo2;
@@ -182,7 +200,7 @@ export class UserRegAddress {
 
 
     loadMap(){
-        console.log("11",this)
+        // console.log("11",this)
         let map = this.map = new BMap.Map(this.mapElement.nativeElement, { enableMapClick: true });//创建地图实例
 
         // let map = new BMap.Map("map");
@@ -255,8 +273,8 @@ export class UserRegAddress {
 
         // self.addresInfo2 = addresInfo2;
 
-         console.log(addresInfo2,"12");
-         console.log(self.addresInfo2,"nowadd")
+        //  console.log(addresInfo2,"12");
+        //  console.log(self.addresInfo2,"nowadd")
 
         //  self.cdr.markForCheck();
          self.cdr.detectChanges();
@@ -276,8 +294,8 @@ export class UserRegAddress {
 /*-----------------------------------------------地图拖动--------------------------------------------*/
 
 map.addEventListener('dragend', function(){
-  console.log("地图被拖动了+++++++++++++++++++++++");
-  console.log("当前地图中心点：" + map.getCenter().lng + "," + map.getCenter().lat);
+  // console.log("地图被拖动了+++++++++++++++++++++++");
+  // console.log("当前地图中心点：" + map.getCenter().lng + "," + map.getCenter().lat);
  let mapY0 = map.getCenter().lng;
  let mapX0 = map.getCenter().lat;
  map.clearOverlays();
@@ -313,13 +331,12 @@ map.addEventListener('dragend', function(){
 
     }
 
+    getFiveAddress(){
+      $("#addressFixed").show();
+    }
    fiveAddress(){
 
     this.newAddress = true;
-    // this.hasCity=false;
-    // this.hasArea=false;
-    // this.hasTown=false;
-    // this.hasStree=false;
     if (this.activeCity != -1 && this.servicesInfo.areaId == null){
       this.hasTown = true;
       this.hasPro2 = false;
@@ -329,7 +346,7 @@ map.addEventListener('dragend', function(){
     }
 
 
-    $("#addressFixed").show();
+
     $(".toogle-address").animate({"bottom":"0px"},500);
 
     // console.log(this.newAddress,"chulai");
@@ -341,7 +358,7 @@ map.addEventListener('dragend', function(){
       .map(res => res.json())
       .subscribe(function (data) {
           if(data.errorinfo==null){
-            console.log(self,":this")
+            // console.log(self,":this")
             self.provinceList =  data.data.provinceList
             self.loading = false;
           }else{
@@ -381,7 +398,6 @@ map.addEventListener('dragend', function(){
   //重新加载页面
 
   reLoad(){
-    console.log("??")
 
     $("#addressFixed").hide();
     $("#addressFixed").css({"display":"none"})
@@ -394,6 +410,7 @@ map.addEventListener('dragend', function(){
   }
   //点击省份获取市区
   selectPro(proId, provinceId){
+    clearTimeout(this.timer1)
     this.hasPro2=false;
     this.hasCity2=true;
     this.hasArea2=false;
@@ -404,7 +421,7 @@ map.addEventListener('dragend', function(){
     this.hasCity=true;
     $(".city").addClass("address-now");
     $(".city").siblings().removeClass("address-now");
-    console.log($(".city").text())
+    // console.log($(".city").text())
       /**
        * 如果用户重新选择重置掉地址。
        */
@@ -416,19 +433,10 @@ map.addEventListener('dragend', function(){
     $(".area").text("请选择");
     $(".town").text("请选择");
     $(".stree").text("请选择");
-
-
-    // $($event.target).css({"color":"red"});
-    // $($event.target).siblings().css({"color":"black"})
-    // i = proId.
-
     this.active = provinceId;
     $(".provice").text(proId.provinceName);
-    $("#address-info").animate({"margin-left":"-100%"},300);
-
-
-
-    console.log($(".city").text())
+    $("#address-info").animate({"margin-left":"-100%"});
+    // console.log($(".city").text())
       this.loading = true;
       let params = {
         "data":{
@@ -445,9 +453,10 @@ map.addEventListener('dragend', function(){
       .map(res => res.json())
       .subscribe(function (data) {
           if(data.errorinfo==null){
+
             self.cityList =  data.data.cityList
             self.loading = false;
-            console.log(self.cityList,":this")
+            // console.log(self.cityList,":this")
           }else{
             self.loading = false;
             self.toast(data.errorinfo.errormessage);
@@ -459,6 +468,7 @@ map.addEventListener('dragend', function(){
    }
 //点击城市获取县区
   selectCity(city,cityId){
+    clearTimeout(this.timer2)
     this.hasPro2=false;
     this.hasCity2=false;
     this.hasArea2=true;
@@ -483,7 +493,7 @@ map.addEventListener('dragend', function(){
         this.hasArea=true;
 
         $(".city").text(city.cityName);
-        $("#address-info").animate({"margin-left":"-200%"},300);
+        $("#address-info").animate({"margin-left":"-200%"});
 
         $(".area").addClass("address-now");
         $(".area").siblings().removeClass("address-now");
@@ -507,7 +517,7 @@ map.addEventListener('dragend', function(){
 
               self.areaList =  data.data.areaList
               self.loading = false;
-              console.log(self.areaList,":this")
+              // console.log(self.areaList,":this")
             }else{
               self.loading = false;
               self.toast(data.errorinfo.errormessage);
@@ -521,6 +531,7 @@ map.addEventListener('dragend', function(){
 //点击县区获取乡镇
 
   selectArea(area, areaId){
+    clearTimeout(this.timer3)
     this.hasPro2=false;
     this.hasCity2=false;
     this.hasArea2=false;
@@ -541,7 +552,7 @@ map.addEventListener('dragend', function(){
       this.hasTown=true;
 
      this.loading = true;
-      $("#address-info").animate({"margin-left":"-300%"},300);
+      $("#address-info").animate({"margin-left":"-300%"});
       $(".area").text(area.areaName);
 
       $(".town").addClass("address-now");
@@ -591,7 +602,7 @@ map.addEventListener('dragend', function(){
 
 
      this.loading = true;
-      $("#address-info").animate({"margin-left":"-400%"},300);
+      $("#address-info").animate({"margin-left":"-400%"});
       $(".town").text(town.stName);
 
       $(".stree").addClass("address-now");
@@ -627,26 +638,26 @@ map.addEventListener('dragend', function(){
    }
 
   selectStree(stree, countryId){
-    this.hasPro2=true;
+    // this.hasPro2=true;
     this.activeStree = countryId;
     // $($event.target).css({"color":"red"});
     // $($event.target).siblings().css({"color":"black"})
 
      let self = this;
 
-      console.log(stree.countryId,"最终需要的ID");
+      // console.log(stree.countryId,"最终需要的ID");
       self.servicesInfo.areaId = stree.countryId;
 
       $(".stree").text(stree.countryName);
       $("#addressFixed").hide();
-      $(".toogle-address").css({"bottom":"-6rem"});
+      // $(".toogle-address").css({"bottom":"-6rem"});
       $("#addressFixed").css({ "display": "none" })
 
       self.realAddress = $(".provice").text()+$(".city").text()+$(".area").text()+$(".twon").text()+$(".stree").text();
       self.servicesInfo.pcar = self.realAddress
-      console.log(self.realAddress);
+      // console.log(self.realAddress);
       $("#chose").text(self.realAddress);
-      // self.newAddress = false;
+      self.newAddress = true;
    }
 
    //注册最后一步------

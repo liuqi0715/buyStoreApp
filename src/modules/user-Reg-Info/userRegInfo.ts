@@ -10,6 +10,9 @@ import { AlertController } from 'ionic-angular';    //注册协议
 
 import {UserAgreement} from "../user-agreement/user-agreement"
 import{servicesInfo} from"../../providers/service-info"
+
+declare var $: any;//引入jq
+
 @Component({
     selector: 'page-UserRegInfo',
     templateUrl: 'UserRegInfo.html',
@@ -42,7 +45,41 @@ export class UserRegInfo {
 
     hasSuccess=false;    //显示模态框
     offline:boolean=false;
+    /**
+     * 重新对获取验证码进行定义
+     */
+    verifyCode: any = {
+      verifyCodeTips: "获取验证码",
+      countdown: 60,//总共时间
+      disable: true
+    }
+   timer;
 
+    getCode(){
+
+    }
+    // settime() {
+    //   if (this.verifyCode.countdown == 1) {
+    //     this.verifyCode.countdown = 60;
+    //     this.verifyCode.verifyCodeTips = "获取验证码";
+    //     $("#Rcode").text("获取验证码")
+
+    //     this.verifyCode.disable = true;
+    //     return;
+    //   } else {
+    //     this.verifyCode.countdown--;
+    //   }
+
+    //   this.verifyCode.verifyCodeTips =  this.verifyCode.countdown +　"s";
+    //     $("#Rcode").text(this.verifyCode.countdown +　"s");
+    //   setTimeout(() => {
+    //     this.verifyCode.verifyCodeTips =  this.verifyCode.countdown + "s" ;
+    //     $("#Rcode").text(this.verifyCode.countdown + 　"s");
+    //     console.log("=====", $("#Rcode").text)
+
+    //     this.settime();
+    //   }, 1000);
+    // }
     checkNetwork(){
         let self = this;
 
@@ -59,20 +96,14 @@ export class UserRegInfo {
         let toast = this.toastCtrl.create({
           message: actions,
           duration: 2000,
-          position:'middle'
+          position:'bottom'
 
         });
         toast.present();
       }
 //注册协议
     showAlert() {
-        // console.log(this.agreeI,"??")
-        // let alert = this.alertCtrl.create({
-        //   title: '找铅网会员注册协议',
-        //   subTitle: this.agreementInfo.agreement,
-        //   buttons: ['知道了']
-        // });
-        // alert.present();
+
         this.navCtrl.push(UserAgreement)
       }
 
@@ -86,9 +117,17 @@ export class UserRegInfo {
 
           var img = new Image()
           img.src = "assets/img/login/logo2.png";
-          console.info('fileSize', img.sizes)
+          // console.info('fileSize', img.sizes)
+          $("#Rcode").text("获取验证码");
+          console.log(this.verifyCode.disable = true, '??')
     }
+    ionViewDidLeave(){
+      this.verifyCode.disable = true;
+      clearInterval(this.timer);
+      $("#Rcode").text("获取验证码");
+      console.log(this.verifyCode.disable ,"les")
 
+    }
     next(){
 
         var pwdTest = /^(?![\d]+$)(?![a-zA-Z]+$)(?![-!@#$%^&*()_+.{}`=|\/\[\]\\\'?;\':,<>]+$)[\da-zA-Z-!@#$%^&*()_+.{}`=|\/\[\]\\\'?;\':,<>]{6,32}$/;
@@ -144,15 +183,14 @@ export class UserRegInfo {
             .map(res => res.json())
             .subscribe(function (data) {
                 if(data.errorinfo==null){
-                    console.log(data);
+                    // console.log(data);
                     self.servicesInfo.userId = data.data.userId;
                     // self.errorTip = false;
 
-                    console.log(">>")
                     self.navCtrl.push(UserRegister)
                     self.hasSuccess = false;
-                    self.servicesInfo.mobilePhone = this.userInfo.phone;
-                    self.servicesInfo.pwd = this.userInfo.newPassWord;
+                    self.servicesInfo.mobilePhone = self.userInfo.phone;
+                    self.servicesInfo.pwd = self.userInfo.newPassWord;
 
                 }else{
                     self.hasSuccess = false;
@@ -163,58 +201,71 @@ export class UserRegInfo {
             })
 
         }
-        // this.servicesInfo.userPhone  = "13056895623"
-        this.navCtrl.push(UserRegister)        //仅做测试用，正式环境需要注释
+
+        // this.navCtrl.push(UserRegister)        //仅做测试用，正式环境需要注释
 
     }
     findPasswordCode(){
+      if (this.verifyCode.disable==true){
+        this.verifyCode.disable = false;
+        if (!this.userInfo.phone) {
+          this.toast("请输入手机号");
+        } else if (!(/^1[34578]\d{9}$/.test(this.userInfo.phone))) {
+          this.toast("请输入正确的手机号")
+        } else {
+          let params = {
+            "data": {
+              "mobile": this.userInfo.phone,
+            }
+          };
+          if (this.offline == true) {
+            this.toast('无网络连接，请检查');
+            return;
+          }
 
-        if(!this.userInfo.phone) {
-            // this.errorTip = true;
-            // this.errorTipMsg = "请输入手机号";
-            this.toast("请输入手机号");
-        }else if (!(/^1[34578]\d{9}$/.test(this.userInfo.phone))) {
-            // this.errorTip = true;
-            // this.errorTipMsg = "请输入正确的手机号";
-            this.toast("请输入正确的手机号")
-        }else{
-            let params = { "data":{
-                "mobile": this.userInfo.phone,
-            }};
-            if(this.offline == true){
-                this.toast('无网络连接，请检查');
-                return;
-           }
-            let self = this;
-            // this.toast("请保证您的信箱能够接收短信。");
-            this.http.post(interfaceUrls.getCode,params)
+          let self = this;
+
+          // this.toast("请保证您的信箱能够接收短信。");
+          this.http.post(interfaceUrls.getCode, params)
             .map(res => res.json())
             .subscribe(function (data) {
-                if(data.errorinfo==null){
-                    self.errorTip = false;
-                    self.hasClick = true;
-                    let timer = setInterval(() => {
-                        if (self.num == 0) {
-                            clearInterval(timer);
-                            self.hasClick = false;
-                            self.hq = "重新获取";
-                            self.num = 60;
-                            return;
-                        }
-                        self.num--;
-                    }, 1000);
-                }else{
-                    self.toast(data.errorinfo.errormessage)
-
-                }
+              if (data.errorinfo == null) {
 
 
-            },(err)=>{
+                self.timer = setInterval(() => {
+                  if (self.num == 0) {
+                    clearInterval(self.timer);
+                    self.num = 60;
+                    $("#Rcode").text("重新获取")
+                    self.verifyCode.disable = true;
+                    $(".yzm-btn").css({ "opacity": "1" })
+                    return;
+                  } else {
+                    // self.num--;
+                    $("#Rcode").text(self.num-- + "s")
+                    console.log(self.num)
+
+                  }
+
+                }, 1000);
+                $("#Rcode").text(self.num-- + "s")
+                $(".yzm-btn").css({"opacity":"0.5"})
+              } else {
+                self.toast(data.errorinfo.errormessage)
+
+              }
+
+
+            }, (err) => {
               self.toast("服务器异常，请稍后再试")
             }
-          )
+            )
 
         }
+      }else{
+        console.info('tag', this.verifyCode.disable )
+      }
+
 
     }
 
