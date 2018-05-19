@@ -61,7 +61,7 @@ export class UserLogin {
         let toast = this.toastCtrl.create({
           message: actions,
           duration: 1000,
-          position:'bottom'
+          position:'middle'
 
         });
         toast.present();
@@ -146,11 +146,12 @@ export class UserLogin {
                         localStorage.setItem("pwd", self.userInfo.pwd);
                         self.servicesInfo.userId = data.data.userId;
                         localStorage.setItem("VERSION",data.version);
+                        localStorage.setItem("userId", data.data.userId);
                         self.toast("登录成功");
                         // self.navCtrl.setRoot(TabPage);
                         self.app.getRootNav().setRoot(TabPage);
 
-                        self.nativeStorage.setItem('token', { "token": data.data.token })
+                        self.nativeStorage.setItem('token', { "token": data.data.token, "userId": data.data.userId })
                           .then(
                           (data) => { console.log('Stored item!', data)},
                           error => console.error('Error storing item', error)

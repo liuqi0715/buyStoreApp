@@ -114,7 +114,7 @@ export class UserRegister {
         let toast = this.toastCtrl.create({
           message: actions,
           duration: 2000,
-          position:'bottom'
+          position:'middle'
 
         });
         toast.present();
@@ -166,13 +166,12 @@ export class UserRegister {
     takePicture(){
 
         const options: CameraOptions = {
-            quality: 70,
+            quality: 85,
             destinationType: this.camera.DestinationType.FILE_URI,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
-            targetWidth: 500,
-            targetHeight: 500,
-            saveToPhotoAlbum:true
+            targetWidth: 600,
+            targetHeight: 600
           }
           this.camera.getPicture(options).then((imageData) => {
             this.hasnotImg=true;
