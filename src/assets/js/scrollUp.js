@@ -54,8 +54,14 @@ var ua = navigator.userAgent.toLowerCase();
   SrollUp.prototype = {
       init: function (data) {
           var _this = this;
-          if(data.fontSize){
-            _this.fontSize = data.fontSize;
+          // if(data.fontSize){
+          //   _this.fontSize = data.fontSize;
+          // }
+
+          if(data.fontSize && parseInt(data.fontSize)<18){
+            _this.fontSize = dpr>2?16:data.fontSize;
+          }else{
+            _this.fontSize = dpr>2?16:_this.fontSize;
           }
 
           _this.bgColor = data.bgColor;
@@ -144,7 +150,7 @@ var ua = navigator.userAgent.toLowerCase();
               var offsetX = $(li).data('x');
               var offsetY = $(li).data('y');
               var liHeight = $(li).data('height');
-              if(Math.abs(offsetY + liHeight/2 - self.height/2) < 10){
+              if(Math.abs(offsetY + liHeight/2 - self.height/2) < 13){
                 $(li).css({'font-size':self.fontSize+2,'color':'#f5fa31'});
               }
               if(offsetY < 0){

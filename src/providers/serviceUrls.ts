@@ -1,8 +1,10 @@
 
 
-const urls = "http://120.79.117.124/storeApp";
+// const urls = "http://120.79.117.124/storeApp";
 
-// const urls = "http://192.168.0.156/storeApp";    //李子
+const urls = "http://192.168.0.156/storeApp";    //李子
+// const urlsR = "http://192.168.0.37:6100";     //汪湘
+const urlsR = "http://192.168.0.156:6100";     //汪湘
 
 
 export const interfaceUrls = {
@@ -15,7 +17,6 @@ export const interfaceUrls = {
     updStoreRegistered:urls+"/storeController/updStoreRegistered",    //第二步的注册接口
 
     uploadImage:urls+"/fileUploadController/uploadImage",                //上传图片
-
     getStoreType: urls+"/storeController/getStoreType",    //获取店铺类型
     getProvinceList: urls+"/storeController/getProvinceList",    //获取省份接口
     getCityList: urls+"/storeController/getCityList",    //获取市级接口
@@ -54,7 +55,17 @@ export const interfaceUrls = {
 
     /*-------------------------------------修改微信账号-----------------------------*/
     updateWXPhone:urls+"/storeInfo/updateWXPhone",
-    addSigninInfo:urls+"/login/addSigninInfo"
+    addSigninInfo:urls+"/login/addSigninInfo",
+    /*--------------------------------------新闻阅读评论部分------------------------------*/
+    getNewsList: urlsR +"/tabContent/contentMain",      //新闻阅读列表
+    getNewsDetail: urlsR +"/tabContent/queryById",        //获取新闻详情
+    addCommentConnet: urlsR +"/tabComments/insert",       //新增评论或者回复接口
+    likeThisComment: urlsR +"/tabPointGoods/insert",      //点赞评论
+    getTabCommentsPage: urlsR +"/tabComments/getTabCommentsPage", //根据内容获取评论
+    getReplyTabCommentsPage: urlsR +"/tabComments/getReplyTabCommentsPage", //获取评论里的回复数据
+    queryTabColumnList: urlsR +"/tabColumn/queryTabColumn",              //查询顶部栏目
+
+
 }
 
 

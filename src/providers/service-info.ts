@@ -45,6 +45,27 @@ export class servicesInfo {
       }else{
         this.token = localStorage.getItem("token")
       }
+      /**
+     * 获取用户Id
+     */
+      if (!localStorage.getItem("userId")) {
+        let self = this;
+        this.nativeStorage.getItem('token')
+          .then(
+          data => {
+            if (data.userId) {
+              self.userId = data.userId;
+              console.log(self.userId, "服务中的userId");
+            } else {
+
+            }
+          },
+          error => {
+          }
+          );
+      } else {
+        this.userId = localStorage.getItem("userId")
+      }
     }
 
 }

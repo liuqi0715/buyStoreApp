@@ -19,8 +19,8 @@
 
       <div class="bOrder_nums_title" *ngIf="models.length>0"><span>请选择型号及报价</span><span style="float:right;margin-right:.3rem;">{{models[0].rateUnit}}</span></div>
       <section class="bOrder_slcbox" *ngFor="let m of models, let idx = index;" [style.display]="m.isShow ? 'block': 'none' ">
-           <div class="bOrder_slcbox_l" (click)="checkItem(idx)">
-             <div class="bOrder_slcbox_check"><div class="bOrder_slcbox_checkDot" *ngIf="m.check"></div></div>
+           <div class="bOrder_slcbox_l">
+             <div class="bOrder_slcbox_check" (click)="checkItem(idx)"><div class="bOrder_slcbox_checkDot" *ngIf="m.check"></div></div>
              <span>{{m.rateModelName}}</span>
            </div>
            <div class="bOrder_slcbox_r">
@@ -31,7 +31,7 @@
                <div class="bOrder_slb_in" *ngIf="datas[0].public">
                    <input type="text" class="bdInput" (keyup)="limitIn(idx)" [(ngModel)] = "m.ratePrice"/>
                </div>
-               <span style="position:absolute;right:0;top:.4rem;width:100%;text-align:right;" *ngIf="!datas[0].public">{{m.ratePrice}} {{m.rateUnit}}</span>
+               <span style="position:absolute;width:100%;text-align:right;right:0;top:.4rem;" *ngIf="!datas[0].public">{{m.ratePrice}} {{m.rateUnit}}</span>
                <div class="bOrder_slb_btn bbtn2" (click)="plus(idx)" *ngIf="datas[0].public">
                    <ion-icon ios="ios-add" md="md-add"></ion-icon>
                </div>
