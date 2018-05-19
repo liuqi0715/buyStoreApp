@@ -125,7 +125,7 @@ order-born-page {
    float: left;
    line-height: 1.2rem;
    color: #AAA9A9;
-   font-size: .3rem;
+   font-size: .26rem;
    text-indent: .14rem;
    border-bottom: 0.02rem solid #F5F5F4;
   }
@@ -142,9 +142,9 @@ order-born-page {
   .bOrder_slcbox_check{
     position: relative;
     display: inline-block;
-    width: .36rem;
-    height: .36rem;
-    top: .07rem;
+    width: .34rem;
+    height: .34rem;
+    top: .1rem;
     border-radius: 50%;
     margin-right: .2rem;
     border: .04rem solid #1FA695;
@@ -171,9 +171,6 @@ order-born-page {
     height: .55rem;
     margin:.3rem 0 0 0;
     float: right;
-  }
-  .bOrder_slb_num span{
-    font-size: .3rem;
   }
   .bOrder_slb_btn{
     width: .6rem;

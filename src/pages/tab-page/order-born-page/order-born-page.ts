@@ -11,6 +11,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { File } from '@ionic-native/file';
 import { servicesInfo } from"../../../providers/service-info";//公共信息
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { radarPage } from "../../radar/radar-page";
 declare  var $; 
 declare var BMap;
 declare let baidumap_location: any;
@@ -485,10 +486,25 @@ export class orderBornPage {
     var uploadUrl = FILEUPLOAD_URL + '?key='+this.orderNo+'&type='+1;
     fileTransfer.upload(fileUrl, uploadUrl, options)
      .then((data) => {
-       self.toast("报单成功");
-       self.navCtrl.popToRoot();
+        if(self.datas[0].public){
+          self.navCtrl.push(radarPage).then(() => {
+            const startIndex = self.navCtrl.getActive().index - 1;
+            self.navCtrl.remove(startIndex, 1);
+          });
+        }else{
+          self.toast("报单成功");
+          self.navCtrl.popToRoot();
+        }
      }, (err) => {
-       self.navCtrl.popToRoot();
+        if(self.datas[0].public){
+          self.navCtrl.push(radarPage).then(() => {
+            const startIndex = self.navCtrl.getActive().index - 1;
+            self.navCtrl.remove(startIndex, 1);
+          });
+        }else{
+          self.toast("报单成功");
+          self.navCtrl.popToRoot();
+        }
       switch(err.code)
       {
       case 1:
@@ -527,8 +543,15 @@ export class orderBornPage {
       this.camera.getPicture(options).then((imageData) => {
        self.upload(imageData);
       }, (err) => {
-       self.toast("报单成功");
-       self.navCtrl.popToRoot();
+        if(self.datas[0].public){
+          self.navCtrl.push(radarPage).then(() => {
+            const startIndex = self.navCtrl.getActive().index - 1;
+            self.navCtrl.remove(startIndex, 1);
+          });
+        }else{
+          self.toast("报单成功");
+          self.navCtrl.popToRoot();
+        }
       });
    }
 
@@ -672,6 +695,11 @@ export class orderBornPage {
                     if(resp.errorinfo == null){
                         self.orderNo = resp.data.orderNo;
                         self.checkPermission();
+
+        //                         self.navCtrl.push(radarPage).then(() => {
+        //   const startIndex = self.navCtrl.getActive().index - 1;
+        //   self.navCtrl.remove(startIndex, 1);
+        // });
                     }else{
                       self.toast(resp.errorinfo.errormessage);
                       // self.openCam();      //李子让暂时注释
