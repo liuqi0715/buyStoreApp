@@ -1,14 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Platform, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { Platform, NavController, NavParams} from 'ionic-angular';
 // import * as Swiper from 'swiper';
-// import { Camera, CameraOptions } from '@ionic-native/camera';
 import { orderBornPage } from "../order-born-page/order-born-page";
 import { orderDetailPage } from "../order-detail-page/order-detail-page";
 import { orderAgreePage } from "../order-agree-page/order-agree-page";
 import { orderCommentPage } from "../order-comment-page/order-comment-page";
 import { chartConfig } from "../../../providers/chartConfig";
 import { urlService } from "../../../providers/urlService";
-import { SELLINFO_URL, SELLORDER_URL, APPUPDATE_URL, APPCONFIG_URL, PAGEJUMP_URL } from "../../../providers/Constants";
+import { SELLINFO_URL, SELLORDER_URL, PAGEJUMP_URL } from "../../../providers/Constants";
 import { ToastController } from 'ionic-angular';
 import { servicesInfo } from"../../../providers/service-info";//公共信息
 import { Device } from '@ionic-native/device';
@@ -16,11 +15,6 @@ import { Network } from '@ionic-native/network';
 import { msgDetails } from "../../wallet/wallet-msgDetails-page/wallet-msgDetails-page";
 import { UserLogin } from "../../../modules/user-login/user-login";
 import { App } from 'ionic-angular';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
-import { FileOpener } from '@ionic-native/file-opener';
-import { AppVersion } from '@ionic-native/app-version';
-import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { orderConfirmPage} from '../order-confirm-page/order-confirm-page';
 import ECharts from 'echarts';
 declare var $;
@@ -59,33 +53,25 @@ export class TabSell {
   // firstTime2:any = true;
   devicePlatform:any = {};
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public platform: Platform,
-              public el: ElementRef,
-              public chartConfig: chartConfig,
-              public urlService: urlService,
-              public servicesInfo: servicesInfo,
-              public toastCtrl: ToastController,
-              public device: Device,
-              private network: Network,
-              private alertCtrl: AlertController,
-              public loadingCtrl: LoadingController,
-              private app: App,
-              private appVersion:AppVersion,
-              private transfer:FileTransfer,
-              private file: File,
-              private fileOpener:FileOpener,
-              private fileTransfer:FileTransferObject,
-              private androidPermissions: AndroidPermissions
-      ) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public platform: Platform,
+    public el: ElementRef,
+    public chartConfig: chartConfig,
+    public urlService: urlService,
+    public servicesInfo: servicesInfo,
+    public toastCtrl: ToastController,
+    public device: Device,
+    public network: Network,
+    public app: App
+    ) {
   }
 
   ionViewDidLoad() {
     this.orderActive = true;    /****/
     this.checkNetwork();
     // this.initJPush();
-    this.checkUpdate();
   }
 
   ionViewWillLeave() {
@@ -134,200 +120,6 @@ export class TabSell {
     });
   }
 
-  toast1(actions){
-    let toast = this.toastCtrl.create({
-      message: actions,
-      duration: 2000,
-      position:'middle'
-    });
-    toast.present();
-  }
-
-  //检查版本更新
-  checkUpdate() {
-    let self = this;
-    let data = {
-       "data":{
-
-       },
-       "token":this.servicesInfo.token
-    };
-　　//查询当前服务器的APP版本号与当前版本号进行对比
-    this.urlService.postDatas(APPCONFIG_URL,data).then((resp:any) => {
-      if(resp){
-        if(resp.errorinfo == null){
-          self.appVersion.getVersionNumber().then((version) => {
-            // alert(JSON.stringify(resp));
-            if (resp.version != version && resp.version) {
-              // this.appUrl=data[0].APPURL;  //可以从服务端获取更新APP的路径
-              let updateAlert = self.alertCtrl.create({
-                title: '提示',
-                message: '发现新版本,是否立即更新?',
-                buttons: [{
-                  text: '取消',
-                  handler: () => {
-                    self.platform.exitApp();
-                  }
-                }, {
-                  text: '确定',
-                  handler: () => {
-                    self.checkPermission();
-                  }
-                }
-                ]
-              });
-              updateAlert.present();
-            }
-          });
-        }
-      }
-    });
-
-  }
-
-  checkPermission(){
-     var self = this;
-     self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
-        result => {
-          // alert('可读权限'+result.hasPermission);
-          if(result.hasPermission == false){
-            self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
-            result => {
-              self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-                result => {
-                  // alert('可写权限'+result.hasPermission);
-                  if(result.hasPermission == false){
-                     self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-                        result => {
-                            if(result.hasPermission == false){
-                              self.toast1("相应权限未打开,升级失败");
-                              setTimeout(function(){
-                                self.platform.exitApp();
-                              },2000);
-                            }else{
-                               self.upgradeApp();
-                            }
-                        },
-                        err => {
-
-                            self.toast1("相应权限未打开,升级失败");
-                            setTimeout(function(){
-                              self.platform.exitApp();
-                            },2000);
-                        }
-                     )
-                  }else{
-                    self.upgradeApp();
-                  }
-
-                }
-              );
-            })
-          }else{
-              self.androidPermissions.checkPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-                result => {
-                  // alert('可写权限'+result.hasPermission);
-                  if(result.hasPermission == false){
-                     self.androidPermissions.requestPermission(self.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-                        result => {
-                            if(result.hasPermission == false){
-                              self.toast1("相应权限未打开,升级失败");
-                              setTimeout(function(){
-                                self.platform.exitApp();
-                              },2000);
-                            }else{
-                               self.upgradeApp();
-                            }
-                        },
-                        err => {
-
-                            self.toast1("相应权限未打开,升级失败");
-                            setTimeout(function(){
-                              self.platform.exitApp();
-                            },2000);
-
-                        }
-                     )
-                  }else{
-                    self.upgradeApp();
-                  }
-
-                }
-              );
-          }
-        },
-        err => {
-          self.toast1("存储权限未打开,升级失败");
-          setTimeout(function(){
-            self.platform.exitApp();
-          },2000);
-
-        }
-      );
-  }
-
-  upgradeApp() {
-
-    let self = this;
-
-    let uploading = this.loadingCtrl.create({
-      content: "安装包正在下载...",
-      dismissOnPageChange: false
-    });
-
-    // var options = {};
-    uploading.present();
-    const fileTransfer: FileTransferObject = this.transfer.create();
-    const apk = this.file.externalRootDirectory + 'xdll_shop.apk'; //apk保存的目录
-
-    // this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE, this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE]).then(
-    //   result => {
-
-    //   },
-    //   err => {
-    //       alert(JSON.stringify(err));
-    //   }
-    // );
-       fileTransfer.download(APPUPDATE_URL, apk).then(
-          (result) => {
-            uploading.dismiss();
-            self.fileOpener.open(apk, 'application/vnd.android.package-archive').then(
-              (result) => {
-                // alert("ok");
-              }
-            ).catch((error) => {
-                // alert(JSON.stringify(error));
-                let toast = self.toastCtrl.create({
-                  message: error.exception,
-                  duration: 2000,
-                  position:'middle'
-                });
-                toast.present();
-            });
-          },(error) => {
-            let toast = self.toastCtrl.create({
-              message: error.exception,
-              duration: 2000,
-              position:'middle'
-            });
-            toast.present();
-            uploading.dismiss();
-          }
-        );
-
-        fileTransfer.onProgress((event) => {
-          //进度，这里使用文字显示下载百分比
-            var downloadProgress = (event.loaded / event.total) * 100;
-            uploading.setContent("已经下载：" + Math.floor(downloadProgress) + "%");
-
-            if (downloadProgress > 99) {
-              uploading.dismiss();
-            }
-
-        });
-
-  }
-
   toast(actions){
     let toast = this.toastCtrl.create({
       message: actions,
@@ -335,6 +127,25 @@ export class TabSell {
       position:'middle'
     });
     toast.present();
+  }
+
+  renderDatas(){
+     let self = this;
+     if(self.oSwiper1){
+        self.oSwiper1.destroy(false);
+        self.oSwiper1 = null;
+     }
+     if(self.swiper1){
+        self.swiper1.destroy(false);
+        self.swiper1 = null;
+     }
+     if(self.swiper2){
+        self.swiper2.destroy(false);
+        self.swiper2 = null;
+     }
+     self.initInfoBox(self.datas);
+     self.initNoticeSlide();
+     self.initCharts();
   }
 
   getInfoDatas(refresher){
@@ -348,24 +159,11 @@ export class TabSell {
     let self = this;
     this.urlService.postDatas(SELLINFO_URL,data).then(function(resp){
       if(resp){
-        if(resp.errorinfo == null){
-           if(self.oSwiper1){
-              self.oSwiper1.destroy(false);
-              self.oSwiper1 = null;
-           }
-           if(self.swiper1){
-              self.swiper1.destroy(false);
-              self.swiper1 = null;
-           }
-           if(self.swiper2){
-              self.swiper2.destroy(false);
-              self.swiper2 = null;
-           }
+        if(resp.errorinfo === null){
            sessionStorage.setItem("infoIdx",'0');
+           sessionStorage.setItem('homeCache',JSON.stringify(resp.data));
            self.datas = resp.data;
-           self.initInfoBox(self.datas);
-           self.initNoticeSlide();
-           self.initCharts();
+           self.renderDatas();
            if(refresher){
              refresher.complete();
            }
@@ -373,9 +171,20 @@ export class TabSell {
            if(refresher){
              refresher.cancel();
            }
-           $("#home-swiper-navL").hide();
-           $("#home-swiper-navR").hide();
-           $(".infoSlide .swiper-wrapper").empty().append('<div class="home-display-card" style="margin:0 auto;"><span class="home-display-none">暂无报价</span></div>');
+
+           if(sessionStorage.getItem('homeCache') != 'undefined'){
+             self.datas = JSON.parse(sessionStorage.getItem('homeCache'));
+             self.renderDatas();
+           }else{
+             if(self.swiper2){
+                self.swiper2.destroy(false);
+                self.swiper2 = null;
+             }
+             $("#home-swiper-navL").hide();
+             $("#home-swiper-navR").hide();
+             $(".infoSlide .swiper-wrapper").empty().append('<div class="home-display-card" style="margin:0 auto;"><span class="home-display-none">暂无报价</span></div>');
+           }
+
            /*token失效的问题*/
            if(resp.errorinfo.errorcode=="10003"){
             self.app.getRootNav().setRoot(UserLogin);
@@ -393,30 +202,47 @@ export class TabSell {
             self.swiper1.startAutoplay();
          }
          self.toast("服务器异常，请重试");
-         $("#home-swiper-navL").hide();
-         $("#home-swiper-navR").hide();
-         $(".infoSlide .swiper-wrapper").empty().append('<div class="home-display-card" style="margin:0 auto;"><span class="home-display-none">暂无报价</span></div>');
+         if(sessionStorage.getItem('homeCache') != 'undefined'){
+           self.datas = JSON.parse(sessionStorage.getItem('homeCache'));
+           self.renderDatas();
+         }else{
+           if(self.swiper2){
+              self.swiper2.destroy(false);
+              self.swiper2 = null;
+           }
+           $("#home-swiper-navL").hide();
+           $("#home-swiper-navR").hide();
+           $(".infoSlide .swiper-wrapper").empty().append('<div class="home-display-card" style="margin:0 auto;"><span class="home-display-none">暂无报价</span></div>');
+         }
     });
     this.urlService.postDatas(SELLORDER_URL,data).then(function(resp){
       if(resp){
-        if(resp.errorinfo == null){
-          self.orderActive = false;                /*****/
+        if(resp.errorinfo === null){
+          self.orderActive = false; 
+          sessionStorage.setItem('orderActive','false');               /*****/
           self.orderCard = resp.data.orderInfo;
           if(refresher){
             refresher.complete();
           }
         }else{
           self.orderActive = true;
+          sessionStorage.setItem('orderActive','true'); 
           if(refresher){
              refresher.cancel();
           }
            /*token失效的问题*/
-           if(resp.errorinfo.errorcode=="10003"){
+          if(resp.errorinfo.errorcode=="10003"){
             self.app.getRootNav().setRoot(UserLogin);
           }
         }
       }
     }).catch(function(error){
+         if(sessionStorage.getItem('orderActive') != 'undefined'){
+           self.orderActive = sessionStorage.getItem('orderActive') == 'false'?false:true;
+         }else{
+           self.orderActive = true;
+         }
+         
          if(refresher){
            refresher.cancel();
          }
@@ -572,7 +398,7 @@ export class TabSell {
         this.urlService.postDatas(SELLORDER_URL,data).then(function(resp){
             self.firstClick = true;
             if(resp){
-              if(resp.errorinfo == null){
+              if(resp.errorinfo === null){
 
                 self.orderCard = resp.data.orderInfo;
                 if(self.orderCard.pathway == "1"){

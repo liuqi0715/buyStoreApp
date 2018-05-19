@@ -100,6 +100,18 @@ page-tab-home-page {
   font-size: .28rem !important;
 }
 
+@media only screen and (max-width: 350px){
+  #home .home-notice #noticeSlider .swiper-slide, #home .home-notice #noticeSlider .swiper-wrapper span{
+    font-size: .24rem !important;
+  }
+}
+
+ @media only screen and (width: 424px) and (max-device-height:850px) {
+  #home .home-notice #noticeSlider .swiper-slide, #home .home-notice #noticeSlider .swiper-wrapper span{
+    font-size: .24rem !important;
+  }
+}
+
 #home .home-notice #noticeSlider .swiper-wrapper span{
   margin-right: .2rem;
 }
@@ -236,7 +248,7 @@ page-tab-home-page {
 
 .home-btn p{
   width: 60%;
-  margin: .24rem auto 0;
+  margin: .3rem auto 0;
   font-size: .32rem;
   text-align: center;
   word-break:break-all;
