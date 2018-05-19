@@ -42,7 +42,7 @@ export class msgDetails {
     this.urlService.postDatas(MSGDETAILS_URL,data).then(function(resp){
       if(resp){
         // console.log(resp);
-        if(resp.errorinfo == null){
+        if(resp.errorinfo === null){
           // alert(resp.data.details);
           $("#msgDetails").html(resp.data.details);
         }else{

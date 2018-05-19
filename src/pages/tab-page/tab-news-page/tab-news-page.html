@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar>
+<ion-title>
+  <span>找铅头条</span>
+  <!-- <input type="button" id="tab_news_refresh" (click)="refresh()"> -->
+</ion-title>
+  </ion-navbar>
+  <div class="topList">
+    <ul>
+      <li *ngFor="let item of column" (click)="getColList(item)" [ngClass]="active == item.id?'hasActive':'normal'">
+        <a href="#miao"> {{item.nameCol}}</a>
+      </li>
+    </ul>
+  </div>
+</ion-header>
+<ion-content id="home">
+
+
+    <!-- ??? -->
+    <a name="miao"></a>
+      <div class="content" style="">
+
+        <section class="has_action" [ngClass]="{'hasClick': item.hasClick}" *ngFor="let item of newsList" [innerHtml]="item.listHtml" id={{item.id}} (click)="goDeatailPage(item)">
+
+        </section>
+      </div>
+  <p *ngIf="hasALL" class="hasAll">已显示全部内容</p>
+
+    <div class="inner-center noNet" *ngIf="noContent == true && offline == true" (click)="reload()">
+      <img src="assets/img/noNet.png" alt="无网络">
+    </div>
+    <div class="inner-center noContent" *ngIf="noContent == true && offline == false">
+      <img src="assets/img/noContent.png" alt="暂无内容">
+    </div>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+         refreshingText="下拉刷新..."
+         pullMin="120"
+         loadingSpinner="bubbles"
+         >
+    </ion-refresher-content>
+  </ion-refresher>
+  <!--下拉加载-->
+      <!-- <textarea class="commet_info" [(ngModel)]="commentConent" (keyup)="test()"  placeholder="文明上网，友善发言"></textarea> -->
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
+

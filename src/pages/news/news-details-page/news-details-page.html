@@ -1,0 +1,167 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>文章详情</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+
+  <article class="article-container">
+    <!-- <video src="" style="width:1px;height:1px;" id="video-el"></video> -->
+    <h1 class="title">{{conent.title}}</h1>
+    <div class="article__header article__header-container">
+      <div class="pgc-bar-top clearfix" data-user-id="1564563397050370">
+          <div class="avatar">
+            <img  onerror="javascript:this.src='assets/img/default.png';" src={{conent.contAuthorImg}} class="avatar" alt="西洲二姐">
+          </div>
+        <div class="subtitle">
+          <p class="name">
+              <span id="mediaName">{{conent.contAuthor}}</span>
+              <!-- <img  src="//s3b.pstatp.com/growth/mobile_detail/image/toutiaohao_tag.1vygyFaw.svg"> -->
+          </p>
+            <span class="subtime">{{conent.contTime}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="banner-bg" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1); display: none;">
+    </div>
+    <div class="articleConent" [innerHtml]="conent.tContent" >
+
+    </div>
+    <p style="color:#ccc;text-align:right;">阅读{{conent.clickNum}}</p>
+  </article>
+  <div class="commet">
+    <p><span class="container__header">全部评论</span> </p>
+    <div class="comment_list">
+        <ul class="comment-content">
+              <li *ngFor="let item of commentsList" >
+                  <div class="avatar btn">
+                    <img src={{item.commentImage}}
+                      alt="头像" onerror="javascript:this.src='assets/img/default.png';">
+                  </div>
+                  <div class="name">
+                    <span class="btn text-ellipsis">{{item.userId}}</span>
+                  </div>
+                  <div class="content">
+                    <div class="btn">
+                      <div class="expand-container">
+                        <div class="expand__text" >
+                         {{item.commentsContent}}
+                         <!-- [innerHtml]="item.commentsContent" -->
+
+                        </div>
+                          <div class="reply" >
+                             <!-- *ngIf="(item.replyNums == 0)" -->
+                          <p style="font-size:.24rem;">
+                            <span>{{item.createTimeStr}}</span>-
+                            <span [ngClass]="{'reply_num':item.reply_num!=null}"  class="replyBg" (click)="getComList(item)">{{item.replyNums}}回复</span>
+                          </p>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="action_pane" (click)="Ilike(item)">
+                    <span class="btn digg" *ngIf="item.isPoint==0">{{item.giveNums}}</span>
+                    <span class="btn digg hasdone" *ngIf="item.isPoint==1">{{(item.giveNums)}}</span>
+                    <span class="ilike"  *ngIf="item.likeShow" [ngClass]="{'haslike': item.isPoint}">+1</span>
+                  </div>
+              </li>
+
+              <li class="noComment" *ngIf="noComment" (click)="KeyboardHe()">
+                暂无评论
+              </li>
+
+        </ul>
+    </div>
+  </div>
+  <div class="commet_content">
+      <div class="commet_input" *ngIf="hasCommet">
+
+        <!-- <section class="commet_info">
+           <img src="assets/img/news/write.png" alt="write">
+           <textarea [(ngModel)]="commentConent"   (keyup)="inputChange()" #mapAction placeholder="文明上网，友善发言"></textarea>
+        </section> -->
+
+      <div class="expandingArea commet_info">
+        <div id="text">{{commentConent}}</div>
+        <img src="assets/img/news/write.png" alt="write">
+        <textarea id="tae" placeholder="文明上网，友善发言" [(ngModel)]="commentConent" (keyup)="valueChange()"></textarea>
+      </div>
+
+        <span class="commit" [ngClass]="{'hasLength': canCommentArticle }" (click)="commitComment()">提交</span>
+      </div>
+
+
+  </div>
+
+
+  <!-- <div class="wantComme"  [ngClass]="{'anmiate': hasComment}">
+      <div class="comment_replylist">
+      <span (click)="disappear()" class="disappear">X</span>
+        {{listCommentReply.replyNums}}条回复
+      </div>
+      <div class="comment_top" style="position:relative" >
+          <div class="avatar btn">
+              <img src={{listCommentReply.ImgSrc}} alt="头像">
+          </div>
+          <div class="name">
+            <span class="btn text-ellipsis">{{listCommentReply.auditState}}</span>
+          </div>
+          <div class="content">
+            <div class="btn">
+              <div class="expand-container">
+                <div class="expand__text">
+                {{listCommentReply.commentsContent}}
+                </div>
+              </div>
+            </div>
+              <p>
+                <span>{{listCommentReply.createTimeStr}}</span>
+              </p>
+          </div>
+          <div class="action_like">
+            <span class="btn digg">{{listCommentReply.giveNums}}</span>
+          </div>
+      </div>
+      <div class="reply_list">
+          <p style="padding-bottom:.2rem">全部评论</p>
+          <ul  *ngIf="commentReplyList.length!=0">
+            <li style="position:relative" *ngFor="let item of commentReplyList">
+              <div class="avatar btn">
+                <img src={{listCommentReply.ImgSrc}} alt="头像">
+              </div>
+              <div class="name">
+                <span class="btn text-ellipsis">{{item.name}}</span>
+              </div>
+              <div class="content">
+                <div class="btn">
+                  <div class="expand-container">
+                    <div class="expand__text">
+                      {{item.commentsContent}}
+                    </div>
+                  </div>
+                </div>
+                  <p>
+                    <span>{{item.createTimeStr}}</span>
+                  </p>
+              </div>
+              <div class="action_like2" (click)="Ilike(item)">
+                <span class="btn digg" *ngIf="item.isPoint==0">{{item.giveNums}}</span>
+                <span class="btn digg hasdone" *ngIf="item.isPoint==1">{{item.giveNums}}</span>
+                <span class="ilike" *ngIf="item.likeShow" [ngClass]="{'haslike': item.isPoint}">+1</span>
+              </div>
+            </li>
+          </ul>
+            <p *ngIf="commentReplyList.length==0" class="noReply">暂无回复</p>
+          <div class="commet_input reply_list_btm" >
+            <div class="commet_info"  id="commet_info" contenteditable="true" data-text="文明上网，友善发言" (keyup)="test2()"></div>
+            <span class="commit" [ngClass]="{'hasLength': conentLenght2==0}" (click)="commitReply()">提交</span>
+          </div>
+      </div>
+  </div> -->
+      <!-- <video id="video-el2" src="https://baikebcs.bdimg.com/baike-other/big-buck-bunny.mp4" poster="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=cfeae5e78501a18bf0eb1549a6146035/9825bc315c6034a81ae1db4ac9134954082376fd.jpg"></video> -->
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

@@ -15,24 +15,31 @@ wallet-message-page {
 		border-radius: .08rem;
 	}
 	.msg_box_head,.msg_box_body,.msg_box_bottom{
+		position: relative;
 		min-height: .8rem;
-		padding: 0 .3rem;
+		padding: 0 .3rem .1rem;
 		line-height: .8rem;
 	}
+	.msg_box_head{
+		padding: .2rem .3rem .1rem;
+	}
 	.msg_box_head label{
+		display: inline-block;
 		color: #2C2C2C;
 		float: left;
 		font-size: .28rem;
-		line-height: .8rem;
+		line-height: .4rem;
+		width: calc(100% - .3rem);
 	}
 	.msg_box_head span{
+		position: absolute;
 		display: block;
 		width: .2rem;
 		height: .2rem;
-		float: right;
 		border-radius: 50%;
 		background: #ED6767;
-		margin-top: .3rem;
+		top: .3rem;
+		right: .28rem;
 	}
 	.msg_box_body{
 		text-align: justify;

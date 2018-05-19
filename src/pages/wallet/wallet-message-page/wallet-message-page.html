@@ -15,7 +15,7 @@
       </div>
 
       <div class="msg_box_body">
-          <img [src]="msg.msgImage" alt="" *ngIf="msg.msgType == 1"/>
+          <img [src]="msg.msgImage" alt="" *ngIf="msg.msgType == 1 || msg.msgType == 25"/>
           <p>{{msg.msgIntro}}</p>
       </div>
 

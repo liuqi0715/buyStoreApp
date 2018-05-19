@@ -105,7 +105,7 @@ export class messagePage {
     this.urlService.postDatas(MSG_URL,data).then(function(resp){
       if(resp){
         loading.dismiss();
-        if(resp.errorinfo == null){
+        if(resp.errorinfo === null){
            if(resp.data.msgList.length == 0){
              self.noContent = true;
            }else{
@@ -153,7 +153,7 @@ export class messagePage {
 
           this.urlService.postDatas(MSG_URL,data).then(function(resp){
             if(resp){
-              if(resp.errorinfo == null){
+              if(resp.errorinfo === null){
                  self.maxPage = resp.data.totalPage;
                  for(var i = 0;i<resp.data.msgList.length;i++){
                     self.msgList.push(resp.data.msgList[i]);
@@ -177,11 +177,33 @@ export class messagePage {
   }
 
   detail(msg){
-      console.log(msg);
       if(msg.msgType == 1){
         this.navCtrl.push(msgDetails,{
           "msgContentId":msg.jpusMsgId
         });
+      }else if(msg.msgType == 25){
+          let data = {
+             "data":{
+               "jpusMsgId":msg.jpusMsgId,
+               "platform":1,
+             },
+             "token":this.servicesInfo.token
+          };
+          // console.log(data);
+          let self = this;
+          this.urlService.postDatas(MSGDETAILS_URL,data).then(function(resp){
+            if(resp){
+              // console.log(resp);
+              if(resp.errorinfo === null){
+                // alert(resp.data.details);
+                window.open(resp.data.details);
+              }else{
+                if(resp.errorinfo.errorcode=="10003"){
+                  self.app.getRootNav().setRoot(UserLogin);
+                }
+              }
+            }
+          });
       }else{
         if(msg.orderStatusNo == 2){
           this.navCtrl.push(orderAgreePage,{

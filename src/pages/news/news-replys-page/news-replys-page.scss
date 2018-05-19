@@ -1,0 +1,496 @@
+news-replys-page {
+
+  .article-container{
+    padding: 0.21rem;
+  }
+
+  .title{
+    color: #000;
+    font-size: .4rem;
+    line-height: 1.45;
+    font-weight: 600;
+    margin: .12rem 0;
+
+  }
+ .avatar{
+    height: .6rem;
+    width: .6rem;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: .2rem;
+
+ }
+ .subtitle{
+   display: inline-block;
+
+ }
+ .subtitle .subtime {
+
+   padding-left: .84rem;
+ }
+
+ .name img{
+  background-color: #f85959;
+  width: 30px;
+  height: 15px;
+  border-radius: 2px;
+  margin-left: 4px;
+
+}
+.article-container .unfold-field .text-link p span{
+  background: url(../assets/img/news/unfold.png) 0 4px no-repeat;
+  background-size: contain;
+  display: inline-block;
+  width: .25rem;
+  height: .25rem;
+  margin-left: .12rem;
+
+
+}
+.unfold-field{
+  text-align: center;
+  height: .53rem;
+  line-height: .53rem;
+
+}
+.container__header{
+  font-size: 16px;
+  display: inline-block;
+  color: #505050;
+  padding-bottom: 10px;
+  font-weight: 400;
+  border-bottom: 1px solid #f85959;
+
+}
+.commet{
+  padding: .21rem;
+  position: relative;
+}
+.comment-content{
+  position: relative;
+  padding: .21rem 0;
+  margin-bottom: .38rem;
+}
+//0
+ .name {
+
+ padding-left: .84rem;
+
+}
+
+  .avatar{
+  height: .64rem;
+  width: .64rem;
+
+  border: none;
+  position: absolute;
+  // left: 0;
+  border-radius: 32px;
+  overflow: hidden;
+
+ }
+
+
+.avatar img{
+  width: .64rem;
+  height: .64rem;
+  display: block;
+  background: url(../assets/img/news/home_head_default.png) #fff no-repeat 50%;
+
+  background-size: 100%;
+  overflow: hidden;
+  border: none;
+
+}
+.text-ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #4B607F;
+  font-size: .28rem;
+  display: inline-block;
+  max-width: 1.6rem;
+
+
+}
+.action_pane{
+  position: absolute;
+  right: .1rem;
+  text-align: left;
+  top: -.15rem;
+  right: 0;
+}
+// .action_pane span{
+//     background: url(../assets/img/news/wap_ic_more03.png) no-repeat 100%;
+//     padding-right: .26rem;
+//     background-size: .2rem;
+// }
+.action_pane2{
+  top: 0 !important;
+}
+
+ .digg{
+    color: #999;
+    background: url(../assets/img/news/praise_dynamic.png) no-repeat 0 0;
+    background-size: .32rem;
+    background-position: 0 6px;
+    display: inline-block;
+    padding-left: 21px;
+    font-size: 11px;
+    line-height: 32px;
+    min-width: 24px;
+    -webkit-transition: background-position .4s ease;
+    padding-right: 3px;
+
+}
+.expand-container .expand__text{
+   padding-bottom: .12rem;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+  //  -webkit-line-clamp: 3;
+  //  overflow: hidden;
+    line-height: .45rem;
+    font-size: .3rem;
+    letter-spacing: .01rem;
+
+}
+.expand_time{
+  padding-bottom: .12rem;
+}
+
+.content{
+    padding-left: .84rem;
+    padding-top: .2rem;
+    padding-right: 3px;
+
+}
+.expand__label{
+  display: inline-block;
+  background-color: #e9e9e9;
+  line-height: 22px;
+  min-width: 53px;
+  color: #999;
+  text-align: center;
+  margin: 8px 0 0;
+  font-size: 14px;
+
+}
+  .expand__label span{
+  background: url(../assets/img/news/wap_ic_more03.png) no-repeat 100%;
+
+  padding-right: 13px;
+  background-size: 9px;
+
+  }
+.comment-content li{
+  margin-bottom: .25rem;
+  border-bottom: 1px solid #E8E8E8;
+  padding-bottom: .25rem;
+  position: relative;
+
+}
+.reply{
+  position: relative;
+  // border-top: 1px solid #E8E8E8;
+  padding-top: .2rem;
+
+}
+.reply_num{
+  background-color: #F4F5F7;
+
+  display: inline-block;
+  height: .43rem;
+  line-height: .43rem;
+  border-radius: .3rem;
+  padding: 0 .2rem;
+}
+
+.author_reply{
+      border-left: 2px solid red;
+      padding-left: .2rem;
+      margin-bottom: .1rem;
+      // position: relative;
+}
+.add_commet{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  height: 1rem;
+  border-top: 1px solid #cccccc;
+}
+.commet_content {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  // height: .8rem;
+  // min-height: .8rem;
+  // max-height: 1.8rem;
+  background: white;
+  z-index: 1;
+  height: auto;
+  padding-bottom: .12rem;
+
+
+}
+.commet_input{
+  width: 100%;
+  border-top: 1px solid #cccccc;
+  background: white;
+  padding: .1rem .2rem;
+  max-height: 2.8rem;
+  min-height: .8rem;
+  position: fixed;
+  bottom: 0;
+
+}
+
+
+// .commet_input .commet_info {
+//   position: relative;
+//   display: block;
+//   width: 84%;
+//   height: 40px;
+//   float: left;
+//   border-radius: 20px;
+//   border: 1px solid #ccc;
+//   padding-left: 31px;
+//   overflow: hidden;
+//   overflow-y: scroll;
+// }
+
+// .commet_input .commet_info img {
+//   position: absolute;
+//   top: 5px;
+//   left: 10px;
+//   width: 24px;
+//   height: 24px;
+// }
+
+// .commet_input .commet_info textarea {
+//   width: calc(100% - 19px);
+//   margin-left: 10px;
+//   min-height: 30px;
+//   max-height: 78px;
+//   padding-top: 10px;
+//   font-size: .35rem;
+//   resize: none;
+//   border: none;
+// }
+
+// [contentEditable=true]:empty:not(:focus):before {
+//   content: attr(data-text);
+//   color: #ccc;
+// }
+
+.wantCommet{
+      width: 8%;
+      height: .6rem;
+      display: block;
+      float: left;
+      margin-left: 1%;
+
+
+}
+.wantCommet img{
+  width: 100%;
+}
+.commit{
+    display: block;
+    width: 12%;
+    height: .6rem;
+    float: right;
+    line-height: .5rem;
+    text-align: center;
+    /* margin-top: .05rem; */
+
+    color: #ccc;
+    border-radius: 3px;
+    position: absolute;
+    right: 0.2rem;
+    // top: .1rem;
+    bottom: .1rem;
+    line-height: .6rem;
+    font-size: .35rem;
+}
+
+.wantComme{
+  width: 100%;
+  // height: 92%;
+  background: white;
+  // position: fixed;
+  // left: 0;
+  // bottom:-90%;
+  z-index: 2;
+  animation:btm 0.1s;
+  animation-fill-mode: forwards;
+  padding: 0 .2rem;
+
+
+
+}
+.anmiate{
+animation:toptop 0.2s;
+animation-fill-mode: forwards;
+
+
+}
+@keyframes btm{
+   from {
+     bottom: 0%
+   }
+
+   to {
+     bottom: -92%
+   }
+
+}
+
+@keyframes toptop{
+  from{bottom:-92%}
+  to{bottom:0}
+}
+
+.comment_replylist{
+  width: 100%;
+  height: .87rem;
+  line-height: .87rem;
+  text-align: center;
+  padding: 0 .2rem;
+  border-bottom : 1px solid #E8E8E8;
+  font-size: .35rem
+}
+.disappear{
+  float: left;
+  font-size: .4rem;
+}
+.comment_top{
+      margin-bottom: .25rem;
+      border-bottom: 1px solid #E8E8E8;
+      padding: .25rem 0;
+      position: relative;
+
+}
+.action_like{
+      text-align: left;
+      position: absolute;
+      right: 0;
+      top: .15rem;
+}
+.action_like2{
+    text-align: left;
+    position: absolute;
+    right: 0;
+    top: -.15rem;
+
+}
+.hasLength{
+   color: #1ca696 !important;
+
+}
+.reply_list_btm{
+
+}
+.ilike{
+    position: absolute;
+    right: .25rem;
+    top: .25rem;
+
+}
+.haslike{
+  color: red;
+  position: absolute;
+  right: .25rem;
+
+  animation:like 0.8s;
+  animation-fill-mode: forwards;
+
+}
+
+@keyframes like {
+  from {top:.25rem}
+  to{top:-.2rem}
+}
+.hasdone{
+      color: #de7c2c;
+      background: url(../assets/img/news/praise_dynamic2.png) no-repeat 0 0 ;
+      background-size: .32rem;
+      background-position: 0 6px;
+
+}
+.articleConent{
+      line-height: .65rem;
+      font-size: .35rem;
+      padding: .25rem 0;
+
+}
+.noComment{
+     height: .6rem;
+     line-height: .6rem;
+     text-align: center;
+     color: #ccc;
+    //  border-top: 1px solid #E8E8E8;
+     padding: 0 !important;
+     margin: 0 !important;
+
+
+}
+.noReply{
+  text-align: center;
+}
+
+ .expandingArea {
+   position: relative;
+   width: 80%;
+   /* border: 1px solid red; */
+   font-size: .3rem;
+   min-height: .6rem;
+ }
+
+ .expandingArea img {
+   width: .3rem;
+   position: absolute;
+   top: 8px;
+   left: 3%;
+ }
+
+ textarea {
+   width: 100%;
+   position: absolute;
+   top: 0;
+   left: 0;
+   border: 1px solid #ccc;
+   font-size: .3rem;
+   height: 100%;
+   background: transparent;
+   min-height: .6rem;
+   outline: none;
+   border-radius: 25px;
+   padding: 0 10px;
+   resize: none;
+  //  line-height: .6rem;
+  padding-top: .06rem;
+
+   padding-left: 9%;
+   word-break: break-all;
+   overflow: hidden;
+
+ }
+
+ #text {
+  width: 100%;
+  min-height: .6rem;
+  word-break: break-all;
+  word-wrap: normal;
+  overflow-x: hidden;
+  visibility: hidden;
+  // line-height: .6rem;
+  padding-top: .06rem;
+  max-height: 1.8rem;
+  font-size: .3rem;
+  padding: 0 10px;
+  padding-left: 9%;
+  border-radius: 25px;
+
+ }
+
+}

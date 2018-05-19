@@ -33,12 +33,8 @@
             </ul>
             <div id="getCode">
                 <!-- <span  class="yzm-btn" (click)="findPasswordCode()" *ngIf="!hasClick">{{hq}}</span>
-                <span  class="yzm-btn" disabled *ngIf="hasClick">{{num}}s</span>  {{verifyCode.verifyCodeTips}} -->
-                <button class="yzm-btn" (click)="findPasswordCode()" > <span id="Rcode">获取验证码</span> </button>
-
-            <!-- <button class="yzm-btn" (click)="findPasswordCode()" [disabled]="!verifyCode.disable">
-              <span id="Rcode">获取验证码</span>
-            </button> -->
+                <span  class="yzm-btn" disabled *ngIf="hasClick">{{num}}s</span> -->
+                <button class="yzm-btn" (click)="findPasswordCode()" [disabled]="!verifyCode.disable">{{verifyCode.verifyCodeTips}}</button>
         </div>
         </div>
 
