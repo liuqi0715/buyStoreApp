@@ -7,12 +7,12 @@ import { orderDetailPage } from "../order-detail-page/order-detail-page";
 import { orderMapPage } from "../order-map-page/order-map-page";
 import { orderAgreePage } from "../order-agree-page/order-agree-page";
 import { orderCommentPage } from "../order-comment-page/order-comment-page";
-import { adsPage } from "./../../ads/ads-page";
+import { radarPage } from "./../../radar/radar-page";
 
 @NgModule({
   declarations: [
     TabSell,
-    adsPage,
+    radarPage,
     orderBornPage,
     orderConfirmPage,
     orderDetailPage,
@@ -28,7 +28,7 @@ import { adsPage } from "./../../ads/ads-page";
   ],
   entryComponents:[
     TabSell,
-    adsPage,
+    radarPage,
     orderBornPage,
     orderConfirmPage,
     orderDetailPage,
