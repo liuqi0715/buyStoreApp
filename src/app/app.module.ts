@@ -15,6 +15,7 @@ import {TabSellModule} from "../pages/tab-page/tab-sell-page/tab-sell-page.modul
 // import {TabBroadcastPageModule} from "../pages/tab-page/tab-look-page/tab-look-page.module";
 // import {TabDiscoverPageModule} from "../pages/tab-page/tab-discover-page/tab-discover-page.module";
 import {TabMineModule} from "../pages/tab-page/tab-mine-page/tab-mine-page.module";
+import { TabNewsModule } from '../pages/tab-page/tab-news-page/tab-news-page.module';
 // import {TabMessagesPageModule} from "../pages/tab-page/tab-shopcart-page/tab-shopcart-page.module";
 import {TabPageModule} from "../pages/tab-page/tab-page.module";
 import {Camera} from '@ionic-native/camera';
@@ -31,7 +32,7 @@ import { AppVersion } from '@ionic-native/app-version';
 // import { Device } from '@ionic-native/device';
 
 import {servicesInfo} from "../providers/service-info";
-
+import { mockDataInfo } from '../providers/mock-data';
 
 import { UserLogin } from '../modules/user-login/user-login';
 import { UserRegister } from "../modules/user-register/user-register ";
@@ -48,6 +49,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { NativeStorage } from '@ionic-native/native-storage';
+import { Keyboard } from '@ionic-native/keyboard';
+import { AppUpdate } from '@ionic-native/app-update';
 //我的钱包页面
 
 @NgModule({
@@ -83,7 +86,8 @@ import { NativeStorage } from '@ionic-native/native-storage';
     TabSellModule,
     // TabBroadcastPageModule,
     // TabDiscoverPageModule,
-    TabMineModule
+    TabMineModule,
+    TabNewsModule
     // TabMessagesPageModule,
 
   ],
@@ -111,6 +115,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
     HttpModule,
     FileChooser,
     servicesInfo,
+    mockDataInfo,
     DatePipe,
     Device,
     Network,
@@ -121,8 +126,9 @@ import { NativeStorage } from '@ionic-native/native-storage';
     AndroidPermissions,
     ScreenOrientation,
     ImagePicker,
-    NativeStorage
-
+    NativeStorage,
+    Keyboard,
+    AppUpdate
   ]
 })
 export class AppModule {

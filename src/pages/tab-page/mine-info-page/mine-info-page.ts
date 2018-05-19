@@ -182,13 +182,12 @@ export class myInfoPage {
   takePicture(){
 
     const options: CameraOptions = {
-        quality: 70,
+        quality: 100,
         destinationType: this.camera.DestinationType.FILE_URI,
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
         targetWidth: 500,
-        targetHeight: 500,
-        saveToPhotoAlbum:true
+        targetHeight: 500
       }
       this.camera.getPicture(options).then((imageData) => {
         let base64Image = 'data:image/jpeg;base64,' + imageData;

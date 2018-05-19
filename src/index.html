@@ -12,11 +12,16 @@
   <!--插件css-->
   <link href="build/main.css" rel="stylesheet">
   <link href="assets/css/flex.css" rel="stylesheet">
-  <link href="assets/css/swiper.min.css" rel="stylesheet">
+  <link href="assets/css/swiper.min.css" rel="stylesheet" >
+  <link rel="stylesheet" href="https://unpkg.com/larkplayer-ui@latest/dist/larkplayer-ui.css" />
   <!--<script type="text/javascript" src="assets/js/adapt.js"></script>-->
   <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="assets/js/scrollUp.js"></script>
   <script type="text/javascript" src="http://api.map.baidu.com/getscript?v=2.0&ak=S2XBCnEYouwQYSpqxcpX2BP1"></script>
+  <script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.js"></script>
+  <script src="https://unpkg.com/larkplayer-ui@latest/dist/larkplayer-ui.js"></script>
+  <!-- <script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.min.js"></script> -->
+
   <script src="cordova.js"></script>
 </head>
 <body>
@@ -33,26 +38,45 @@
   <script src="build/main.js"></script>
   <script type="text/javascript" src="assets/js/swiper.min.js"></script>
   <script type="text/javascript" src="assets/js/swiper.animate1.0.3.min.js"></script>
-  <!--<script>
+  <script>
     var dpr = window.devicePixelRatio;
 
-    alert(window.innerWidth +"/"+window.innerHeight+"/"+window.devicePixelRatio);
-    switch(dpr)
-    {
-    case 1:
-      document.documentElement.style.fontSize="100px";
-      break;
-    case 2:
-      document.documentElement.style.fontSize="50px";
-      break;
-    default:
-      document.documentElement.style.fontSize="50px";
+    function IsPC() {
+       var userAgentInfo = navigator.userAgent;
+       var Agents = ["Android", "iPhone",
+          "SymbianOS", "Windows Phone",
+          "iPad", "iPod"];
+       var flag = true;
+       for (var v = 0; v < Agents.length; v++) {
+          if (userAgentInfo.indexOf(Agents[v]) > 0) {
+             flag = false;
+             break;
+          }
+       }
+       return flag;
     }
 
-    if(window.innerWidth<=360 && window.innerHeight <= 470 && dpr == 2){
-      document.documentElement.style.fontSize="45px";
+    if(IsPC() && dpr == 1){
+      document.documentElement.style.fontSize="150px";
     }
 
-  </script>-->
+    // alert(window.innerWidth +"/"+window.innerHeight+"/"+window.devicePixelRatio);
+    // switch(dpr)
+    // {
+    // case 1:
+    //   document.documentElement.style.fontSize="100px";
+    //   break;
+    // case 2:
+    //   document.documentElement.style.fontSize="50px";
+    //   break;
+    // default:
+    //   document.documentElement.style.fontSize="50px";
+    // }
+
+    // if(window.innerWidth<=360 && window.innerHeight <= 470 && dpr == 2){
+    //   document.documentElement.style.fontSize="45px";
+    // }
+
+  </script>
 </body>
 </html>
