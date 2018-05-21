@@ -34,35 +34,35 @@ export class urlService {
     return body || {};
   }
 
-  // private handleError(error: Response | any) {
-  //   let errMsg: string;
-  //   if (error instanceof Response) {
-  //     const body = error.json() || '';
-  //     const err = body.error || JSON.stringify(body);
-  //     errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-  //   } else {
-  //     errMsg = error.message ? error.message : error.toString();
-  //   }
-  //   return errMsg;
-  //   // return Observable.throw(errMsg);
-  // }
-
-  private handleError(err): Promise<any> {
-    if (err.status == 503 || err.status == 0) {
-      return Promise.reject({ "errorMassage": '应用服务器不可用！' });
-    }
-    if (err.status == 404) {
-      return Promise.reject({ "errorMassage": '您请求的资源不存在！' });
-    }
-    //防止服务器返回非约定格式的错误信息时，向用户弹出离奇错误提示
-    if (err.errorMassage && err.errorMassage !== "" && typeof err.errorMassage == 'string') {
-      return Promise.reject(err);
-    } else if (err.message == "Timeout has occurred") {
-      return Promise.reject({ "errorMassage": "请求超时，请重试！" });
+  private handleError(error: Response | any) {
+    let errMsg: string;
+    if (error instanceof Response) {
+      const body = error.json() || '';
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
     } else {
-      console.error('HxsmartHttp.post:服务器内部错误，原始响应如下：', err);
-      return Promise.reject({ "errorMassage": '服务器内部错误' });
+      errMsg = error.message ? error.message : error.toString();
     }
+    return errMsg;
+    // return Observable.throw(errMsg);
   }
+
+  // private handleError(err): Promise<any> {
+  //   if (err.status == 503 || err.status == 0) {
+  //     return Promise.reject({ "errorMassage": '应用服务器不可用！' });
+  //   }
+  //   if (err.status == 404) {
+  //     return Promise.reject({ "errorMassage": '您请求的资源不存在！' });
+  //   }
+  //   //防止服务器返回非约定格式的错误信息时，向用户弹出离奇错误提示
+  //   if (err.errorMassage && err.errorMassage !== "" && typeof err.errorMassage == 'string') {
+  //     return Promise.reject(err);
+  //   } else if (err.message == "Timeout has occurred") {
+  //     return Promise.reject({ "errorMassage": "请求超时，请重试！" });
+  //   } else {
+  //     console.error('HxsmartHttp.post:服务器内部错误，原始响应如下：', err);
+  //     return Promise.reject({ "errorMassage": '服务器内部错误' });
+  //   }
+  // }
 
 }
