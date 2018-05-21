@@ -1,10 +1,10 @@
 
 
-// const urls = "http://120.79.117.124/storeApp";
+const urls = "http://120.79.117.124/storeApp";
+const urlsR = "http://120.79.117.124/news";     //汪湘
 
-const urls = "http://192.168.0.156/storeApp";    //李子
-// const urlsR = "http://192.168.0.37:6100";     //汪湘
-const urlsR = "http://192.168.0.156:6100";     //汪湘
+// const urls = "http://192.168.0.156/storeApp";    //李子
+// const urlsR = "http://192.168.0.156:6100";     //汪湘
 
 
 export const interfaceUrls = {
