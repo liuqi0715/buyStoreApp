@@ -158,7 +158,8 @@ export class MyApp {
                 buttons: [{
                   text: '取消',
                   handler: () => {
-                    self.platform.exitApp();
+                    // self.platform.exitApp();
+
                   }
                 }, {
                   text: '确定',
