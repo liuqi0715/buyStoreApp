@@ -13,6 +13,7 @@ import { mockDataInfo } from '../../../providers/mock-data';
 import { Keyboard } from '@ionic-native/keyboard';
 import { newsReplyPage } from '../news-replys-page/news-replys-page';
 import { DomSanitizer } from '@angular/platform-browser';
+
 // declare let cordova:any;
 declare var BMap;
 declare let baidumap_location: any;
@@ -126,8 +127,6 @@ export class newsDetailsPage {
     } else {
       self.canCommentArticle = false;
     }
-    console.log($(".commet_info textarea").val(), "value")
-
 
   }
   ionViewDidEnter(){
@@ -163,13 +162,18 @@ export class newsDetailsPage {
       setTimeout(function() {
         let src = $("#video-el").attr("src")
         if (src!=undefined) {
-          console.log($("#video-el").attr("src"))
           const player = larkplayer("video-el", {
 
           }, () => {
-            console.info('ppppp===', '');
+            // console.info('ppppp===', '');
           });
         }
+        $("a").click((e) => {
+          e.preventDefault();
+          let selfSRC = e.target.href;
+          console.log(selfSRC);
+          const browser = self.iab.create(selfSRC, "_self", "location=no");
+        })
 
       }, 50);
       // $(document).on('click', '.lark-request-fullscreen', function () {
@@ -191,7 +195,7 @@ export class newsDetailsPage {
       if (this.conent.tContent){
         this.conent.tContent = this.sanitizer.bypassSecurityTrustHtml(this.conent.tContent);
       }
-      console.log(this.navParams, "navParams", this.conent.contTime)
+
       for (var i = 0; i < this.conent.tabCommentsList.length; i++) {
         this.conent.tabCommentsList[i]["likeShow"] = false;
       }
@@ -263,7 +267,7 @@ export class newsDetailsPage {
           //  console.log("1",resp);
           if (resp) {
             if (resp.errorinfo == null) {
-              console.info('tag:', resp)
+              // console.info('tag:', resp)
               setTimeout(function () {
                 item.likeShow = false;
                 self.hasGiveLike = true;
@@ -376,7 +380,7 @@ export class newsDetailsPage {
                 for (var i = 0; i < resp.tabCommentsList.length; i++) {
                   resp.tabCommentsList[i]["likeShow"] = false;
                 }
-                console.info('tag;;', resp.tabCommentsList)
+                // console.info('tag;;', resp.tabCommentsList)
                 self.commentsList = self.commentsList.concat(resp.tabCommentsList )
                 infiniteScroll.complete();
               } else {
@@ -398,6 +402,5 @@ export class newsDetailsPage {
 
   KeyboardHe(){
     $("#commet_info").focus();
-    console.log("00")
   }
 }
