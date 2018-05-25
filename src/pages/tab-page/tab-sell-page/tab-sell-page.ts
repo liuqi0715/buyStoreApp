@@ -38,6 +38,8 @@ export class TabSell {
   oSwiper1: any = null;
   swiper1:any = null;
   swiper2:any = null;
+  scrollUp:any = null;
+  scrollUp1:any = null;
   public headerSlideData = [];
   public orderActive = true;
   public datas = "";
@@ -83,7 +85,7 @@ export class TabSell {
      }
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     if(this.servicesInfo.token){
       this.getInfoDatas(null);
     }
@@ -141,8 +143,15 @@ export class TabSell {
      }
      if(self.swiper2){
         self.swiper2.destroy(false);
-        self.swiper2 = null;
+        self.swiper2 = null
      }
+     if(self.scrollUp){
+       self.scrollUp.cancelStep();
+     }
+     if(self.scrollUp1){
+       self.scrollUp1.cancelStep();
+     }
+
      self.initInfoBox(self.datas);
      self.initNoticeSlide();
      self.initCharts();
@@ -202,6 +211,7 @@ export class TabSell {
             self.swiper1.startAutoplay();
          }
          self.toast("服务器异常，请重试");
+         console.log(sessionStorage.getItem('homeCache'));
          if(sessionStorage.getItem('homeCache') != 'undefined'){
            self.datas = JSON.parse(sessionStorage.getItem('homeCache'));
            self.renderDatas();
@@ -218,7 +228,7 @@ export class TabSell {
     this.urlService.postDatas(SELLORDER_URL,data).then(function(resp){
       if(resp){
         if(resp.errorinfo === null){
-          self.orderActive = false; 
+          self.orderActive = false;
           sessionStorage.setItem('orderActive','false');               /*****/
           self.orderCard = resp.data.orderInfo;
           if(refresher){
@@ -226,7 +236,7 @@ export class TabSell {
           }
         }else{
           self.orderActive = true;
-          sessionStorage.setItem('orderActive','true'); 
+          sessionStorage.setItem('orderActive','true');
           if(refresher){
              refresher.cancel();
           }
@@ -242,7 +252,7 @@ export class TabSell {
          }else{
            self.orderActive = true;
          }
-         
+
          if(refresher){
            refresher.cancel();
          }
@@ -255,9 +265,9 @@ export class TabSell {
     function addSwiper(con,i){
         return '<div class="swiper-slide"><span class="home-chart-title1">找铅网</span><span class="home-chart-title2">指导价: ' + con + '</span><div class="home-chart" id='+ 'chart' + i + '></div></div>';
     }
-    
+
     var chartDatas = (this.datas as any).refPriceList;
-    
+
     let textArray = [];
     let textArray1 = [];
     let htmlContain = '<div class="swiper-slide"><span class="home-chart-title1">找铅网</span><span class="home-chart-title2">指导价:'+ chartDatas[0].typeView +'</span><div id="home-pDisplay"></div></div>';
@@ -274,10 +284,10 @@ export class TabSell {
             }
           }else{
             htmlContain = htmlContain + addSwiper(chartDatas[i].catName,i+1);
-          } 
+          }
       }
 
-      
+
       $(".headSlideBox").empty().html(htmlContain);
       var self = this,option_l,option_r;
       setTimeout(function(){
@@ -349,8 +359,8 @@ export class TabSell {
               datas : textArray1
           }
 
-          $("#home-pDisplay").srollUp(config);
-          $("#home-pDisplay1").srollUp(config1);
+          self.scrollUp = $("#home-pDisplay").srollUp(config);
+          self.scrollUp1 = $("#home-pDisplay1").srollUp(config1);
 
 
         },100);
@@ -497,10 +507,18 @@ private initInfoBox(infoDatas) {
     for(var k = 0; k < data.quotePriceList.length;k++){
       goodsDom = goodsDom + '<li><label>'+ data.quotePriceList[k].catName +'</label><span>'+ data.quotePriceList[k].catPrice +'<a>'+data.quotePriceList[k].catUnit+'</a></span></li>';
     }
+    if (data.recycleType==1){
 
-    return '<div class="swiper-slide"><div class="home-display-card">'+'<div class="home-display-card_t"><div class="home-display-card_tag">'+ starsDom+'</p>'+
-    '<p>综合评分'+data.commScore+'</p></div><div class="home-display-card_tag"><p>'+data.quoTime+'报价</p><p>'+data.distance+'</p></div></div><div class="home-display-card_m">'+
-      wordsDom +'</ul></div><div class="home-display-warn">点击下方价格查看更多报价</div><div class="home-display-card_b" recycleid = '+data.recycleId+' >'+ goodsDom +'</ul></div></div></div>';
+      return '<div class="swiper-slide"><div class="home-display-card1">' + '<div class="home-display-card_t"><div class="home-display-card_tag">' + starsDom + '</p>' +
+        '<p>综合评分' + data.commScore + '</p></div><div class="home-display-card_tag"><p>' + data.quoTime + '报价</p><p>' + data.distance + '</p></div></div><div class="home-display-card_m">' +
+        wordsDom + '</ul></div><div class="home-display-warn">点击下方价格查看更多报价</div><div class="home-display-card_b" recycleid = ' + data.recycleId + ' >' + goodsDom + '</ul></div></div></div>';
+    } else if (data.recycleType == 2){
+
+      return '<div class="swiper-slide"><div class="home-display-card">' + '<div class="home-display-card_t"><div class="home-display-card_tag">' + starsDom + '</p>' +
+        '<p>综合评分' + data.commScore + '</p></div><div class="home-display-card_tag"><p>' + data.quoTime + '报价</p><p>' + data.distance + '</p></div></div><div class="home-display-card_m">' +
+        wordsDom + '</ul></div><div class="home-display-warn">点击下方价格查看更多报价</div><div class="home-display-card_b" recycleid = ' + data.recycleId + ' >' + goodsDom + '</ul></div></div></div>';
+    }
+
 
   }
 
@@ -508,6 +526,11 @@ private initInfoBox(infoDatas) {
   var datas = infoDatas;
 
   if(datas && datas.collectorList && datas.collectorList.length>0){
+    if (datas.collectorList[0].recycleType==2){
+      $("#changeList").text("置换报单")
+    }else{
+      $("#changeList").text("向他报单")
+    }
 
       $(".infoSlide .swiper-wrapper").empty();
       for(var i = 0;i < datas.collectorList.length;i++){
@@ -531,10 +554,18 @@ private initInfoBox(infoDatas) {
 
             }
         },
-        onSetTransition: function(swiper, speed) {
+        onSetTransition: function(swiper, speed,event) {
             self.recycleIdx = swiper.activeIndex;
             sessionStorage.setItem("infoIdx",self.recycleIdx);
             // console.log(self.recycleIdx);
+
+            // console.log($($(".swiper-slide-active").children()[4]).attr("class"));
+            let activeDom = $($(".swiper-slide-active").children()[4]).attr("class");
+            if (activeDom=="home-display-card"){
+              $("#changeList").text("置换报单")
+            }else{
+              $("#changeList").text("向他报单")
+            }
             if(swiper.activeIndex == 0){
               $("#home-swiper-navL").show();
             }else{

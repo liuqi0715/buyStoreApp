@@ -8,7 +8,7 @@ import { orderMapPage } from "../order-map-page/order-map-page";
 import { orderAgreePage } from "../order-agree-page/order-agree-page";
 import { orderCommentPage } from "../order-comment-page/order-comment-page";
 import { radarPage } from "./../../radar/radar-page";
-
+import { ActivityComponent } from "../../../components/activity/activity"
 @NgModule({
   declarations: [
     TabSell,
@@ -18,6 +18,7 @@ import { radarPage } from "./../../radar/radar-page";
     orderDetailPage,
     orderAgreePage,
     orderCommentPage,
+    ActivityComponent,
     orderMapPage
   ],
   imports: [
@@ -34,6 +35,7 @@ import { radarPage } from "./../../radar/radar-page";
     orderDetailPage,
     orderAgreePage,
     orderCommentPage,
+    ActivityComponent,
     orderMapPage
   ]
 })
