@@ -14,7 +14,7 @@ page-tab-more-page-page {
     border-radius:50%;
   }
   .scroll-content{
-    background-color: #EEEEEE;  
+    background-color: #EEEEEE;
   }
   .mine-header{
     position: relative;
@@ -70,7 +70,7 @@ page-tab-more-page-page {
     padding-top: .1rem;
     color: #8A8A8A;
   }
- 
+
   .iconImg{
     width: .64rem;
   }
@@ -92,6 +92,7 @@ page-tab-more-page-page {
   }
   .asked{
     color: #8A8A8A;
+    margin-bottom: .3rem;
   }
   .fontS{
     font-size: .25rem;
@@ -157,7 +158,7 @@ page-tab-more-page-page {
   @keyframes ripple {
     0% {
       width:0%;
-    } 
+    }
     // 50%{
     //   width: 50%;
     // }

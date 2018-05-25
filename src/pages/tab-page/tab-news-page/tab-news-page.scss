@@ -178,7 +178,7 @@ page-tab-news-page {
      margin-top: .1rem;
      position: absolute;
      right: 0;
-     top: .25rem;
+     top: 0rem;
 
   }
 
@@ -190,10 +190,8 @@ page-tab-news-page {
   width: 67%;
   // height: 1.4rem;
   margin-top: .1rem;
-  /* display: inline-block; */
-
-  // float: left;
-    position: relative;
+  min-height: 1.6rem;
+  position: relative;
 
   }
 
@@ -207,7 +205,14 @@ page-tab-news-page {
     // position: absolute;
     // bottom: -.2rem;
     width: 89%;
+    font-size: .2rem;
   }
+  .item_info{
+    font-size: .2rem;
+
+
+  }
+
   @media screen and(max-width:320px) {
      .oneline {
        margin-top: .2rem;

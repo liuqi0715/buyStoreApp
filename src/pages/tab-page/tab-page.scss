@@ -66,5 +66,10 @@ page-learn-tab-page {
 	// #tab-t0-1[aria-selected=false] .tab-button-icon{
 	// 	 content: url("../assets/img/tabs/icon_mine_off.png") !important;
 	// }
+	#tab-t0-1 .tab-button-icon{
+		margin-top: -.08rem !important;
+		margin-bottom: .1rem !important;
+		font-size: .76rem !important;
+	}
 
 }

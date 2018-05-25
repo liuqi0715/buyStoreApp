@@ -48,6 +48,7 @@ var ua = navigator.userAgent.toLowerCase();
       this.wordSpace = 10,
       this.standOutIdx = null,
       this.frame = null,
+      this.frame1 = null,
       this.scrollCount = null
   }
 
@@ -144,7 +145,7 @@ var ua = navigator.userAgent.toLowerCase();
           }
 
 
-          setTimeout(function(){
+          self.frame = setTimeout(function(){
             for(var i = 0; i<items.length;i++){
               var li = items[i];
               var offsetX = $(li).data('x');
@@ -168,13 +169,15 @@ var ua = navigator.userAgent.toLowerCase();
             }
           },500);
 
-          setTimeout(function(){
+          self.frame1 = setTimeout(function(){
             self.drawStep();
           },self.intervalTime);
 
       },
       cancelStep:function(){
-          cancelAnimationFrame(this.frame);
+          var self = this;
+          clearTimeout(self.frame);
+          clearTimeout(self.frame1);
       }
   };
 
@@ -182,4 +185,5 @@ var ua = navigator.userAgent.toLowerCase();
       var obj = new SrollUp();
       obj.self = $(this);
       obj.init(data);
+      return obj;
   };

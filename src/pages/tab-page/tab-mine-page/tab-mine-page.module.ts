@@ -14,6 +14,7 @@ import { msgDetails } from "./../../wallet/wallet-msgDetails-page/wallet-msgDeta
 import { myInfoPage } from "../mine-info-page/mine-info-page";
 import { myAccountPage } from "../mine-account-page/mine-account-page";
 import { BankInfoPage } from "../../wallet/wallet-bankInfo-page/wallet-bankInfo-page"
+import { myCouponPage} from '../mine-coupon-page/mine-coupon-page';
 // import { StatusBar } from '@ionic-native/status-bar';
 @NgModule({
   declarations: [
@@ -30,11 +31,12 @@ import { BankInfoPage } from "../../wallet/wallet-bankInfo-page/wallet-bankInfo-
     msgDetails,
     myInfoPage,
     myAccountPage,
-    BankInfoPage
+    BankInfoPage,
+    myCouponPage
   ],
   imports: [
     IonicPageModule,
-   
+
   ],
   exports: [
     IonicPageModule
@@ -53,7 +55,9 @@ import { BankInfoPage } from "../../wallet/wallet-bankInfo-page/wallet-bankInfo-
     msgDetails,
     myInfoPage,
     myAccountPage,
-    BankInfoPage
+    BankInfoPage,
+    myCouponPage,
+
   ]
 })
 export class TabMineModule {}

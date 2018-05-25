@@ -1,10 +1,14 @@
 
 
-const urls = "http://120.79.117.124/storeApp";
-const urlsR = "http://120.79.117.124/news";     //汪湘
+// const urls = "http://120.79.117.124/storeApp";
+// const urlsR = "http://120.79.117.124/news";     //汪湘
 
-// const urls = "http://192.168.0.156/storeApp";    //李子
-// const urlsR = "http://192.168.0.156:6100";     //汪湘
+const urls = "http://192.168.0.156/storeApp";    //李子
+const urlsR = "http://192.168.0.156:6100";     //汪湘
+
+
+// const urls = "http://buypb.e1.luyouxia.net:28708/storeApp"
+// const urlsR = "http://buypb.e1.luyouxia.net:28708/news"
 
 
 export const interfaceUrls = {
@@ -64,7 +68,7 @@ export const interfaceUrls = {
     getTabCommentsPage: urlsR +"/tabComments/getTabCommentsPage", //根据内容获取评论
     getReplyTabCommentsPage: urlsR +"/tabComments/getReplyTabCommentsPage", //获取评论里的回复数据
     queryTabColumnList: urlsR +"/tabColumn/queryTabColumn",              //查询顶部栏目
-
+    getCouponList: urls +"/acticity/queryCoupon",       //获取
 
 }
 

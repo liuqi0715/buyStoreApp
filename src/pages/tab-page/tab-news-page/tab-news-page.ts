@@ -17,7 +17,7 @@ import { mockDataInfo } from '../../../providers/mock-data';
 import { Pipe, PipeTransform } from "@angular/core";
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { interfaceUrls } from '../../../providers/serviceUrls';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser';//打开页面
 import ECharts from 'echarts';
 // import larkplayer from 'larkplayer';
 declare var $;
@@ -72,6 +72,7 @@ export class TabNews {
               private fileTransfer:FileTransferObject,
               private androidPermissions: AndroidPermissions,
               public mockDataInfo:mockDataInfo,
+              public iab: InAppBrowser,
               private _sanitizer: DomSanitizer
       ) {
   }
@@ -102,12 +103,11 @@ export class TabNews {
   ionViewDidEnter() {
     const image = new Image();
     image.src = "http://192.168.0.156/imgs/news/20180518145311_426.jpg"
-    console.log(image,":image","imageSrc:",image.width)
     this.checkNetwork();
     this.queryTabColumnList();
     this.getSort();
 
-
+    let a = window.localStorage.getItem("loginToken");
   }
   toast(actions) {
     let toast = this.toastCtrl.create({
@@ -157,9 +157,7 @@ export class TabNews {
       .then(function (resp) {
         if (resp) {
           loading.dismiss();
-          console.log(resp)
           if (resp.errorinfo === null) {
-              console.info('tag:', resp)
               item.hasClick = true;
               self.navCtrl.push(newsDetailsPage,{
               tabconnet:resp,
@@ -199,7 +197,6 @@ export class TabNews {
         //  console.log("1",resp);
         if (resp) {
           if (resp.errorinfo === null) {
-            console.info('tag:', resp)
             refresher.complete()
             for (var i = 0; i < resp.data.length; i++) {
               // var element = array[i];
@@ -254,7 +251,6 @@ export class TabNews {
           //  console.log("1",resp);
           if (resp) {
             if (resp.errorinfo === null) {
-              console.info('tag:', resp)
               for (var i = 0; i < resp.data.length; i++) {
                 // var element = array[i];
                 resp.data[i]["hasClick"] = false;
@@ -310,7 +306,6 @@ export class TabNews {
     this.getNEwsList();
     setTimeout(function() {
       this.roateFlag = false
-      console.log(this.roateFlag)
     }, 1000);
   }
 
@@ -349,7 +344,6 @@ getNEwsList(){
 
             }
             self.noContent = false;
-            console.info('tag:', resp)
             self.newsList = resp.data;
             self.maxPage = resp.totalPage;
             self.total = resp.total;
@@ -387,7 +381,6 @@ queryTabColumnList(){
       if (resp) {
         if (resp.errorinfo === null) {
           self.column = resp.data;
-          console.log(self.column)
           if (self.column.length<=5){
             $(".topList ul").css({ "width": "100%"});
             $(".topList ul li").css({ "width": 100 / (self.column.length) +"%" })
@@ -396,15 +389,11 @@ queryTabColumnList(){
             $(".topList ul li").css({"width":"1.52rem"})
           }
         } else {
-          console.log("===?")
-
           self.toast(resp.errorinfo.errormessage);
           if (resp.errorinfo.errorcode == "10003") {
             self.app.getRootNav().setRoot(UserLogin);
           }
         }
-      }else{
-        console.log("===")
       }
     }).catch(() => {
       self.toast("网络异常。")
@@ -426,6 +415,5 @@ queryTabColumnList(){
   reload(){
     this.getNEwsList();
   }
-
 
 }

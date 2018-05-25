@@ -23,6 +23,7 @@ import { UserLogin } from "../../../modules/user-login/user-login";
 import { AppVersion } from '@ionic-native/app-version';
 import { addCardPage } from "../../wallet/wallet-addCard-page/wallet-addCard-page";
 import { NativeStorage } from '@ionic-native/native-storage';
+import { myCouponPage } from '../mine-coupon-page/mine-coupon-page';
 declare var $;
 @Component({
   selector: 'page-tab-more-page-page',
@@ -370,6 +371,9 @@ export class TabMine {
     // })
 
   }
-
+  //去往优惠卷页面
+  goCoupon(){
+    this.navCtrl.push(myCouponPage)
+  }
 
 }
