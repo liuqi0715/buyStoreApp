@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>我的优惠卷</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="ma_content">
+      <div class="mc_available">
+          <ul>
+            <li *ngFor="let item of CouponList">
+              <div class="mc_available_conten">
+                <div class="mc_available_left">
+                    <span class="mc_available_num" >{{item.couponCount}}</span>  <span>{{item.unit}}</span>
+                </div>
+                <div class="mc_available_right">
+                    <p class="mc_available_coupon">{{item.couponName}}</p>
+                    <p class="mc_available_style">{{item.modelname}}</p>
+                    <p class="mc_available_time">{{item.useDate}}</p>
+                </div>
+              </div>
+
+              <div class="mc_available_tips">活动说明：<span class="mc_available_tipsc">{{item.useDesc}}</span> </div>
+            </li>
+          </ul>
+      </div>
+      <!-- <div class="mc_unavailable">
+        <ul>
+          <li>
+            <div class="mc_unavailable_right">
+              <p class="mc_available_coupon">置换卷</p>
+              <p class="mc_available_style">48V12H</p>
+              <p class="mc_available_time mc_UNavailable_time">2018.6.1~2018.6.30</p>
+            </div>
+          </li>
+          <li></li>
+        </ul>
+      </div> -->
+      <p style="text-align:center;color: #CCC;" *ngIf="CouponList.length==0">您还没有优惠卷</p>
+</ion-content>
+
+
