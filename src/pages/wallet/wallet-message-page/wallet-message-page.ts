@@ -11,6 +11,7 @@ import { servicesInfo } from"../../../providers/service-info";//公共信息
 import { App } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { UserLogin } from "../../../modules/user-login/user-login";
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 // declare let cordova:any;
 declare var BMap;
 declare let baidumap_location: any;
@@ -27,7 +28,7 @@ export class messagePage {
   firstOffline: boolean = true;
   noContent: boolean = false;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public http: Http,
               public urlService: urlService,
@@ -35,6 +36,7 @@ export class messagePage {
               private app: App,
               private network: Network,
               public loadingCtrl: LoadingController,
+              public iab: InAppBrowser,
               public toastCtrl: ToastController
 
     ) {
@@ -65,7 +67,7 @@ export class messagePage {
     let self = this;
 
     self.network.onDisconnect().subscribe(()=>{
-          self.offline=true; 
+          self.offline=true;
           if(self.msgList.length == 0){
             self.firstOffline = true;
             self.noContent = true;
@@ -73,7 +75,7 @@ export class messagePage {
           // self.toast('无网络连接，请检查');
     });
     self.network.onConnect().subscribe(()=>{
-          self.offline=false; 
+          self.offline=false;
     });
 
   }
@@ -196,7 +198,8 @@ export class messagePage {
               // console.log(resp);
               if(resp.errorinfo === null){
                 // alert(resp.data.details);
-                window.open(resp.data.details);
+                // window.open(resp.data.details);
+                self.iab.create(resp.data.details +"?access_token="+self.servicesInfo.token,"_self","location=no");
               }else{
                 if(resp.errorinfo.errorcode=="10003"){
                   self.app.getRootNav().setRoot(UserLogin);
