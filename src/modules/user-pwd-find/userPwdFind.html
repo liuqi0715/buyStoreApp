@@ -32,15 +32,16 @@
                 </li>
             </ul>
             <div id="getCode">
-              <button ion-button class="yzm-btn" (click)="findPasswordCode()" *ngIf="!hasClick">{{hq}}</button>
-              <button ion-button class="yzm-btn" disabled *ngIf="hasClick">{{num}}s</button>
+              <!-- <button ion-button class="yzm-btn" (click)="findPasswordCode()" *ngIf="!hasClick">{{hq}}</button>
+              <button ion-button class="yzm-btn" disabled *ngIf="hasClick">{{num}}s</button> -->
+                <button class="yzm-btn" (click)="findPasswordCode()" [disabled]="!verifyCode.disable">{{verifyCode.verifyCodeTips}}</button>
             </div>
-        </div>  
-      
+        </div>
+
 
             <button ion-button class="btn" (click)="next()" block>确定</button>
     </div>
- 
+
 </ion-content>
 
 

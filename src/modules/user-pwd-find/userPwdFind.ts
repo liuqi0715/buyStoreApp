@@ -40,9 +40,13 @@ export class UserPwdFind {
     hasClick=false;
     hq = "获取验证码";
     num = 60;
- 
-    offline:boolean=false;
 
+    offline:boolean=false;
+    verifyCode: any = {
+      verifyCodeTips: "获取验证码",
+      countdown: 60,//总共时间
+      disable: true
+    }
     toast(actions){
         let toast = this.toastCtrl.create({
           message: actions,
@@ -55,21 +59,37 @@ export class UserPwdFind {
 
       checkNetwork(){
         let self = this;
-    
+
         self.network.onDisconnect().subscribe(()=>{
-              self.offline=true; 
+              self.offline=true;
               self.toast('无网络连接，请检查');
         });
         self.network.onConnect().subscribe(()=>{
-              self.offline=false; 
+              self.offline=false;
         });
-    
+
       }
 
     ionViewDidLoad(){
-        this.checkNetwork()        
+        this.checkNetwork()
+    }
+  settime() {
+    console.log("=====")
+    if (this.verifyCode.countdown == 1) {
+      this.verifyCode.countdown = 60;
+      this.verifyCode.verifyCodeTips = "获取验证码";
+      this.verifyCode.disable = true;
+      return;
+    } else {
+      this.verifyCode.countdown--;
     }
 
+    this.verifyCode.verifyCodeTips = this.verifyCode.countdown + 　"s";
+    setTimeout(() => {
+      this.verifyCode.verifyCodeTips = this.verifyCode.countdown + "s";
+      this.settime();
+    }, 1000);
+  }
     next(){
         var pwdTest = /^(?![\d]+$)(?![a-zA-Z]+$)(?![-!@#$%^&*()_+.{}`=|\/\[\]\\\'?;\':,<>]+$)[\da-zA-Z-!@#$%^&*()_+.{}`=|\/\[\]\\\'?;\':,<>]{6,32}$/;
         if(!this.userInfo.phone){
@@ -127,7 +147,7 @@ export class UserPwdFind {
                         // self.errorTipMsg = data.errorinfo.errormessage;
                     }
                 }
-               
+
             });
 
         }
@@ -157,20 +177,22 @@ export class UserPwdFind {
                 if(resp.errorinfo==null){
                     self.errorTip = false;
                     self.hasClick = true;
-                    let timer = setInterval(() => {
-                        if (self.num == 0) {
-                            clearInterval(timer);
-                            self.hasClick = false;
-                            self.hq = "重新获取";
-                            self.num = 60;
-                            return;
-                        }
-                        self.num--;
-                    }, 1000);
+                    // let timer = setInterval(() => {
+                    //     if (self.num == 0) {
+                    //         clearInterval(timer);
+                    //         self.hasClick = false;
+                    //         self.hq = "重新获取";
+                    //         self.num = 60;
+                    //         return;
+                    //     }
+                    //     self.num--;
+                    // }, 1000);
+                    self.verifyCode.disable = false;
+                    self.settime();
                 }else{
-                    
+
                     self.toast(resp.errorinfo.errormessage)
-                 
+
                 }
            });
 

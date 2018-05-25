@@ -25,8 +25,8 @@
     </div>
     <div class="details">
         <span class="listDetails">
-            账单详情
-        </span>
+            账单详情      
+        </span>  
         <span class="date" (click)="getDate()">
             <img src="assets/img/wallet/DATE.png" alt="" id="DATE">
                 <ion-datetime displayFormat="MM YYYY" pickerFormat="MM YYYY"  (ionChange)="cityChange()" monthValues="1,2,3,4,5,6,7,8,9,10,11,12"  cancelText="取消" doneText="确定" [(ngModel)]="timeStarts"></ion-datetime>
@@ -51,14 +51,14 @@
                    {{a.amount}}
                 </div>
             </li>
-
+         
         </ul>
-
+        
 
         <p *ngIf="noData" class="noData">暂无数据</p>
     </div>
 
-
+  
 
  <!--下拉加载-->
  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
@@ -67,7 +67,7 @@
                 loadingText="加载中...">
         </ion-infinite-scroll-content>
 </ion-infinite-scroll>
-
+   
 <div class="motai" *ngIf="hasSuccess">
     <img src="assets/img/login/loading.gif" alt="" id="loading">
   </div>
