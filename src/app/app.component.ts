@@ -8,7 +8,6 @@ import { orderAgreePage } from "../pages/tab-page/order-agree-page/order-agree-p
 import { orderCommentPage } from "../pages/tab-page/order-comment-page/order-comment-page";
 import { msgDetails } from "../pages/wallet/wallet-msgDetails-page/wallet-msgDetails-page";
 import { messagePage } from "../pages/wallet/wallet-message-page/wallet-message-page";
-import { adsPage } from "../pages/ads/ads-page";
 import { App } from 'ionic-angular';
 import { UserLogin } from "../modules/user-login/user-login";
 import { Http,Headers } from '@angular/http';
@@ -24,6 +23,7 @@ import { Device } from '@ionic-native/device';
 import { AppVersion } from '@ionic-native/app-version';
 import { AppUpdate } from '@ionic-native/app-update';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 declare var window;
 
@@ -51,6 +51,7 @@ export class MyApp {
     private nativeStorage: NativeStorage,
     private app: App,
     public alertCtrl: AlertController,
+     public iab: InAppBrowser,
     // public loadingCtrl: LoadingController,
     // public transfer:FileTransfer,
     // public file: File,
@@ -159,7 +160,6 @@ export class MyApp {
                   text: '取消',
                   handler: () => {
                     // self.platform.exitApp();
-
                   }
                 }, {
                   text: '确定',
@@ -381,7 +381,7 @@ export class MyApp {
                         "msgContentId":msgList.jpusMsgId
                       });
                     }else if(msgType == 25){
-                        window.open(msgList.msgContent);
+                        self.iab.create(msgList.msgContent,"_self","location=no");
                     }else{
                       if(orderStatusNo == 2){
                         self.nav.push(orderAgreePage,{
