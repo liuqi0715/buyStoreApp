@@ -16,7 +16,7 @@
     <!--头条-->
     <div class="home-notice">
       <img src="assets/img/sell/laba.png">
-      <span>最近交易(L)</span>
+      <span>最近交易</span>
       <div id="noticeSlider" class="swiper-container noticeSlide">
         <div class="swiper-wrapper">
         </div>
@@ -44,7 +44,7 @@
     </section>
 
     <section class="home-display" [ngClass]="{noMarginTop:!orderActive}">
-        <div class="home-btn home-btn-pos1" (click)="goOrderBorn(datas.collectorList)" *ngIf="orderActive"><div class="home-btn-inner"><p><span *ngIf="!publicOnly">向他报单</span><span *ngIf="publicOnly">公开报单</span></p></div></div>
+        <div class="home-btn home-btn-pos1" (click)="goOrderBorn(datas.collectorList)" *ngIf="orderActive"><div class="home-btn-inner"><p><span *ngIf="!publicOnly" id="changeList"></span><span *ngIf="publicOnly">公开报单</span></p></div></div>
         <div id="home-swiper-navL">
           <span class="tri-right"></span>
         </div>
@@ -63,6 +63,7 @@
     <!--回到顶部的区块-->
 <!--     <div #btnBackTop class="back_top"></div> -->
   </div>
+  <activity></activity>
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>

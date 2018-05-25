@@ -466,7 +466,11 @@ export class radarPage {
         let datas = this.posGroup[i];
         if(this.posGroup[i].deg < rotateDeg){
           let img = document.createElement('img');
-          img.src = datas.recycleImg;
+          if(datas.recycleImg){
+            img.src = datas.recycleImg;
+          }else{
+            img.src = 'assets/img/radar/touxiang.png';
+          }
           let viewer = document.createElement('div');
           let viewTip = document.createElement('div');
           let viewTipImg = document.createElement('img');
