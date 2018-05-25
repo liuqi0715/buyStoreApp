@@ -1,0 +1,9 @@
+<!-- Generated template for the ActivityComponent component -->
+
+  <!--<p>{{text}}</p>-->
+  <div class="home-activity" *ngIf="hasActivity" (click)="goNewPage()">
+    <div class="home-activity-skip" (click)="skip()">
+      跳过({{skipTime}}s)
+    </div>
+  </div>
+

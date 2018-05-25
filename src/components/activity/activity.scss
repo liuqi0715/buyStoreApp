@@ -1,0 +1,26 @@
+activity {
+  .home-activity{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ccc;
+    z-index: 999;
+    background: url('../assets/img/sell/activity_bg.jpg') no-repeat;
+    background-size: cover;
+  }
+  .home-activity-skip{
+    width: 1.4rem;
+    height: .6rem;
+    line-height: .6rem;
+    text-align: center;
+    color: white;
+    background: #560F14;
+    position: absolute;
+    right: 0.2rem;
+    top: .31rem;
+
+  }
+
+}
