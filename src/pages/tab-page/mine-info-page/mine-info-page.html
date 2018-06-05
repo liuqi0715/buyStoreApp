@@ -4,20 +4,28 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <div class="mi_list"> 
+  <div class="mi_list">
     <span>门店头像</span><div (click)="checkPermission()" id="stroeImg"><img  *ngIf="hasImg" onerror="javascript:this.src='assets/img/default.png';" [src]="user.storeImage"></div>
   </div>
-  <div class="mi_list"> 
+  <div class="mi_list">
     <span>姓名</span><span>{{user.userName}}</span>
   </div>
-  <div class="mi_list"> 
+  <div class="mi_list">
     <span>地址</span><span>{{datas.areaName}}{{datas.streetCountry}}</span>
   </div>
-  <div class="mi_list"> 
+  <div class="mi_list">
     <span>手机号码</span><span>{{user.mobilePhone}}</span>
   </div>
-  <div class="mi_list"> 
+  <div class="mi_list">
     <span>微信账号</span><div id="mi_change"><img src="assets/img/wallet/changeWX.png" alt="" (click)="changeWX()"></div><span id="mi_WXphone">{{user.refereePhone}}</span>
+  </div>
+  <div class="mi_list" (click)="changeLoca()"  *ngIf="user.isModified=='Y'">
+     <!-- -->
+    <span>修改地理位置</span>
+    <div id="mi_changeLau">
+      <img src="assets/img/wallet/gengduo.png" alt="" >
+    </div>
+
   </div>
   <div class="tm_headImg" *ngIf="openHeadImg" (click)="closeHeadImg()">
     <img src="{{user.storeImage}}" alt="头像" onerror="javascript:this.src='assets/img/default.png';">

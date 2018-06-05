@@ -5,7 +5,7 @@
 </ion-header>
 <ion-content style="background:#EFEFEF;">
 
-  <div *ngFor="let msg of msgList,let idx = index">
+  <div *ngFor="let msg of msgList,let idx = index" (click)="detail(msg)">
     <div class="msg_time">{{msg.createTime}}</div>
     <section class="msg_box">
 
@@ -15,13 +15,13 @@
       </div>
 
       <div class="msg_box_body">
-        
+
           <img [src]="msg.msgImage" alt="" *ngIf="msg.msgType == 1 || msg.msgType == 25"/>
           <p>{{msg.msgIntro}}</p>
       </div>
 
 <!-- *ngIf="msg.orderStatusNo == 1 || msg.orderStatusNo == 2 || msg.orderStatusNo == 3 || msg.msgType == 1" -->
-      <div class="msg_box_bottom" (click)="detail(msg)">
+      <div class="msg_box_bottom">
         <span>查看详情</span>
         <span><ion-icon name="arrow-forward"></ion-icon></span>
       </div>
@@ -35,7 +35,7 @@
   <div class="inner-center noContent" *ngIf="noContent == true && firstOffline == false">
       <img src="assets/img/noContent.png" alt="暂无内容">
   </div>
-  
+
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"

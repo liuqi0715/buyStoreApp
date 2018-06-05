@@ -115,10 +115,10 @@ export class newsDetailsPage {
   //   element.style.height = scrollHeight + 'px';
   //   this.myInput['_elementRef'].nativeElement.style.height = (scrollHeight + 16) + 'px';
   // }
-  ngAfterViewInit(){
-
-
+  ionViewWillLeave() {
+    $("a").unbind("click");
   }
+
   valueChange(){
     let self = this;
     if (self.commentConent.length > 0) {

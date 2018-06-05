@@ -15,7 +15,8 @@ import {TabSellModule} from "../pages/tab-page/tab-sell-page/tab-sell-page.modul
 // import {TabBroadcastPageModule} from "../pages/tab-page/tab-look-page/tab-look-page.module";
 // import {TabDiscoverPageModule} from "../pages/tab-page/tab-discover-page/tab-discover-page.module";
 import {TabMineModule} from "../pages/tab-page/tab-mine-page/tab-mine-page.module";
-import { TabNewsModule } from '../pages/tab-page/tab-news-page/tab-news-page.module';
+import {TabNewsModule } from '../pages/tab-page/tab-news-page/tab-news-page.module';
+import {TabInteModule } from '../pages/tab-page/tab-inte-page/tab-inte-page.module';
 // import {TabMessagesPageModule} from "../pages/tab-page/tab-shopcart-page/tab-shopcart-page.module";
 import {TabPageModule} from "../pages/tab-page/tab-page.module";
 import {Camera} from '@ionic-native/camera';
@@ -87,7 +88,8 @@ import { AppUpdate } from '@ionic-native/app-update';
     // TabBroadcastPageModule,
     // TabDiscoverPageModule,
     TabMineModule,
-    TabNewsModule
+    TabNewsModule,
+    TabInteModule
     // TabMessagesPageModule,
 
   ],

@@ -351,17 +351,60 @@ page-tab-home-page {
 .home-display-card_t{
   height: 28%;
 }
-.home-display-card_t .home-display-card_tag:nth-child(1){
+.home-display-card_t .home-display-card_tag:nth-child(2){
   float: left;
+  margin-left: 5px;
 }
+.home-display-card_t .home-display-card_tag:nth-child(3) {
+  float: right;
+}
+
+.home-display-card_t .home-display-card_tag:nth-child(2) p img{
+  width: .35rem;
+}
+.home-display-online{
+  font-size: 10px;
+  float: left;
+  height: .8rem;
+  // width: .6rem;
+  color: white;
+  margin-left: -.15rem;
+  line-height: 1.23rem;
+  text-indent: .051rem;
+
+
+}
+
 .home-display-card_t .home-display-card_tag ion-icon{
   margin-top: 0;
   color: #FFF;
   line-height: .1rem;
 }
-.home-display-card_t .home-display-card_tag:nth-child(2){
-  float: right;
+.home-display-online img{
+  width: .4rem;
+  position: absolute;
+  margin: 0 auto;
+  left: 0.12rem;
+
 }
+@media screen and (max-width: 320px) {
+.home-display-online img{
+  width: .4rem;
+  position: absolute;
+  margin: 0 auto;
+  left: 0.2rem;
+
+}
+
+}
+.home-display-online span{
+  color: white;
+}
+
+
+// .home-display-card_t .home-display-card_tag:nth-child(2){
+//   float: right;
+// }
 .home-display-card_t p{
   height: .4rem;
   color: #FFF;

@@ -176,12 +176,10 @@ export class UserRegInfo {
                     // console.log(data);
                     self.servicesInfo.userId = data.data.userId;
                     // self.errorTip = false;
-
                     self.navCtrl.push(UserRegister)
                     self.hasSuccess = false;
                     self.servicesInfo.mobilePhone = self.userInfo.phone;
                     self.servicesInfo.pwd = self.userInfo.newPassWord;
-
                 }else{
                     self.hasSuccess = false;
                     self.toast(data.errorinfo.errormessage);

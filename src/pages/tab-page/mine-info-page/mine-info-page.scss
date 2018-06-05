@@ -95,7 +95,7 @@ mine-info-page {
   @keyframes ripple {
     0% {
       width:0%;
-    } 
+    }
     50%{
       width: 50%;
     }
@@ -103,4 +103,19 @@ mine-info-page {
       width:100%;
     }
   }
+  .mi_list #mi_changeLau{
+      float: right;
+      width: .65rem;
+      height: .65rem;
+      border-radius: 0%;
+      margin-right: -.12rem;
+      overflow: hidden;
+      border: 0;
+  }
+
+  #mi_changeLau img{
+      width: 100%;
+      height: 100%;
+  }
+
 }

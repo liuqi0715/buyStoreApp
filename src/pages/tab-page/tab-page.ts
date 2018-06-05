@@ -5,7 +5,8 @@ import {TabSell} from "./tab-sell-page/tab-sell-page";
 // import {TabBroadcastPage} from "./tab-look-page/tab-look-page";
 // import {TabMessagesPage} from "./tab-shopcart-page/tab-shopcart-page";
 import {TabMine} from "./tab-mine-page/tab-mine-page";
-import { TabNews } from './tab-news-page/tab-news-page';
+import {TabNews} from './tab-news-page/tab-news-page';
+import {TabInte} from './tab-inte-page/tab-inte-page';
 
 @IonicPage()
 @Component({
@@ -18,6 +19,7 @@ export class TabPage {
   // tab2Root: any = TabDiscoverPage;
   // tab3Root: any = TabBroadcastPage;
   // tab4Root: any = TabMessagesPage;
+  tabInte: any = TabInte;
   tabMine: any = TabMine;
   tabNews: any = TabNews;
   constructor(public navCtrl: NavController, public navParams: NavParams) {

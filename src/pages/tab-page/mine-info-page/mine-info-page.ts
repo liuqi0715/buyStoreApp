@@ -16,6 +16,7 @@ import { UserLogin } from "../../../modules/user-login/user-login";
 import { interfaceUrls } from "../../../providers/serviceUrls";
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { mineLocationChange } from '../mine-location-change/mine-location-change';
 declare var $;
 @Component({
   selector: 'mine-info-page',
@@ -206,31 +207,7 @@ export class myInfoPage {
         this.toast("上传头像失败。")
       });
 }
-//选择照片上传
-// chosePicture(){
 
-//     console.log("头像");
-//     var self0 = this;
-//     this.fileChooser.open()
-//     .then(
-//         function(url){
-//           var box = document.getElementById("stroeImg");
-//           box.innerHTML = "";
-//           var img = document.createElement("img");
-//           img.src = url;
-//           self0.storeImage = url;
-//           img.setAttribute("class","imgSize");
-//           box.appendChild(img);
-//           self0.uploadStoreImg();
-
-//         }
-//     )
-//     .catch(
-//         function(e){
-//           self0.toast("上传头像失败。")
-//         }
-//     );
-// }
   chosePicture(){
     let self0 = this;
     const options = {
@@ -240,7 +217,10 @@ export class myInfoPage {
       height: 600
     }
     this.imagePicker.getPictures(options).then((results) => {
-      var box = document.getElementById("stroeImg");
+      if (results.length <= 0) {
+        self0.toast("图片未选择");
+      }else{
+         var box = document.getElementById("stroeImg");
           box.innerHTML = "";
           var img = document.createElement("img");
           img.src = results;
@@ -248,6 +228,8 @@ export class myInfoPage {
           img.setAttribute("class","imgSize");
           box.appendChild(img);
           self0.uploadStoreImg();
+      }
+
     }, (err) => { });
 
 
@@ -376,6 +358,11 @@ showPic(){
   $("ion-header").css({"display":"none"})
 
 }
-
+/**
+ * 修改地理位置
+ */
+  changeLoca(){
+    this.navCtrl.push(mineLocationChange,{user:this.user});
+  }
 
 }

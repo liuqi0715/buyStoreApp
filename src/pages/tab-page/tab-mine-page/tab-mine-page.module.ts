@@ -15,6 +15,7 @@ import { myInfoPage } from "../mine-info-page/mine-info-page";
 import { myAccountPage } from "../mine-account-page/mine-account-page";
 import { BankInfoPage } from "../../wallet/wallet-bankInfo-page/wallet-bankInfo-page"
 import { myCouponPage} from '../mine-coupon-page/mine-coupon-page';
+import { mineLocationChange } from '../mine-location-change/mine-location-change';
 // import { StatusBar } from '@ionic-native/status-bar';
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { myCouponPage} from '../mine-coupon-page/mine-coupon-page';
     myInfoPage,
     myAccountPage,
     BankInfoPage,
-    myCouponPage
+    myCouponPage,
+    mineLocationChange
   ],
   imports: [
     IonicPageModule,
@@ -57,6 +59,7 @@ import { myCouponPage} from '../mine-coupon-page/mine-coupon-page';
     myAccountPage,
     BankInfoPage,
     myCouponPage,
+    mineLocationChange
 
   ]
 })

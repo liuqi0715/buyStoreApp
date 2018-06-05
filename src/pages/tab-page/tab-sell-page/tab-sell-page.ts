@@ -499,7 +499,9 @@ private initInfoBox(infoDatas) {
         wordsDom = wordsDom + '<li>'+ data.commNotgood +'</li>';
         break;
       case 3:
-        wordsDom = wordsDom + '<li>'+ data.lableName +'</li>';
+          wordsDom = wordsDom + '<li>' + data.receiveRate +'</li>';
+        // wordsDom = wordsDom + '<li>' + '回收率' + data.lableName + '</li>';
+
         break;
       }
     }
@@ -508,15 +510,28 @@ private initInfoBox(infoDatas) {
       goodsDom = goodsDom + '<li><label>'+ data.quotePriceList[k].catName +'</label><span>'+ data.quotePriceList[k].catPrice +'<a>'+data.quotePriceList[k].catUnit+'</a></span></li>';
     }
     if (data.recycleType==1){
+      if (data.onlineState==0){
+        return '<div class="swiper-slide"><div class="home-display-card1">' + '<div class="home-display-card_t"><div class="home-display-online"> <img src="assets/img/sell/offline.png"><span>'+ data.onlineStateName + '<span></div><div class="home-display-card_tag">' + starsDom + '</p>' +
+          '<p>综合评分' + data.commScore + '</p></div><div class="home-display-card_tag"><p>' + data.quoTime + '报价</p><p>' + data.distance + '</p></div></div><div class="home-display-card_m">' +
+          wordsDom + '</ul></div><div class="home-display-warn">点击下方价格查看更多报价</div><div class="home-display-card_b" recycleid = ' + data.recycleId + ' >' + goodsDom + '</ul></div></div></div>';
+      }else{
+        return '<div class="swiper-slide"><div class="home-display-card1">' + '<div class="home-display-card_t"><div class="home-display-online"> <img src="assets/img/sell/online.png">' + data.onlineStateName + '</div><div class="home-display-card_tag">' + starsDom + '</p>' +
+          '<p>综合评分' + data.commScore + '</p></div><div class="home-display-card_tag"><p>' + data.quoTime + '报价</p><p>' + data.distance + '</p></div></div><div class="home-display-card_m">' +
+          wordsDom + '</ul></div><div class="home-display-warn">点击下方价格查看更多报价</div><div class="home-display-card_b" recycleid = ' + data.recycleId + ' >' + goodsDom + '</ul></div></div></div>';
+      }
 
-      return '<div class="swiper-slide"><div class="home-display-card1">' + '<div class="home-display-card_t"><div class="home-display-card_tag">' + starsDom + '</p>' +
-        '<p>综合评分' + data.commScore + '</p></div><div class="home-display-card_tag"><p>' + data.quoTime + '报价</p><p>' + data.distance + '</p></div></div><div class="home-display-card_m">' +
-        wordsDom + '</ul></div><div class="home-display-warn">点击下方价格查看更多报价</div><div class="home-display-card_b" recycleid = ' + data.recycleId + ' >' + goodsDom + '</ul></div></div></div>';
     } else if (data.recycleType == 2){
+        if (data.onlineState == 0) {
+          return '<div class="swiper-slide"><div class="home-display-card">' + '<div class="home-display-card_t"><div class="home-display-online"> <img src="assets/img/sell/offline.png"><span>' + data.onlineStateName + '</span></div><div class="home-display-card_tag">' + starsDom + '</p>' +
+            '<p>综合评分' + data.commScore + '</p></div><div class="home-display-card_tag"><p>' + data.quoTime + '报价</p><p>' + data.distance + '</p></div></div><div class="home-display-card_m">' +
+            wordsDom + '</ul></div><div class="home-display-warn">点击下方价格查看更多报价</div><div class="home-display-card_b" recycleid = ' + data.recycleId + ' >' + goodsDom + '</ul></div></div></div>';
+        }else{
+          return '<div class="swiper-slide"><div class="home-display-card">' + '<div class="home-display-card_t"><div class="home-display-online"> <img src="assets/img/sell/online.png">' + data.onlineStateName + '</div><div class="home-display-card_tag">' + starsDom + '</p>' +
+            '<p>综合评分' + data.commScore + '</p></div><div class="home-display-card_tag"><p>' + data.quoTime + '报价</p><p>' + data.distance + '</p></div></div><div class="home-display-card_m">' +
+            wordsDom + '</ul></div><div class="home-display-warn">点击下方价格查看更多报价</div><div class="home-display-card_b" recycleid = ' + data.recycleId + ' >' + goodsDom + '</ul></div></div></div>';
+        }
 
-      return '<div class="swiper-slide"><div class="home-display-card">' + '<div class="home-display-card_t"><div class="home-display-card_tag">' + starsDom + '</p>' +
-        '<p>综合评分' + data.commScore + '</p></div><div class="home-display-card_tag"><p>' + data.quoTime + '报价</p><p>' + data.distance + '</p></div></div><div class="home-display-card_m">' +
-        wordsDom + '</ul></div><div class="home-display-warn">点击下方价格查看更多报价</div><div class="home-display-card_b" recycleid = ' + data.recycleId + ' >' + goodsDom + '</ul></div></div></div>';
+
     }
 
 

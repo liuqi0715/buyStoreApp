@@ -97,9 +97,6 @@ export class TabNews {
 
   }
 
-  ionViewWillLeave() {
-  }
-
   ionViewDidEnter() {
     const image = new Image();
     image.src = "http://192.168.0.156/imgs/news/20180518145311_426.jpg"

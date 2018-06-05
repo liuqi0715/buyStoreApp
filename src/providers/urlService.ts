@@ -6,10 +6,11 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/timeout';
 import 'rxjs/add/operator/map';
+import { AlertController } from 'ionic-angular';        //提示信息
 @Injectable()
 export class urlService {
 
-  constructor(public http: Http) {
+  constructor(public http: Http, public alertCtrl: AlertController,) {
 
   }
 
@@ -50,6 +51,22 @@ export class urlService {
             console.error('HxsmartHttp.post:服务器内部错误，原始响应如下：',err);
             return Promise.reject({"errorMassage":'服务器内部错误'});
      }
+  }
+
+
+  confirm(str: string = '您确定此操作吗？', noStr: string = '取消', okStr: string = '确定'): Promise<any> {
+    return new Promise((resolve, reject) => {
+      return this.alertCtrl.create({
+        title: "提示", message: str, enableBackdropDismiss: false, buttons: [{
+          text: noStr, handler: () => {
+            reject('操作被取消')
+          }
+        },{
+
+          text: okStr, handler: resolve
+        }, ]
+      }).present();
+    });
   }
 
 }

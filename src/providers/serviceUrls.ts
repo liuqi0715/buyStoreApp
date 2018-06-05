@@ -1,10 +1,10 @@
 
 
-// const urls = "http://120.79.117.124/storeApp";
-// const urlsR = "http://120.79.117.124/news";     //汪湘
+const urls = "http://120.79.117.124/storeApp";
+const urlsR = "http://120.79.117.124/news";     //汪湘
 
-const urls = "http://192.168.0.156/storeApp";    //李子
-const urlsR = "http://192.168.0.156:6100";     //汪湘
+// const urls = "http://192.168.0.156/storeApp";    //李子
+// const urlsR = "http://192.168.0.156:6100";     //汪湘
 
 
 // const urls = "http://buypb.e1.luyouxia.net:28708/storeApp"
@@ -69,6 +69,7 @@ export const interfaceUrls = {
     getReplyTabCommentsPage: urlsR +"/tabComments/getReplyTabCommentsPage", //获取评论里的回复数据
     queryTabColumnList: urlsR +"/tabColumn/queryTabColumn",              //查询顶部栏目
     getCouponList: urls +"/acticity/queryCoupon",       //获取
+    changeLocation: urls +"/storeInfo/modifiedAddress",    //修改地理坐标
 
 }
 
