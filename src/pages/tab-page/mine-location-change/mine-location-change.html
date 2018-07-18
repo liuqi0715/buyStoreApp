@@ -1,0 +1,23 @@
+
+
+<ion-header>
+    <ion-navbar id="titlePrice">
+      <ion-title>
+      修改门店位置
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content>
+<!-- <p>????</p> -->
+    <div class="contain">
+          <div id="od_map_tip">地理位置仅可修改一次。</div>
+      <div id="map" #map></div>
+      <div (click)="getLocal()" class="ml_local">
+          <img src="assets/img/wallet/localtion.png" alt="">
+      </div>
+<button ion-button class="btn" (click)="next()" block>确认修改</button>
+    </div>
+</ion-content>
+
+

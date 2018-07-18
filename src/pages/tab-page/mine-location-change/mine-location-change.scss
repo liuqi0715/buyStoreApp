@@ -1,0 +1,110 @@
+page-mine-location {
+
+
+    .toolbar-background-md{
+        background-color: #0EAF9D;
+    }
+    .toolbar-title-md{
+        color: white;
+    }
+    .bar-button-default-md{
+        color: white;
+    }
+    .scroll-content{
+        background-color:#0EAF9D;
+        margin-top: 1.08rem !important;
+    }
+    .header-md::after{
+        background-image: none;
+    }
+    .contain{
+    // width: 90%;
+    height: 100%;
+    background-color: white;
+    /* margin: 5px auto; */
+    border-radius: 3px;
+    padding-top: 1px;
+    position: relative;
+
+    }
+
+
+    #map{
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: hidden;
+      margin:0;
+      font-family:"微软雅黑";
+
+    }
+
+    .toogle-title{
+        height: .8rem;
+        line-height: .8rem;
+        font-size: .24rem;
+        text-align: center;
+    }
+    .icon-close {
+        height: .5rem;
+        width: .5rem;
+        line-height: 25px;
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: .2rem;
+        font-size: .4rem;
+    }
+  #od_map_tip{
+        position: absolute;
+        padding: .1rem .2rem;
+        top: .06rem;
+        left: 50%;
+        border-radius: .6rem;
+        font-size: .24rem;
+        width: 4.6rem;
+        height: .5rem;
+        text-align: center;
+        color: #F0A767;
+        transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.9);
+        z-index: 1000;
+
+  }
+  .btn,
+  .btn:hover {
+    width: 90%;
+    margin: .3rem auto;
+    background-color: #0DAF90;
+    font-size: .25rem;
+    color: white;
+    height: .8rem !important;
+    position: absolute;
+    bottom: .25rem;
+    left: 5%;
+
+  }
+
+.ml_local{
+    width: .6rem;
+    height: .6rem;
+    position: absolute;
+    bottom: 2.5rem;
+    left: 2%;
+    background: white;
+    border-radius: 50%;
+
+}
+.ml_local img{
+  width: .4rem;
+  margin-left: .1rem;
+  margin-top: .1rem;
+
+}
+
+
+}
