@@ -4,8 +4,8 @@
 // exports.SELLINFO_URL = 'http://192.168.0.16:6020/home/getView';
 
 
-const urls = "http://120.79.117.124/storeApp";
-// const urls = "http://192.168.0.156/storeApp";    //李子
+// const urls = "http://120.79.117.124/storeApp";
+const urls = "http://192.168.0.156/storeApp";    //李子
 
 export const SELLINFO_URL = urls+'/home/getView';
 export const SELLORDER_URL =  urls+'/orderInfoController/selectOrder';
