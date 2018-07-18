@@ -56,7 +56,7 @@ li{
 }
 .bottomBar_l{
 	float: left;
-	padding-top: 8px; 
+	padding-top: 8px;
 }
 .bottomBar_l p{
 	line-height: .24rem;
@@ -118,7 +118,7 @@ li{
 	border-radius: .12rem;
 	margin: .24rem auto;
 	box-shadow: .02rem .02rem .08rem rgba(0,0,0,.3);
-} 
+}
 .oc_box_nav{
 	background: #66CCCC;
 	height: 1rem;
@@ -357,7 +357,7 @@ ion-app{
 	right: 0;
 	border-radius:0;
 	text-align: center;
-	max-width: 100%; 
+	max-width: 100%;
 }
 .toast-ios .toast-wrapper.toast-bottom{
 	bottom: -.05rem;
@@ -438,7 +438,7 @@ ion-infinite-scroll{
 }
 
 .list-ios > .item-block:first-child{
-	border-top:none !important; 
+	border-top:none !important;
 }
 //下拉选框
 .alert-ios [aria-checked=true] .alert-radio-label{
@@ -522,6 +522,17 @@ text-align: initial;
 color: black !important;
 margin-top: .2rem;
 }
+
+ion-app,
+ion-nav,
+ion-tab,
+ion-tabs,
+.app-root,
+.ion-page {
+  contain: none !important;
+}
+
+
  @media only screen and (max-width: 1280px) and (max-device-height:800px) {
  html,body {
      font-size:100px !important;
