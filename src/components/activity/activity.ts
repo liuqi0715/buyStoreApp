@@ -62,7 +62,6 @@ export class ActivityComponent {
         $(".tabs-ios .tabbar").css({ "display": "" });
         browser.on("loadstart").subscribe(
             (res) => {
-                // Handle url checking and body parsing here
                 console.log('event exit with' + res);
                 $(".tabs-ios .tabbar").css({ "display": "" });
             },
