@@ -163,6 +163,27 @@ mine-coupon-page {
      font-size: .2rem;
    }
  }
+ #mc_withdraw{
+   width: 150px;
+   height: 30px;
+   background: red;
+   text-align: center;
+   line-height: 30px;
+   margin: 0 auto;
+   border-radius: 3px;
+ }
+
+
+   .main-wrap {
+     margin: 0 auto;
+     min-width: 320px;
+     max-width: 640px;
+   }
+
+   .main-wrap video {
+     width: 100%;
+   }
+
 
 
 }

@@ -12,6 +12,7 @@ import {UserLogin} from "../../../modules/user-login/user-login";
 import { servicesInfo } from '../../../providers/service-info';
 import { interfaceUrls } from "../../../providers/serviceUrls";//接地址
 declare var $;
+declare var larkplayer;
 
 @Component({
   selector: 'mine-coupon-page',
@@ -34,9 +35,18 @@ export class myCouponPage {
     private app: App,
     ) {
   }
-
+  wantWithdraw=false;
   ionViewDidEnter(){
-    this.getCouponList()
+    this.getCouponList();
+    // const player = larkplayer("video-el", {
+
+    // }, () => {
+    // });
+    // setTimeout(function () {
+    //   console.log($("#wd_keybord"))
+    //   $("#wd_keybord ul li").css({ "width": ($("window").width() - 2) / 3 })
+    // }, 50);
+
   }
   ionViewDidLoad(){
 
@@ -77,6 +87,26 @@ export class myCouponPage {
       });
   }
 
+  /**
+   * 提現部分
+   */
 
+  wantDraw(){
+    this.wantWithdraw=true;
 
+    setTimeout(function() {
+      console.log($(window).width());
+
+      // $("#wd_keybord").find('li').width(($(window).width() - 2) / 3 );
+      $("#wd_keybord").find('li').css({"width":100/3+"%"});
+    }, 50);
+
+  }
+  /**
+   * 接收子组件中的数据变化
+   *
+   */
+  stateChange($event){
+    this.wantWithdraw = false;
+  }
 }
