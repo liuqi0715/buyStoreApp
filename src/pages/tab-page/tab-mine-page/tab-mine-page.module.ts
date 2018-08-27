@@ -16,6 +16,7 @@ import { myAccountPage } from "../mine-account-page/mine-account-page";
 import { BankInfoPage } from "../../wallet/wallet-bankInfo-page/wallet-bankInfo-page"
 import { myCouponPage} from '../mine-coupon-page/mine-coupon-page';
 import { mineLocationChange } from '../mine-location-change/mine-location-change';
+import { WithdrawComponent } from "../../../components/withdraw/withdraw"
 // import { StatusBar } from '@ionic-native/status-bar';
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { mineLocationChange } from '../mine-location-change/mine-location-change
     myAccountPage,
     BankInfoPage,
     myCouponPage,
-    mineLocationChange
+    mineLocationChange,
+    WithdrawComponent
   ],
   imports: [
     IonicPageModule,
@@ -59,7 +61,8 @@ import { mineLocationChange } from '../mine-location-change/mine-location-change
     myAccountPage,
     BankInfoPage,
     myCouponPage,
-    mineLocationChange
+    mineLocationChange,
+    WithdrawComponent
 
   ]
 })
