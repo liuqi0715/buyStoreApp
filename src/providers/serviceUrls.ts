@@ -1,14 +1,8 @@
 
 
-const urls = "http://120.79.117.124/storeApp";
-const urlsR = "http://120.79.117.124/news";     //汪湘
+const urls ="代码保密"
 
-// const urls = "http://192.168.0.156/storeApp";    //李子
-// const urlsR = "http://192.168.0.156:6100";     //汪湘
-
-
-// const urls = "http://buypb.e1.luyouxia.net:28708/storeApp"
-// const urlsR = "http://buypb.e1.luyouxia.net:28708/news"
+const urlsR = "daimabaomi"
 
 
 export const interfaceUrls = {
