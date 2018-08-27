@@ -1,0 +1,42 @@
+<div class="withdraw" *ngIf='withdraw'>
+    <div id="wd_contentbox">
+        <div id="wd_passwordbox">
+            <div id="wd_topInfo">
+                <span (click)='close()' id="wd_close">X</span>
+                请输入支付密码
+            </div>
+            <div id="wd_cenInfo">
+                <p>提现</p>
+                <p>￥5000.00</p>
+                <p>额外扣除￥10.55手续费</p>
+                <div id="wd_password">
+                    <ul>
+                      <li> <div class="cricle"></div></li>
+                      <li > <div class="cricle"></div></li>
+                      <li> <div class="cricle"></div></li>
+                      <li> <div class="cricle"></div></li>
+                      <li><div class="cricle"></div></li>
+                      <li><div class="cricle"></div></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="wd_keybord">
+            <ul (click)="writePwd($event)">
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+              <li>4</li>
+              <li>5</li>
+              <li>6</li>
+              <li>7</li>
+              <li>8</li>
+              <li>9</li>
+              <li></li>
+              <li>0</li>
+              <li (click)="delectPwd()"><img src="assets/img/withdraw/delect.png" alt=""></li>
+            </ul>
+        </div>
+    </div>
+    <p>提現页面</p>
+</div>
