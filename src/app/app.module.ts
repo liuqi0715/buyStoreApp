@@ -41,6 +41,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Keyboard } from '@ionic-native/keyboard';
 import { AppUpdate } from '@ionic-native/app-update';
+// import { AddressComponent} from '../components/addressSelect/addressSelect';
 //我的钱包页面
 
 @NgModule({
@@ -53,7 +54,8 @@ import { AppUpdate } from '@ionic-native/app-update';
     UserRegAddress,
     UserAgreement,
     UserPwdFind,
-    UserOpenAccount
+    UserOpenAccount,
+    // AddressComponent
   ],
   imports: [
     LazyLoadImageModule,
@@ -86,7 +88,8 @@ import { AppUpdate } from '@ionic-native/app-update';
     UserRegAddress,
     UserAgreement,
     UserPwdFind,
-    UserOpenAccount
+    UserOpenAccount,
+    // AddressComponent
   ],
   providers: [
     Data,

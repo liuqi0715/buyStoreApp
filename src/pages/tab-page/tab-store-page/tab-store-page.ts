@@ -63,9 +63,13 @@ export class TabStore {
         browser.close();
         console.log('wvent',event);
       }
-    }
+    });
+    // var domain = 'http://192.168.0.156:8019/h5/index.html';
+    // var myPopup = window.open(domain, 'myWindow');
+    // var message = 'Hello!  The time is: ' + (new Date().getTime());
+    // myPopup.postMessage(message, domain);
+    // console.log('tag', myPopup.postMessage)
 
-    )
   }
   toast(actions) {
     let toast = this.toastCtrl.create({

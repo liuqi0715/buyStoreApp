@@ -190,7 +190,7 @@ export class UserRegInfo {
 
         }
 
-        // this.navCtrl.push(UserRegister)        //仅做测试用，正式环境需要注释
+         this.navCtrl.push(UserRegister)        //仅做测试用，正式环境需要注释
 
     }
     findPasswordCode(){

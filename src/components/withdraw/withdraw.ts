@@ -28,12 +28,12 @@ export class WithdrawComponent {
     public iab: InAppBrowser,
     public servicesInfo: servicesInfo,
   ) {
-    console.log('Hello WithdrawComponent Component');
+  
 
   }
   ngOnInit() {
     // console.log(this.withdraw,"withdraw");    // 父组件内传入的值或者我们自己设置的初始值0
-    console.log($("#wd_keybord"))
+   
     $("#wd_keybord ul li").css({ "width": ($("window").width() - 2) / 3 })
   }
   ionViewDidEnter(){

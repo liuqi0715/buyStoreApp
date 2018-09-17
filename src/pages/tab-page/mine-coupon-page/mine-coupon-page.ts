@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component,ViewChild} from '@angular/core';
 import { Http,Response } from '@angular/http';
 import { NavController, NavParams} from 'ionic-angular';
 import { urlService } from "../../../providers/urlService";
@@ -11,6 +11,7 @@ import { App } from 'ionic-angular';
 import {UserLogin} from "../../../modules/user-login/user-login";
 import { servicesInfo } from '../../../providers/service-info';
 import { interfaceUrls } from "../../../providers/serviceUrls";//接地址
+import { AddressComponent } from '../../../components/addressSelect/addressSelect';
 declare var $;
 declare var larkplayer;
 
@@ -18,8 +19,9 @@ declare var larkplayer;
   selector: 'mine-coupon-page',
   templateUrl: 'mine-coupon-page.html',
 })
-
+ 
 export class myCouponPage {
+  @ViewChild("Address") AddressCom : AddressComponent;
   CouponList:any=[]; //优惠卷信息
 
   constructor(
@@ -36,20 +38,21 @@ export class myCouponPage {
     ) {
   }
   wantWithdraw=false;
+  isDisappear:boolean;
+  isEdit = {
+    city:"深圳市",
+    district: "龙岗区",
+    province: "广东省",
+    street: "五和南路",
+    streetNumber:"41号"
+  };
   ionViewDidEnter(){
+   
     this.getCouponList();
-    // const player = larkplayer("video-el", {
-
-    // }, () => {
-    // });
-    // setTimeout(function () {
-    //   console.log($("#wd_keybord"))
-    //   $("#wd_keybord ul li").css({ "width": ($("window").width() - 2) / 3 })
-    // }, 50);
 
   }
   ionViewDidLoad(){
-
+ 
   }
   toast(actions){
     let toast = this.toastCtrl.create({
@@ -59,6 +62,9 @@ export class myCouponPage {
 
     });
     toast.present();
+  }
+  touchPickerShow(){
+    this.AddressCom.show(this.isEdit);
   }
   getCouponList(){
     let params = {
@@ -70,7 +76,7 @@ export class myCouponPage {
     let self = this;
     this.urlService.postDatas(interfaceUrls.getCouponList, params)
       .then(function (resp) {
-        //  console.log("1",resp);
+       
         if (resp) {
           if (resp.errorinfo == null) {
             self.CouponList =  resp.data.listConpon;
@@ -97,7 +103,7 @@ export class myCouponPage {
     setTimeout(function() {
       console.log($(window).width());
 
-      // $("#wd_keybord").find('li').width(($(window).width() - 2) / 3 );
+     
       $("#wd_keybord").find('li').css({"width":100/3+"%"});
     }, 50);
 
@@ -109,4 +115,10 @@ export class myCouponPage {
   stateChange($event){
     this.wantWithdraw = false;
   }
+
+  addressPinker($event){
+    console.log('tag', $event);
+  }
+
+
 }

@@ -18,6 +18,7 @@ import { myCouponPage} from '../mine-coupon-page/mine-coupon-page';
 import { mineLocationChange } from '../mine-location-change/mine-location-change';
 import { WithdrawComponent } from "../../../components/withdraw/withdraw"
 // import { StatusBar } from '@ionic-native/status-bar';
+import { AddressComponent } from '../../../components/addressSelect/addressSelect';
 @NgModule({
   declarations: [
     TabMine,
@@ -36,14 +37,16 @@ import { WithdrawComponent } from "../../../components/withdraw/withdraw"
     BankInfoPage,
     myCouponPage,
     mineLocationChange,
-    WithdrawComponent
+    WithdrawComponent,
+    AddressComponent
   ],
   imports: [
     IonicPageModule,
 
   ],
   exports: [
-    IonicPageModule
+    IonicPageModule,
+    AddressComponent    //因为这里注入了组件，app.moudles.js里面不用注入，但是需要exports即可
   ],
   entryComponents:[
     TabMine,
@@ -62,7 +65,8 @@ import { WithdrawComponent } from "../../../components/withdraw/withdraw"
     BankInfoPage,
     myCouponPage,
     mineLocationChange,
-    WithdrawComponent
+    WithdrawComponent,
+    AddressComponent
 
   ]
 })

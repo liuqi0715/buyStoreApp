@@ -27,10 +27,16 @@
       <!-- <video id="video-el" src="https://baikebcs.bdimg.com/baike-other/big-buck-bunny.mp4"
        playsinline webkit-playsinline></video> -->
 
-       <!-- <div id="mc_withdraw" (click)="wantDraw()">
+       <div id="mc_withdraw" (click)="wantDraw()">
          提現.
        </div>
-       <withdraw [withdraw]='wantWithdraw'  (change)="stateChange($event)"></withdraw> -->
+        <div class="form-item" (click)="touchPickerShow()">
+            
+              所在地区
+          </div>
+       <withdraw [withdraw]='wantWithdraw'  (change)="stateChange($event)"></withdraw>
+
+       <address-piker (pinkerAdd)="addressPinker($event)"  #Address></address-piker>   
 
 </ion-content>
 
