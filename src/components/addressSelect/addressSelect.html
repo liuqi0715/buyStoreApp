@@ -1,0 +1,59 @@
+
+
+  <!--<p>{{text}}</p>-->
+  <!-- Picker -->
+ 
+<!-- -->
+  <div id="addressFixed"  *ngIf="isDisappear">
+    <p class="addTips" *ngIf="addTips">
+      正在为您智能匹配地址...
+    </p>
+    <p class="addTips" *ngIf="!addTips">
+      已为您智能匹配推荐地址。
+    </p>
+    <div class="toogle-address">
+      <div class="toogle-title">
+        请选择您的地址
+        <span class="icon-close" (click)="hide()">×</span>
+      </div>
+      <div id="address2">
+  
+        <div class="address-header">
+          <span class="provice " (click)="provice()" [ngClass]="{'address-now': hasPro == true}">{{proSNAME||"请选择"}}</span>
+          <span class="city" (click)="city()" *ngIf="hasSECity" [ngClass]="{'address-now': hasCity == true}">{{citySNAME||"请选择"}}</span>
+          <span class="area" (click)="area()" *ngIf="hasSEArea" [ngClass]="{'address-now': hasArea == true}">{{areaSNAME||"请选择"}}</span>
+          <span class="town" (click)="town()" *ngIf="hasSETown" [ngClass]="{'address-now': hasTown == true}">{{townSNAME||"请选择"}}</span>
+          <span class="stree" (click)="stree()" *ngIf="hasSEStree" [ngClass]="{'address-now': hasStree == true}">{{streeSNAME||"请选择"}}</span>
+        </div>
+        <!-- onclick="address(this)" -->
+        <div id="address-info">
+          <ul id="provice">
+            <li *ngFor="let pro of provinceList" (click)="selectPro(pro.provinceName,pro.provinceId,pro)">
+              <span [ngClass]="active==pro.provinceId?'btn-default':'btn-primary'"> {{pro.provinceName}}</span>
+            </li>
+          </ul>
+          <ul id="city">
+            <li *ngFor="let city of cityList" (click)="selectCity(city.cityName,city.cityId,city)">
+              <span [ngClass]="activeCity==city.cityId?'btn-default':'btn-primary'"> {{city.cityName}}</span>
+            </li>
+          </ul>
+          <ul id="area">
+            <li *ngFor="let area of areaList" (click)="selectArea(area.areaName,area.areaId,area)">
+              <span [ngClass]="activeArea==area.areaId?'btn-default':'btn-primary'"> {{area.areaName}}</span>
+            </li>
+          </ul>
+          <ul id="town">
+            <li *ngFor="let stree of streetList " (click)="selectTown(stree.stName,stree.stId,stree)">
+              <span [ngClass]="activeStree==stree.stId?'btn-default':'btn-primary'"> {{stree.stName}}</span>
+            </li>
+          </ul>
+          <ul id="stree">
+            <li *ngFor="let country of countryList" (click)="selectCountry(country.countryName,country.countryId,1)">
+              <span [ngClass]="activeCountry==stree.countryId?'btn-default':'btn-primary'"> {{country.countryName}}</span>
+            </li>
+          </ul>
+        </div>
+        <img src="assets/img/login/loading.gif" alt="" *ngIf="loading" class="loading">
+      </div>
+    </div>
+  </div>

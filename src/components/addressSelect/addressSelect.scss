@@ -1,0 +1,285 @@
+address-piker{
+
+ #addressFixed{
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 99;
+        opacity: 1;
+    }
+    .toogle-title{
+        height: 40px;
+        line-height: 40px;
+        font-size: 12px;
+        text-align: center;
+    }
+    .icon-close{
+        height: 25px;
+        width: 25px;
+        line-height: 25px;
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 20px;
+    }
+    #address2{
+        position: relative;
+    }
+    .header-md::after{
+        background-image: none;
+    }
+    .contain{
+        width: 90%;
+        height: 11rem;
+        background-color: white;
+        margin: 5px auto;
+        border-radius: 3px;
+        padding-top: 1px;
+    }
+    .btn, .btn:hover {
+        width: 90%;
+        margin: .3rem auto;
+        background-color: #0DAF90;
+        font-size: .25rem;
+        color: white;
+        height: .8rem !important;
+      }
+      #map{
+        width: 100%;
+        height: 5.8rem;
+        display: block;
+        overflow: hidden;
+        margin:0;
+        font-family:"微软雅黑";
+
+    }
+    #cityPiker,#cityPiker2{
+        width: 90%;
+        height: 90px;
+        line-height: 30px;
+        text-indent: 16px;
+        margin: 10px auto;
+        border: 1px solid #D4D4D4;
+        border-radius: 2px;
+
+    }
+    .cityPiker{
+        width: 90%;
+        font-size: .25rem;
+        margin-left: 5%;
+        height: .8rem;
+        text-align: center;
+        line-height: .8rem;
+        // border: 1px solid #D4D4D4;
+        text-indent: .25rem;
+        border-radius: 2px;
+    }
+    .cityPiker input{
+        width: 100%;
+        height: 100%;
+        float: left;
+        border: 1px solid #D4D4D4;
+        text-indent: .25rem;
+    }
+    .item-md{
+        width: 90%;
+        height: 30px;
+        border: 1px solid #E8E8E8;
+        margin: 15px auto;
+    }
+    .item-cover{
+        height: 30px;
+    }
+    #cityPiker{
+        width: 90%;
+        height: 30px;
+        margin: 10px auto;
+    }
+    #addressIn{
+        text-indent: .25rem;
+        font-size: .25rem;
+        height: .8rem;
+        line-height: .8rem;
+    }
+
+
+    //五级联动样式部分
+
+    #addressFixed{
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 99;
+        opacity: 1;
+    }
+    .toogle-address{
+        height: 6rem;
+        width: 100%;
+
+        background: white;
+        position: fixed;
+        z-index: 99;
+        bottom: 0rem;
+        left: 0;
+    }
+    .toogle-title{
+        height: .8rem;
+        line-height: .8rem;
+        font-size: .24rem;
+        text-align: center;
+    }
+    .icon-close {
+        height: .5rem;
+        width: .5rem;
+        line-height: 25px;
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: .2rem;
+        font-size: .4rem;
+    }
+    .address-now::after {
+        position: absolute;
+        content: "";
+        left: 0;
+        bottom: 0px;
+        background: red;
+        height: 2px;
+        width: 100%;
+    }
+    #chose{
+        width: 90%;
+        margin: 20px auto;
+        height: .8rem;
+        font-size: .25rem;
+        text-align: center;
+        /* background: red; */
+        line-height: .8rem;
+        border: 1px solid #D4D4D4;
+        border-radius: 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    #address-info{
+        /* overflow-y: hidden; */
+        width: 500%;
+        overflow-y: scroll;
+    }
+    #address-info ul{
+        width: 20%;
+        height: 5rem;
+        float: left;
+        padding-top: 5px;
+        padding: 13px;
+        overflow-x: scroll;
+        padding-top: 0;
+
+    }
+    ul li{
+        font-size: .25rem;
+        list-style: none;
+        line-height: .7rem;
+    }
+    ul li:last-child{
+        margin-bottom: .5rem;
+    }
+    .provice,.city,.area,.town,.stree{
+        position: relative;
+    }
+    .noMarginTop{
+        bottom: 0;
+    }
+    #address2{
+        position: relative;
+    }
+    .loading{
+        width: .4rem;
+        height: .4rem;
+        position: absolute;
+        left: 45%;
+        top: 45%;
+        z-index: 999;
+    }
+    .address-header{
+
+        height: .8rem;
+        line-height: 1.2rem;
+        padding-left: .1rem;
+        z-index: 99;
+    }
+    .address-header span{
+        height: .8rem;
+        font-size: .25rem;
+        margin-left: .2rem;
+        float: left;
+        max-width: 2rem;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+    }
+    .more{
+        height: 100%;
+        float: right;
+        vertical-align: middle;
+    }
+    .BMap_Marker {
+        width: .4rem;
+        height: .5rem;
+    }
+    .red{
+        color: red;
+    }
+    $text-input-placeholder-color:(#D4D4D4);
+    ion-input{
+        height: 100%;
+
+    }
+    .text-input-ios{
+        margin: 0;
+        @include placeholder(#B0B0B0,.25rem);
+    }
+    .btn-default{
+       color: red;
+    }
+    .btn-primary{
+
+       color: black;
+
+    }
+    
+    .addTips img{
+      width: .4rem;
+    }
+    .addTips{
+      width: 100%;
+      position: absolute;
+      bottom: 6.5rem;
+      color: white;
+      text-align: center;
+      height: .4rem;
+      line-height: .4rem;
+
+    }
+    .addTips{
+      width: 100%;
+      position: absolute;
+      bottom: 6.5rem;
+      color: white;
+      text-align: center;
+      height: .4rem;
+      line-height: .4rem;
+    }
+
+}
