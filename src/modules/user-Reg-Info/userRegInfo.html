@@ -9,7 +9,7 @@
   </ion-header>
 
 <ion-content>
-<!-- <p>????</p> -->
+  
     <div class="contain">
             <img src="assets/img/login/logo2.png" alt="" class="logo">
           <div class="ulInput">
@@ -32,13 +32,9 @@
                 </li>
             </ul>
             <div id="getCode">
-                <!-- <span  class="yzm-btn" (click)="findPasswordCode()" *ngIf="!hasClick">{{hq}}</span>
-                <span  class="yzm-btn" disabled *ngIf="hasClick">{{num}}s</span> -->
                 <button class="yzm-btn" (click)="findPasswordCode()" [disabled]="!verifyCode.disable">{{verifyCode.verifyCodeTips}}</button>
         </div>
         </div>
-
-
             <p class="errorTip" *ngIf="errorTip">{{errorTipMsg}}</p>
             <p style="text-align:center;" class="agreeI"> <input type="checkbox" [(ngModel)]="agreeI" (click)="agree()"> <span (click)="showAlert()"> 阅读并同意 <a href="javascript:void(0);" style="text-decoration: none;" >《用户协议》</a> </span> </p>
             <button ion-button class="btn" (click)="next()" block>下一步</button>
@@ -46,7 +42,6 @@
     <div class="motai" *ngIf="hasSuccess">
           <img src="assets/img/login/loading.gif" alt="" id="loading">
     </div>
-    <!-- <input type="file"> -->
 </ion-content>
 
 
