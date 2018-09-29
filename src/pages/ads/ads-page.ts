@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { addCardPage } from "../wallet/wallet-addCard-page/wallet-addCard-page";
 import { changePhonePage } from "../wallet/wallet-phone-page/wallet-phone-page";
-// import { changePasswordPage } from "../wallet/wallet-password-page/wallet-password-page";
 import { WalletMoney } from "../wallet/wallet-money-page/wallet-money-page";
 import { BalancePage } from "../wallet/wallet-balance-page/wallet-balance-page";
 import { rechargePage } from "../wallet/wallet-recharge-page/wallet-recharge-page";
@@ -17,8 +16,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';//打开页面
   templateUrl: 'ads-page.html'
 })
 export class adsPage {
- 
-  
+
+
   constructor(public navCtrl: NavController,
             public urlService: urlService,
             public toastCtrl: ToastController,
@@ -41,16 +40,14 @@ export class adsPage {
         message: actions,
         duration: 3000,
         position:'bottom'
-  
+
       });
       toast.present();
     }
-
-
     ionViewWillEnter(){
       let params= {
          "data":{
-            "platform":1, 
+            "platform":1,
          },
          "token":this.servicesInfo.token
        }
@@ -86,19 +83,17 @@ export class adsPage {
                 self2.bankCardNo = ((resp.data.bankInfo[i].bankCardNo).substr(-4))
                 self2.bankCardNo2 = ((resp.data.bankInfo[i].bankCardNo).substring(0,4))
                 self2.bankName = resp.data.bankInfo[i].bankName
-                    }        
+                    }
             }
            }
-              
+
          }else{
            self.toast(resp.errorinfo.errormessage);
          }
      }
     });
 
-
   }
-
     getMore(){
       this.listP = true;
       this.getMoreInfo = true;
@@ -119,17 +114,12 @@ export class adsPage {
     changePhone(){
       this.listP = false;
     }
-    // changeCard(){
-    //   this.listP = false;
-    // }
+
     needHelp(){
       this.listP = false;
     }
     goBalance(){
-     
-        this.navCtrl.push(BalancePage)
-      
-        
+      this.navCtrl.push(BalancePage)
     }
     getMo(){
       if(this.hasNoCard==true){
@@ -139,7 +129,7 @@ export class adsPage {
       }else{
         this.toast("您还没有添加过银行卡");
       }
-     
+
     }
     listRecord(){
       this.navCtrl.push(WalletMoney)
@@ -150,8 +140,6 @@ export class adsPage {
     //修改交易密码
 
     editPassword(){
-
-      // this.navCtrl.push(changePasswordPage);
       let param2 = {
         "data":{
           "platform":1,
@@ -162,16 +150,12 @@ export class adsPage {
       this.urlService.postDatas(interfaceUrls.changePayPwd,param2).then(function(resp){
        if(resp){
            if(resp.errorinfo==null){
-            console.log(resp,"??")
             const browser = self.iab.create(resp.data.resultUrl,"_self","location=no");
             browser.on("exit").subscribe(
               (res) => {
-                // Handle url checking and body parsing here
                 console.log('event exit with' + res);
-
                },
                (error) => {
-                // Handle error here
                 console.log(error);
                }
                );
@@ -180,14 +164,11 @@ export class adsPage {
            }
        }
       });
-
     }
     //修改绑定手机号
     editPhone(){
       this.navCtrl.push(changePhonePage);
-    
-    }
-    editBankNo(){
 
     }
+
 }
