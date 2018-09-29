@@ -1,5 +1,4 @@
 
-
 <ion-header>
     <ion-navbar id="titlePrice">
       <ion-title>
@@ -7,36 +6,16 @@
       </ion-title>
     </ion-navbar>
   </ion-header>
-
 <ion-content>
-<!-- <p>????</p> -->
     <div class="contain">
     <p id="addressIn">填写地址信息</p>
       <div id="map" #map></div>
-      <!-- <div class="cityPiker2">
-          <city-picker item-content
-          [cancelText]="'取消'"
-          [doneText]="'完成'"
-          [separator]="' - '"
-          [citiesData]="cityData"
-          [(ngModel)]="cityName"
-          (ionChange)="cityChange($event)"
-          class='city_picker'>
-          </city-picker>  -->
-      <!-- </div> -->
-
             <p id="chose" (click)="getFiveAddress()"> {{pcar==null ? "请选择地址" : pcar}}  <img alt="" src="assets/img/login/gengduo.png" class="more"></p>
-            <!-- <p class="cityPiker"> <input type="text" [(ngModel)]="addresInfo2" placeholder="请输入详细地址"></p> -->
             <p class="cityPiker">  <ion-input type="text" [(ngModel)]="addresInfo2"  autocomplete="on" placeholder="请输入详细地址" class="plcolor" ></ion-input></p>
-          <!-- <p>您的参考地址：{{addresInfo2}}</p> -->
-
-
-            <!-- <p id="chose" (click)="fiveAddress()">请选择地址》》</p> -->
             <button ion-button class="btn" (click)="next()" block>下一步</button>
     </div>
     <!-- 五级联动地址插件 -->
     <address-piker (pinkerAdd)="addressPinker($event)" #Address></address-piker>
-
 </ion-content>
 
 

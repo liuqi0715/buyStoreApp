@@ -2,10 +2,8 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {UserRegister} from "../user-register/user-register "
 import { ToastController } from 'ionic-angular';
-
 import {Http,Headers} from '@angular/http';
 import { interfaceUrls }from "../../providers/serviceUrls";//接地址
-
 import { AlertController } from 'ionic-angular';    //注册协议
 import { Network } from '@ionic-native/network';
 import {UserAgreement} from "../user-agreement/user-agreement"
@@ -14,7 +12,6 @@ import { urlService } from "../../providers/urlService";
 import {TabMine} from "../../pages/tab-page/tab-mine-page/tab-mine-page";
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { addCardPage } from "../../pages/wallet/wallet-addCard-page/wallet-addCard-page";
-
 @Component({
     selector: 'page-UserOpenAccount',
     templateUrl: 'userOpenAccount.html',
@@ -42,21 +39,21 @@ export class UserOpenAccount {
     hasNotLinsceNum=true;    //输入框显示
     offline:boolean=false;
     /**
-     * 
      * @param actions 
      * 判断开户是否有相关信息
      */
     hasCompany=true;    //默认不能输入公司名称
     hasOperName=true;   //默认不能输入法人名称
     hasLinsceNum=true;    //默认存在社会信用代码
-/**
- * 
- * @param actions 
- * 另外一种情况
- */
-// hasCompany=false;    //默认不能输入公司名称
-// hasOperName=false;   //默认不能输入法人名称
-// hasLinsceNum=false;    //默认存在社会信用代码
+    /**
+     * 
+     *
+    另外一种情况
+    hasCompany=false;    //默认不能输入公司名称
+    hasOperName=false;   //默认不能输入法人名称
+    hasLinsceNum=false;    //默认存在社会信用代码
+     */
+  
     toast(actions){
     let toast = this.toastCtrl.create({
         message: actions,
@@ -77,7 +74,6 @@ export class UserOpenAccount {
     //将注册成功返回的识别信息（营业执照号码返回并赋值）
     checkNetwork(){
         let self = this;
-    
         self.network.onDisconnect().subscribe(()=>{
               self.offline=true; 
               self.toast('无网络连接，请检查');
@@ -88,17 +84,14 @@ export class UserOpenAccount {
     
       }
     ionViewWillEnter(){
-        
         if(this.servicesInfo.creditCode!=null && this.servicesInfo.creditCode!=""){
             this.linsceNum = this.servicesInfo.creditCode;
             this.hasLinsceNum = true;
 
         }else{
-            // this.linsceNum = this.servicesInfo.creditCode;
             this.hasLinsceNum = false;
         }
         if(this.servicesInfo.firmName!=null&&this.servicesInfo.firmName!=""){
-            // this.hasOperName = false;
             this.hasCompany = true;
             this.campanyName = this.servicesInfo.firmName;//公司名称
         }else{
@@ -110,10 +103,6 @@ export class UserOpenAccount {
        }else{
             this.hasOperName = false;
        }
-    //    this.campanyName = this.servicesInfo.firmName;//公司名称
-    //    this.personName = this.servicesInfo.operName;//法人姓名
-    //    this.linsceNum = this.servicesInfo.creditCode;
-        console.log(this.personName,this.campanyName,this.linsceNum);
     }
 
     /**
@@ -163,7 +152,6 @@ export class UserOpenAccount {
                 let params = {
                     "data":{
                         "deviceType":"MOBILE",
-                        // "orgID":this.servicesInfo.orgId,
                         "comName":this.campanyName,
                         "property":"4",
                         "phone":this.personPhone,        //手机号
@@ -183,22 +171,16 @@ export class UserOpenAccount {
                 let self = this;
                 this.urlService.postDatas(interfaceUrls.addUser,params)
                 .then(function(resp){
-                 //  console.log("1",resp);
                  if(resp){
                      if(resp.errorinfo==null){
                         self.hasSuccess=false;  //模态框的显示
-                             //resp.data.url
                              const browser = self.iab.create(resp.data.url,"_self","location=no");
-                             
                             browser.on("exit").subscribe(
                                 (res) => {
-                                // Handle url checking and body parsing here
                                 console.log('event exit with' + res);
-                                // self.navCtrl.push(TabMine);
                                 self.checkOpen();
                                 },
                                 (error) => {
-                                // Handle error here
                                 console.log(error);
                                 }
                                 );
@@ -227,26 +209,19 @@ export class UserOpenAccount {
                 
                 }
                 this.hasSuccess=true;  //模态框的显示
-
-                
                 let self = this;
                 this.urlService.postDatas(interfaceUrls.addUserByNoLogin,params)
                 .then(function(resp){
-                 //  console.log("1",resp);
                  if(resp){
                      if(resp.errorinfo==null){
-                        //   self.navCtrl.push(TabMine);
                         const browser = self.iab.create(resp.data.url,"_self","location=no");
                         self.hasSuccess=false;  //模态框的显示
                        browser.on("exit").subscribe(
                            (res) => {
-                           // Handle url checking and body parsing here
                            console.log('event exit with' + res);
-                        //    self.navCtrl.push(TabMine);
                               self.checkOpen();
                            },
                            (error) => {
-                           // Handle error here
                            console.log(error);
                            }
                            );
@@ -257,18 +232,9 @@ export class UserOpenAccount {
                  }
                });
             }
-         
-
-        
         }
-
     }
-
-    linsceGo(){
-      
-            console.log("临时营业执照");
-
-    }
+   
     //查询开户是否成功
     checkOpen(){
         let params;
@@ -287,7 +253,6 @@ export class UserOpenAccount {
                 "token":this.servicesInfo.token
               }
         }
-        
         let self = this;
         this.urlService.postDatas(interfaceUrls.openAccountQuery2,params)
         .then(function(resp){
@@ -296,9 +261,6 @@ export class UserOpenAccount {
                if(resp.errorinfo==null){
                    if(resp.data.susses=="Y"){
                       if(resp.data.isBindCard==1){
-                        // self.navCtrl.push(WalletPage)
-                        // self.toast("开户成功，已绑定银行卡");
-                        console.log("开户成功，已绑定银行卡");
                        }else if(resp.data.isBindCard==0){
                         self.toast("开户成功，暂未绑定银行卡");
                         self.navCtrl.push(addCardPage)
@@ -306,12 +268,10 @@ export class UserOpenAccount {
                    }else if(resp.data.susses=="N"){
                       self.toast("开户失败");
                    }
-                    
                }else{
                  self.toast(resp.errorinfo.errormessage);
                }
            }
          });
     }
-
 }

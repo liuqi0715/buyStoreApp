@@ -56,10 +56,8 @@ export class UserPwdFind {
         });
         toast.present();
       }
-
-      checkNetwork(){
+    checkNetwork(){
         let self = this;
-
         self.network.onDisconnect().subscribe(()=>{
               self.offline=true;
               self.toast('无网络连接，请检查');
@@ -67,55 +65,38 @@ export class UserPwdFind {
         self.network.onConnect().subscribe(()=>{
               self.offline=false;
         });
-
-      }
-
+    }
     ionViewDidLoad(){
         this.checkNetwork()
     }
-  settime() {
-    console.log("=====")
-    if (this.verifyCode.countdown == 1) {
-      this.verifyCode.countdown = 60;
-      this.verifyCode.verifyCodeTips = "获取验证码";
-      this.verifyCode.disable = true;
-      return;
-    } else {
-      this.verifyCode.countdown--;
+    settime() {
+        if (this.verifyCode.countdown == 1) {
+            this.verifyCode.countdown = 60;
+            this.verifyCode.verifyCodeTips = "获取验证码";
+            this.verifyCode.disable = true;
+            return;
+        } else {
+            this.verifyCode.countdown--;
+        }
+        this.verifyCode.verifyCodeTips = this.verifyCode.countdown + 　"s";
+        setTimeout(() => {
+        this.verifyCode.verifyCodeTips = this.verifyCode.countdown + "s";
+        this.settime();
+        }, 1000);
     }
-
-    this.verifyCode.verifyCodeTips = this.verifyCode.countdown + 　"s";
-    setTimeout(() => {
-      this.verifyCode.verifyCodeTips = this.verifyCode.countdown + "s";
-      this.settime();
-    }, 1000);
-  }
     next(){
         var pwdTest = /^(?![\d]+$)(?![a-zA-Z]+$)(?![-!@#$%^&*()_+.{}`=|\/\[\]\\\'?;\':,<>]+$)[\da-zA-Z-!@#$%^&*()_+.{}`=|\/\[\]\\\'?;\':,<>]{6,32}$/;
         if(!this.userInfo.phone){
-
-            // this.errorTip = true;
-            // this.errorTipMsg = "请输入手机号";
             this.toast("请输入手机号")
         } else if (!(/^1[34578]\d{9}$/.test(this.userInfo.phone))) {
-            // this.errorTip = true;
-            // this.errorTipMsg = "请输入正确的手机号！";
             this.toast("手机号输入有误")
         } else if (this.userInfo.yzm == null || this.userInfo.yzm == "") {
-            // this.errorTip = true;
-            // this.errorTipMsg = "请输入验证码！";
             this.toast("请输入手机验证码")
         } else if (this.userInfo.newPassWord.length < 6 || this.userInfo.newPassWord.length > 32) {
-            // this.errorTip = true;
-            // this.errorTipMsg = "密码长度必须在6-32位之间！";
             this.toast("密码长度只能在6-23位之间");
         } else if (!pwdTest.test(this.userInfo.newPassWord) || !pwdTest.test(this.userInfo.rePassWord)) {
-            // this.errorTip = true;
-            // this.errorTipMsg = "密码只能由字母、数字、特殊字符的两种或三种组合成！";
             this.toast("密码只能由字母、数字、特殊字符的两种或三种组合成！");
         } else if (this.userInfo.newPassWord != this.userInfo.rePassWord) {
-            // this.errorTip = true;
-            // this.errorTipMsg = "两次输入的密码不一致！";
             this.toast("两次输入的密码不一致！")
         } else{
             let params={
@@ -141,66 +122,43 @@ export class UserPwdFind {
                             self.navCtrl.pop();
                         },2000);
                     }else{
-                        console.log(resp,"??")
-                        // self.errorTip = true;
                         self.toast(resp.errorinfo.errormessage)
-                        // self.errorTipMsg = data.errorinfo.errormessage;
                     }
                 }
-
             });
-
         }
-
-            //  this.navCtrl.push(UserRegister)
-
     }
-
     findPasswordCode(){
-        // this.toast("请保证您的信箱能够接收短信")
         if(!this.userInfo.phone) {
-            // this.errorTip = true;
-            // this.errorTipMsg = "请输入手机号";
             this.toast("请输入手机号");
         }else if (!(/^1[34578]\d{9}$/.test(this.userInfo.phone))) {
-            // this.errorTip = true;
-            // this.errorTipMsg = "请输入正确的手机号";
             this.toast("请输入正确的手机号")
         }else{
             let params = { "data":{
                 "mobile": this.userInfo.phone,
             }};
-
             let self = this;
             this.urlService.postDatas(interfaceUrls.findPwdCode,params)
             .then(function(resp){
                 if(resp.errorinfo==null){
                     self.errorTip = false;
                     self.hasClick = true;
-                    // let timer = setInterval(() => {
-                    //     if (self.num == 0) {
-                    //         clearInterval(timer);
-                    //         self.hasClick = false;
-                    //         self.hq = "重新获取";
-                    //         self.num = 60;
-                    //         return;
-                    //     }
-                    //     self.num--;
-                    // }, 1000);
+                    /*let timer = setInterval(() => {
+                        if (self.num == 0) {
+                            clearInterval(timer);
+                            self.hasClick = false;
+                            self.hq = "重新获取";
+                            self.num = 60;
+                            return;
+                        }
+                        self.num--;
+                    }, 1000);*/
                     self.verifyCode.disable = false;
                     self.settime();
                 }else{
-
                     self.toast(resp.errorinfo.errormessage)
-
                 }
            });
-
-
-
-
         }
-
     }
-
 }
