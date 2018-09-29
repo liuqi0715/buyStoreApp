@@ -47,7 +47,7 @@ export class UserRegister {
         private imagePicker: ImagePicker
     )
 {
-    // console.log(this.servicesInfo.latitude,"latitude")
+    
 };
 
     stroe={
@@ -488,11 +488,8 @@ upLoad() {
             this.toast('无网络连接，请检查');
             return;
        }
-
         let regStroe = new RegExp(/^(\W){1,7}$/) ;            //店铺名字
         let regName = new RegExp(/^([\u4e00-\u9fa5]){2,7}$/) ;//姓名
-        // let regPhone= new RegExp(/^[a-zA-Z\d_]{5,}$/);//微信号
-        // [a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}
         if(this.stroe.stroeName==""||this.stroe.stroeName==undefined){
 
             this.toast("请输入正确的店铺名称")
@@ -542,7 +539,6 @@ upLoad() {
 
             this.confirm("请确定您的信息输入正确,这将影响您后续的操作。")
             .then(()=>{
-                // console.log("===");
                 this.hasSuccess = true;
                 this.servicesInfo.stroePerson = this.stroe.stroePerson;
                 let self = this;
@@ -566,7 +562,6 @@ upLoad() {
                 .subscribe(function (data) {
                     if(data.data.msgCode=="Y"){
                         self.toast("注册成功");
-                        // msgCode
                         self.servicesInfo.orgId = data.data.userId    //不确定
                         self.servicesInfo.creditCode = data.data.creditCode;    //社会统一信用代码
                         if(self.servicesInfo.creditCode==null || self.servicesInfo.creditCode==""){
@@ -583,30 +578,23 @@ upLoad() {
                                 self.app.getRootNav().setRoot(UserLogin);
                                 self.servicesInfo.hasRegister = true;
                             },2000)
-
                         }
-
                         self.hasSuccess = false;
                     }else{
                         self.toast(data.errorinfo.errormessage);
                         self.hasSuccess = false;
                     }
-
                 },err=>{
                   self.hasSuccess = false;
                   self.toast("注册失败，请检查网络后重试。");
                   setTimeout(()=>{
                     self.app.getRootNav().setRoot(UserLogin);
                   },2000)
-                }
-
-              )
-
+                })
             })
             .catch(err => {
                     this.toast("操作取消。");
             })
-
         }
     }
     ionViewDidEnter(){
