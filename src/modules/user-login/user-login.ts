@@ -52,7 +52,6 @@ export class UserLogin {
                 private app: App,
                 public urlService: urlService,
             ) {
-                // console.log('Device UUID is: ' + this.device.uuid);
     }
 
     toast(actions){
