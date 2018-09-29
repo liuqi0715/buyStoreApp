@@ -1,9 +1,7 @@
 
 user-login {
-  
-  // *{
-  //   font-size: 16px !important;
-  // }
+
+
   .title {
     text-align: center;
     color: #fff;
@@ -20,7 +18,7 @@ user-login {
     background-color: #0DAF90;
     background-size: cover;
   }
-  
+
   .item {
     margin-bottom: 10px;
     color: #FFFFFF;
@@ -36,7 +34,6 @@ user-login {
   .item ion-label {
     margin: 7px 8px 7px 0 !important;
     font-size: 0.25rem;
-    //min-width:42px;
   }
   .header-ios .toolbar-ios:last-child .toolbar-background-ios{
     border: none;
@@ -60,10 +57,9 @@ user-login {
     line-height: .55rem;
     border-radius: 3px;
     margin-bottom: .5rem;
-    // margin-top: .3rem;
   }
   ion-item {
-    margin-bottom: .2rem !important; 
+    margin-bottom: .2rem !important;
   }
   .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
     border-bottom: 0;
@@ -85,7 +81,6 @@ user-login {
     font-size: .3rem;
     margin: 0 auto;
     margin-bottom: .25rem;
-    /* font-weight: 600; */
     font-family: monospace;
   }
   .findMM {
@@ -101,15 +96,12 @@ user-login {
     text-align: left;
     float: left;
     color: #fff;
-    // text-decoration: underline;
     text-decoration: none;
   }
-  //my---------------------
   #regsiter{
     text-align: center;
     color: white;
     font-size: .3rem;
-    // margin-top: .3rem;
     float: left;
     text-decoration: none;
   }
@@ -121,14 +113,10 @@ user-login {
     color: white;
     text-indent: .25rem;
   }
-
-  
- 
   $text-input-placeholder-color:(white);
   .text-input{
     @include placeholder(white,12px);
   }
-//my-----------------
 
    .loginIcon{
       width: .6rem;
@@ -143,7 +131,6 @@ user-login {
    }
    .regIcon{
         width: .6rem;
-        
         float: left;
         position: relative;
         top: .7rem;
