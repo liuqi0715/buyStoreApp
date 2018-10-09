@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-
 import { InAppBrowser } from '@ionic-native/in-app-browser';//打开页面
 import { servicesInfo } from"../../providers/service-info";//公共信息
-
 declare var $;
 @Component({
   selector: 'activity',
@@ -34,7 +32,6 @@ export class ActivityComponent {
             let self = this;
             setTimeout(function () {
                 self.skipTime--;
-                // console.info('tag', self.skipTime)
                 if (self.skipTime == 0) {
                     self.hasActivity = false;
                     $(".tabs-ios .tabbar").css({ "display": "" })
@@ -47,9 +44,7 @@ export class ActivityComponent {
                 self.initActity();
             }, 1000);
         }
-
     }
-
     skip(){
         $(".tabs-ios .tabbar").css({ "display": "" });
         this.hasActivity = false;
