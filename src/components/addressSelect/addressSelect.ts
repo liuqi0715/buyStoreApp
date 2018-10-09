@@ -491,7 +491,6 @@ selectCountry(countryName, countryId) {
     this.pinkerAdd.emit(this.datas);
     this.isDisappear = false;
 
-
     this.proSNAME = null;
     this.citySNAME = null;
     this.areaSNAME = null;
