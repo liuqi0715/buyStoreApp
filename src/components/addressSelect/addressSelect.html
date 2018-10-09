@@ -1,8 +1,4 @@
 
-
-  <!--<p>{{text}}</p>-->
-  <!-- Picker -->
- 
 <!-- -->
   <div id="addressFixed"  *ngIf="isDisappear">
     <p class="addTips" *ngIf="addTips">
@@ -17,7 +13,7 @@
         <span class="icon-close" (click)="hide()">×</span>
       </div>
       <div id="address2">
-  
+
         <div class="address-header">
           <span class="provice " (click)="provice()" [ngClass]="{'address-now': hasPro == true}">{{proSNAME||"请选择"}}</span>
           <span class="city" (click)="city()" *ngIf="hasSECity" [ngClass]="{'address-now': hasCity == true}">{{citySNAME||"请选择"}}</span>

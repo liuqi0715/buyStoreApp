@@ -11,7 +11,6 @@ declare var $;
 })
 
 export class AddressComponent {
-
     @Output()
     pinkerAdd = new EventEmitter();
     // @Input() isDisappear:boolean;
@@ -54,7 +53,7 @@ export class AddressComponent {
     areaSNAME = null;
     townSNAME = null;
     streeSNAME = null;
-    
+
     active = -1;		//省份选择变色
     activeCity = -1;//城市点击变色
     activeArea = -1;//区域点击变色
@@ -82,18 +81,16 @@ export class AddressComponent {
       public toastCtrl: ToastController,
       private http: Http,
   ) {
-    console.log('Hello AddressComponent Component');  
+    console.log('Hello AddressComponent Component');
     }
 ngOnInit() {
-      this.getProvince()
-    
+      this.getProvince();
 }
 toast(actions) {
       let toast = this.toastCtrl.create({
           message: actions,
           duration: 3000,
           position: 'bottom'
-
       });
       toast.present();
   }
@@ -124,14 +121,11 @@ touchPickerCancel() {
     this.pickerRegions = [];
     this.pickerRegionName = null;
 }
-
-
 /**
  * 新的地区选择逻辑
  */
 show(isEdit=null){
     this.isDisappear = true;
-    
         if (isEdit!==null) {
             this.addTips = true;
             this.isEdit = isEdit
@@ -140,7 +134,6 @@ show(isEdit=null){
             } else {
                 var PARAMS = (this.isEdit);
             }
-          
             if (PARAMS.province) {
                 this.proSNAME = PARAMS.province;
                 console.info(this.proSNAME)
@@ -156,19 +149,15 @@ show(isEdit=null){
                 this.citySNAME = PARAMS.city;
             }
             if (PARAMS.district) {
-                this.areaSNAME = PARAMS.district;  
+                this.areaSNAME = PARAMS.district;
             }
-          
+
         }else{
             console.warn(isEdit)
         }
-
-          
-    
 }
 
 hide(){
-   
     this.isDisappear = false;
 
     this.proSNAME = null;
@@ -182,7 +171,7 @@ hide(){
     this.activeArea = -1;//区域点击变色
     this.activeStree = -1;//乡镇点击变色
     this.activeCountry = -1;//街道点击变色
-   
+
 }
 
 provice() {
@@ -213,7 +202,7 @@ area() {
     $(".area").siblings().removeClass("address-now");
 }
 town() {
-    $("#address-info").animate({ "margin-left": "-300%" }, 300);  
+    $("#address-info").animate({ "margin-left": "-300%" }, 300);
     this.hasCity = false;
     this.hasArea = false;
     this.hasTown = true;
@@ -273,8 +262,6 @@ selectPro(provinceName, provinceId, isClick,location=null) {
     }
     this.active = provinceId;
     this.proSNAME = provinceName;
-
-    
     let params = {
         "data": {
             "provinceId": "" +provinceId + ""
@@ -287,14 +274,14 @@ selectPro(provinceName, provinceId, isClick,location=null) {
             if (data.errorinfo == null) {
                 self.cityList = data.data.cityList
                 if (location!==null) {
-                    
+
                     if (self.cityList.length) {
                         for (var i = 0; i < self.cityList.length; i++) {
                             if (self.citySNAME==self.cityList[i].cityName) {
                                 self.selectCity(self.cityList[i].cityName, self.cityList[i].cityId, null, self.citySNAME);
                                 console.info('location', location)
                             }else{
-                                
+
                             }
                         }
                     }
@@ -306,7 +293,7 @@ selectPro(provinceName, provinceId, isClick,location=null) {
             }
         }, function (err) {
             self.toast("服务器异常，请稍后再试")
-        })   
+        })
 }
 
 /**
@@ -490,13 +477,13 @@ selectTown(stName, stId, isClick) {
             self.toast("服务器异常，请稍后再试")
         })
 }
-selectCountry(countryName, countryId) {    
+selectCountry(countryName, countryId) {
     this.streeSNAME = countryName;
     this.datas.countryId = countryId;
     this.streeSNAME = countryName;
     this.datas.pickerRegionName = this.proSNAME + this.citySNAME + this.areaSNAME + this.townSNAME + this.streeSNAME;
-    this.datas.provice = this.proSNAME; 
-   
+    this.datas.provice = this.proSNAME;
+
     this.datas.city = this.citySNAME;
     this.datas.area = this.areaSNAME;
     this.datas.town = this.townSNAME;
