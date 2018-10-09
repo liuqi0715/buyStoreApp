@@ -4,14 +4,13 @@ import { NavController, NavParams} from 'ionic-angular';
 import { urlService } from "../../../providers/urlService";
 import { ToastController } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
-import{servicesInfo} from"../../../providers/service-info"
+import {servicesInfo} from"../../../providers/service-info"
 import { InAppBrowser } from '@ionic-native/in-app-browser';//打开页面
 import { interfaceUrls }from "../../../providers/serviceUrls";//接地址
 import { App } from 'ionic-angular';
 import { UserLogin } from "../../../modules/user-login/user-login";
 import { mockDataInfo } from '../../../providers/mock-data';
 import { Keyboard } from '@ionic-native/keyboard';
-// declare let cordova:any;
 declare var BMap;
 declare let baidumap_location: any;
 declare var $;
@@ -21,8 +20,6 @@ declare var window;
   templateUrl: 'news-replys-page.html',
 })
 export class newsReplyPage {
-
-
   offline:boolean=false;
   commentsList = null;  //评论列表
   hasCommet = true;  //真假评论显示
@@ -45,10 +42,8 @@ export class newsReplyPage {
 
   };    //内容
 
-  // commentConent2;//评论文章的内容
   conentLenght=0  ;//输入框里的内容长度
   hasLike = false;  //喜欢之后显示
-
   hasGiveLike =true;  //点赞
   maxPage = 1;  //最大页数
   currentPage = 1 ;//当前页
@@ -80,14 +75,12 @@ export class newsReplyPage {
       message: actions,
       duration: 3000,
       position:'bottom'
-
     });
     toast.present();
   }
 
   checkNetwork(){
     let self = this;
-
     self.network.onDisconnect().subscribe(()=>{
           self.offline=true;
           self.toast('无网络连接，请检查');
@@ -99,8 +92,6 @@ export class newsReplyPage {
   }
   ionViewDidLoad() {
     this.checkNetwork();
-
-
   }
   valueChange(){
     let self = this;
@@ -110,7 +101,6 @@ export class newsReplyPage {
     } else {
       self.canCommentArticle = false;
     }
-    console.log($(".commet_info textarea").val(), "value")
   }
   ionViewDidEnter(){
     this.bodyClientHeight = document.body.clientHeight;
@@ -127,47 +117,45 @@ export class newsReplyPage {
     setTimeout(() => {
 
       $(".commet_info textarea").bind("input propertychange", function (event) {
-        // alert("111:" + event.keyCode)
-        // if (self.commentConent2.length > 0) {
+        /* alert("111:" + event.keyCode)
+        if (self.commentConent2.length > 0) {
 
-        //   if (self.commentConent2 == null) {
-        //     self.canCommentArticle = false;
-        //   } else {
-        //     self.canCommentArticle = true
+          if (self.commentConent2 == null) {
+            self.canCommentArticle = false;
+          } else {
+            self.canCommentArticle = true
 
-        //   }
-        // } else {
-        //   self.canCommentArticle = false;
-        // }
-        // console.log(self.commentConent2, "value")
-        // var _this = this;
-        // _this.style.height = 'auto';
-        // _this.style.height = _this.scrollHeight + "px";
-        // console.log($(".commet_info").scrollTop())
-        // console.log(self.inputOutHeight, _this.scrollHeight, self.inputHeight);
-        // if (_this.scrollHeight - self.inputHeight - 10 > 0) {
+          }
+        } else {
+          self.canCommentArticle = false;
+        }
+        console.log(self.commentConent2, "value")
+        var _this = this;
+        _this.style.height = 'auto';
+        _this.style.height = _this.scrollHeight + "px";
+        console.log($(".commet_info").scrollTop())
+        console.log(self.inputOutHeight, _this.scrollHeight, self.inputHeight);
+        if (_this.scrollHeight - self.inputHeight - 10 > 0) {
+            $(".commet_info").height(self.inputOutHeight + _this.scrollHeight - self.inputHeight - parseInt($('.commet_info textarea').css('padding-top')) + 5);
+            newH = $(".commet_info").height(self.inputOutHeight + _this.scrollHeight - self.inputHeight - parseInt($('.commet_info textarea').css('padding-top')) + 5);
+            if ($(".commet_info").height() >= 78) {
+               $(".commet_info").height(78)
+               $(".commet_info").scrollTop($('.commet_info textarea').height() - 65);
+            } else {
+               $(".commet_info").scrollTop($('.commet_info').height() - $(".commet_info textarea").height());
+            }
+        } else {
+            $('.commet_info textarea').css('padding-top', 10);
+            $(".commet_info textarea").height(self.inputHeight);
+            $(".commet_info").height(self.inputOutHeight);
+            if ($(".commet_info textarea").val() == "") {
+              $(".commet_info").scrollTop(0);
+              $(".commet_info").height(self.inputOutHeight);
+              console.log($(".commet_info").scrollTop(), $(".commet_info textarea").scrollTop())
+            }
 
-
-        //   $(".commet_info").height(self.inputOutHeight + _this.scrollHeight - self.inputHeight - parseInt($('.commet_info textarea').css('padding-top')) + 5);
-        //   newH = $(".commet_info").height(self.inputOutHeight + _this.scrollHeight - self.inputHeight - parseInt($('.commet_info textarea').css('padding-top')) + 5);
-        //   if ($(".commet_info").height() >= 78) {
-        //      $(".commet_info").height(78)
-        //      $(".commet_info").scrollTop($('.commet_info textarea').height() - 65);
-        //   } else {
-        //      $(".commet_info").scrollTop($('.commet_info').height() - $(".commet_info textarea").height());
-        //   }
-        // } else {
-        //     $('.commet_info textarea').css('padding-top', 10);
-        //     $(".commet_info textarea").height(self.inputHeight);
-        //     $(".commet_info").height(self.inputOutHeight);
-        //     if ($(".commet_info textarea").val() == "") {
-        //       $(".commet_info").scrollTop(0);
-        //       $(".commet_info").height(self.inputOutHeight);
-        //       console.log($(".commet_info").scrollTop(), $(".commet_info textarea").scrollTop())
-        //     }
-
-        //     console.error('tag', '')
-        // }
+            console.error('tag', '')
+         } */
 
       });
     }, 50);
@@ -176,8 +164,7 @@ export class newsReplyPage {
      * 监听软键盘
      */
     this.keyboard.onKeyboardShow().subscribe(e => {
-      // $(".scroll-content").css({ "padding-bottom": e.keyboardHeight + "px" });
-      // $(".commet_input").css({ "bottom": e.keyboardHeight + "px" })
+
       if (self.bodyClientHeight > document.body.clientHeight) {
         $(".scroll-content").css({ "padding-bottom": e.keyboardHeight + "px" });
         $(".commet_input").css({ "bottom": 0 + "px" });
@@ -193,13 +180,6 @@ export class newsReplyPage {
     });
   }
 
-
-  // inputStart() {
-
-  // }
-  // inputEnd() {
-
-  // }
   disappear(){
     this.hasComment = false;
   }
@@ -213,7 +193,6 @@ export class newsReplyPage {
       let self = this;
       this.urlService.postDatas(interfaceUrls.likeThisComment, params)
         .then(function (resp) {
-          //  console.log("1",resp);
           if (resp) {
             if (resp.errorinfo == null) {
               console.info('tag:', resp)
@@ -264,8 +243,6 @@ export class newsReplyPage {
         .then(function (resp) {
           if (resp) {
             if (resp.errorinfo == null) {
-
-
                 if (resp.total==0) {
                   self.toast("暂无回复")
                 }else{
@@ -273,7 +250,6 @@ export class newsReplyPage {
                     resp.tabCommentsList[i]["likeShow"] = false;
                   }
                   self.commentReplyList = resp.tabCommentsList;
-                  console.info('tag', self.commentReplyList)
                 }
             } else {
               self.toast(resp.errorinfo.errormessage);
@@ -306,7 +282,6 @@ export class newsReplyPage {
       let self = this;
       this.urlService.postDatas(interfaceUrls.addCommentConnet, params)
         .then(function (resp) {
-          //  console.log("1",resp);
           if (resp) {
             if (resp.errorinfo == null) {
               self.toast("提交成功，评论审核中。")
@@ -364,7 +339,6 @@ export class newsReplyPage {
         infiniteScroll.complete();
       }
   }
-
   KeyboardHe(){
     $("#commet_info").focus();
     console.log("00")

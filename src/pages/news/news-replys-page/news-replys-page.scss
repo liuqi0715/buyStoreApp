@@ -71,63 +71,52 @@ news-replys-page {
   padding: .21rem 0;
   margin-bottom: .38rem;
 }
-//0
- .name {
+  .name {
+   padding-left: .84rem;
 
- padding-left: .84rem;
-
-}
+  }
 
   .avatar{
   height: .64rem;
   width: .64rem;
-
   border: none;
   position: absolute;
-  // left: 0;
   border-radius: 32px;
   overflow: hidden;
 
  }
 
 
-.avatar img{
-  width: .64rem;
-  height: .64rem;
-  display: block;
-  background: url(../assets/img/news/home_head_default.png) #fff no-repeat 50%;
+  .avatar img{
+    width: .64rem;
+    height: .64rem;
+    display: block;
+    background: url(../assets/img/news/home_head_default.png) #fff no-repeat 50%;
+    background-size: 100%;
+    overflow: hidden;
+    border: none;
 
-  background-size: 100%;
-  overflow: hidden;
-  border: none;
+  }
+  .text-ellipsis{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #4B607F;
+    font-size: .28rem;
+    display: inline-block;
+    max-width: 1.6rem;
+  }
+  .action_pane{
+    position: absolute;
+    right: .1rem;
+    text-align: left;
+    top: -.15rem;
+    right: 0;
+  }
 
-}
-.text-ellipsis{
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #4B607F;
-  font-size: .28rem;
-  display: inline-block;
-  max-width: 1.6rem;
-
-
-}
-.action_pane{
-  position: absolute;
-  right: .1rem;
-  text-align: left;
-  top: -.15rem;
-  right: 0;
-}
-// .action_pane span{
-//     background: url(../assets/img/news/wap_ic_more03.png) no-repeat 100%;
-//     padding-right: .26rem;
-//     background-size: .2rem;
-// }
-.action_pane2{
-  top: 0 !important;
-}
+  .action_pane2{
+    top: 0 !important;
+  }
 
  .digg{
     color: #999;
@@ -147,8 +136,6 @@ news-replys-page {
    padding-bottom: .12rem;
    display: -webkit-box;
    -webkit-box-orient: vertical;
-  //  -webkit-line-clamp: 3;
-  //  overflow: hidden;
     line-height: .45rem;
     font-size: .3rem;
     letter-spacing: .01rem;
@@ -177,7 +164,6 @@ news-replys-page {
 }
   .expand__label span{
   background: url(../assets/img/news/wap_ic_more03.png) no-repeat 100%;
-
   padding-right: 13px;
   background-size: 9px;
 
@@ -191,7 +177,6 @@ news-replys-page {
 }
 .reply{
   position: relative;
-  // border-top: 1px solid #E8E8E8;
   padding-top: .2rem;
 
 }

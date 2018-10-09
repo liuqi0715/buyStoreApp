@@ -6,7 +6,6 @@
 <ion-content>
 
   <article class="article-container">
-    <!-- <video src="" style="width:1px;height:1px;" id="video-el"></video> -->
     <h1 class="title">{{conent.title}}</h1>
     <div class="article__header article__header-container">
       <div class="pgc-bar-top clearfix" data-user-id="1564563397050370">
@@ -16,7 +15,6 @@
         <div class="subtitle">
           <p class="name">
               <span id="mediaName">{{conent.contAuthor}}</span>
-              <!-- <img  src="//s3b.pstatp.com/growth/mobile_detail/image/toutiaohao_tag.1vygyFaw.svg"> -->
           </p>
             <span class="subtime">{{conent.contTime}}</span>
         </div>
@@ -46,10 +44,8 @@
                       <div class="expand-container">
                         <div class="expand__text" >
                          {{item.commentsContent}}
-                         <!-- [innerHtml]="item.commentsContent" -->
                         </div>
                           <div class="reply" >
-                             <!-- *ngIf="(item.replyNums == 0)" -->
                           <p style="font-size:.24rem;">
                             <span>{{item.createTimeStr}}</span>-
                             <span [ngClass]="{'reply_num':item.reply_num!=null}"  class="replyBg" (click)="getComList(item)">{{item.replyNums}}回复</span>
@@ -68,24 +64,18 @@
               <li class="noComment" *ngIf="noComment" (click)="KeyboardHe()">
                 暂无评论
               </li>
-
         </ul>
     </div>
   </div>
   <div class="commet_content">
       <div class="commet_input" *ngIf="hasCommet">
-
-
       <div class="expandingArea commet_info">
         <div id="text">{{commentConent}}</div>
         <img src="assets/img/news/write.png" alt="write">
         <textarea id="tae" placeholder="文明上网，友善发言" [(ngModel)]="commentConent" (keyup)="valueChange()"></textarea>
       </div>
-
         <span class="commit" [ngClass]="{'hasLength': canCommentArticle }" (click)="commitComment()">提交</span>
       </div>
-
-
   </div>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content loadingSpinner="bubbles">
